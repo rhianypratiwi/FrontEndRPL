@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lupa Password</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .forgot-card {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      width: 350px;
+      text-align: center;
+    }
+    .forgot-card h1 {
+      margin-bottom: 5px;
+      font-size: 24px;
+      color: #b71c1c;
+    }
+    .forgot-card p {
+      margin: 0 0 20px;
+      color: #666;
+      font-size: 14px;
+    }
+    .forgot-card input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .forgot-card button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #e63946;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .forgot-card button:hover {
+      background: #c62828;
+    }
+    .back-link {
+      display: block;
+      margin-top: 15px;
+      font-size: 13px;
+      color: #e63946;
+      text-decoration: none;
+    }
+    .error {
+      color: red;
+      font-size: 12px;
+      text-align: left;
+      margin-top: -5px;
+      margin-bottom: 5px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="forgot-card">
+    <h1>Lupa Password</h1>
+    <p>Masukkan email Anda untuk menerima tautan reset password</p>
+
+    <form id="forgotForm" novalidate>
+      <input type="email" id="resetEmail" placeholder="Email" required>
+      <div class="error" id="resetError">Masukkan email yang valid</div>
+      <button type="submit">Kirim Link Reset</button>
+    </form>
+
+    <a href="form_login.html" class="back-link">← Kembali ke Login</a>
+  </div>
+
+  <script>
+    const form = document.getElementById('forgotForm');
+    const resetEmail = document.getElementById('resetEmail');
+    const resetError = document.getElementById('resetError');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      if (!resetEmail.value.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/)) {
+        resetError.style.display = 'block';
+      } else {
+        resetError.style.display = 'none';
+        alert('Tautan reset password telah dikirim ke email Anda (Simulasi)');
+        form.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>

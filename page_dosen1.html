@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kelas Jaringan Komputer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #c0392b;
+      color: white;
+      padding: 20px;
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header p {
+      margin: 5px 0 0;
+    }
+
+    .profile-top {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background-color: #e74c3c;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(192, 57, 43, 0.2);
+    }
+
+    .announcement {
+      margin-bottom: 20px;
+    }
+
+    .announcement input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #e74c3c;
+      border-radius: 6px;
+      background-color: #fff8f8;
+    }
+
+    .post {
+      display: flex;
+      align-items: flex-start;
+      border-top: 1px solid #f2dede;
+      padding: 15px 0;
+    }
+
+    .profile-circle {
+      width: 50px;
+      height: 50px;
+      background-color: #e74c3c;
+      border-radius: 50%;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .post-content {
+      flex-grow: 1;
+    }
+
+    .post-content h4 {
+      margin: 0;
+      color: #b03a2e;
+    }
+
+    .post-content p {
+      margin: 5px 0 0;
+      color: #7f1d1d;
+    }
+
+    .timestamp {
+      font-size: 0.85em;
+      color: #a94442;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="profile-top"></div>
+    <h1>Kelas: Jaringan Komputer</h1>
+    <p>Jam: 07.00 - 18.00 WIB</p>
+  </header>
+
+  <div class="container">
+    <div class="announcement">
+      <label for="announcement"><strong>Umumkan Sesuatu:</strong></label>
+      <input type="text" id="announcement" placeholder="Tulis pengumuman di sini...">
+    </div>
+
+    <div class="post">
+      <div class="profile-circle"></div>
+      <div class="post-content">
+        <h4>Yasir Arafat</h4>
+        <span class="timestamp">13 September</span>
+        <p>Selamat datang di kelas Jaringan Komputer! Silakan cek materi di modul pertama.</p>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="profile-circle"></div>
+      <div class="post-content">
+        <h4>Yasir Arafat</h4>
+        <span class="timestamp">13 September</span>
+        <p>Jangan lupa tugas minggu ini dikumpulkan sebelum hari Jumat.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

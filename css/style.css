@@ -1,0 +1,150 @@
+/* Reset dasar */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+  }
+  /*Bungkus semua */
+  .wrapper {
+    max-width: 800px;
+    margin: 30px auto;
+  }
+  /* Navbar */
+  .navbar {
+  background: linear-gradient(to right, #d32f2f, #f44336);
+  padding: 15px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  font-size: 20px;
+}
+
+  .navbar i {
+    cursor: pointer;
+  }
+  
+  /* Container utama */
+  .container {
+  background: white;
+  border-radius: 0 0 10px 10px;
+  padding: 40px 20px 20px;
+  display: flex;
+  gap: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  position: relative; /* penting supaya profile bisa absolute di dalam */
+}
+  /* Form kiri */
+  .form-section {
+    flex: 1;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  /* Profil kanan */
+  .profile-section {
+    position: relative;
+    width: 180px;
+  }
+  .profile-wrapper {
+    display: inline-block;
+  }
+  .profile-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin: left -50px;;
+    object-fit: cover;
+    border: 4px solid white;
+    background: white;
+  }
+  /* Tombol edit di pojok kanan bawah */
+.edit-icon {
+  position: absolute;
+  bottom: 220px;
+  right: 20px;
+  background: #d32f2f;
+  color: white;
+  border-radius: 50%;
+  padding: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 2px solid white;
+  transition: background 0.3s;
+}
+
+.edit-icon:hover {
+  background: #b71c1c;
+}
+  .profile-section img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid white;
+  position: absolute;
+  top: -60px;  /* overlap ke atas */
+  right: 20px;
+  background: white;
+}
+  /* Menu dropdown di profil */
+  .profile-menu {
+    display: none;
+    position: absolute;
+    top: 130px;
+    right: 0;
+    background: #c62828;
+    color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 10;
+  }
+  .profile-menu button {
+    display: block;
+    background: none;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .profile-menu button:hover {
+    background: #b71c1c;
+  }
+  
+  /* Tombol logout */
+  .logout-btn {
+    margin-top: 80px;
+    margin-left: 59px;
+    background: #d32f2f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .logout-btn:hover {
+    background: #b71c1c;
+  }
+
+  
+  

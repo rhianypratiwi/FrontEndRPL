@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Dosen</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1e1e1e;
+    }
+
+   
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      background: #c8102e;
+      position: fixed;
+      top: 0;
+      left: 0;
+      color: white;
+      padding-top: 20px;
+      border-radius: 0 20px 20px 0;
+      box-shadow: 3px 0 8px rgba(0,0,0,0.2);
+    }
+
+    .menu-icon {
+      font-size: 25px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+    }
+
+    .sidebar ul li {
+      padding: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s;
+    }
+
+    .sidebar ul li:hover {
+      background: #a30d25;
+      border-radius: 10px;
+    }
+
+    .sidebar ul li i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    
+    .content {
+      margin-left: 240px;
+      padding: 20px;
+      background: #fff;
+      min-height: 100vh;
+      border-radius: 20px 0 0 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .header p {
+      margin: 2px 0;
+      font-size: 14px;
+      color: gray;
+    }
+
+    .profile img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ddd;
+    }
+
+    .announcement {
+      margin-top: 20px;
+    }
+
+    .announcement input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .announcement input:focus {
+      border-color: #c8102e;
+      box-shadow: 0 0 6px rgba(200,16,46,0.4);
+    }
+
+    
+    .post {
+      background: #fff;
+      border: 1px solid #f0a3a3;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 15px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+
+    .post:hover {
+      transform: scale(1.01);
+    }
+
+    .post-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      background: #e57373;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .post-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-info strong {
+      font-size: 15px;
+    }
+
+    .post-info small {
+      color: gray;
+      font-size: 12px;
+    }
+
+    .post-right {
+      cursor: pointer;
+      font-size: 20px;
+      color: gray;
+    }
+
+    .post-right:hover {
+      color: #c8102e;
+    }
+  </style>
+
+  <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+  <div class="sidebar">
+    <span class="menu-icon">&#9776;</span>
+    <ul>
+      <li><i class="fas fa-home"></i> Home</li>
+      <li><i class="fas fa-user"></i> Profil</li>
+      <li><i class="fas fa-bell"></i> Notifikasi</li>
+    </ul>
+  </div>
+
+ 
+  <div class="content">
+    <div class="header">
+      <div>
+        <h1>Jaringan Komputer</h1>
+        <p>07.00 - 18.00</p>
+      </div>
+      <div class="profile">
+        <img src="https://i.pravatar.cc/100" alt="profile">
+      </div>
+    </div>
+
+   
+    <div class="announcement">
+      <input type="text" placeholder="Umumkan sesuatu...">
+    </div>
+
+    <div class="post">
+      <div class="post-left">
+        <div class="avatar"></div>
+        <div class="post-info">
+          <strong>Yasir Arafat</strong>
+          <small>Sep 13</small>
+        </div>
+      </div>
+      <div class="post-right">⋮</div>
+    </div>
+
+    <div class="post">
+      <div class="post-left">
+        <div class="avatar"></div>
+        <div class="post-info">
+          <strong>Yasir Arafat</strong>
+          <small>Sep 13</small>
+        </div>
+      </div>
+      <div class="post-right">⋮</div>
+    </div>
+  </div>
+
+</body>
+</html>

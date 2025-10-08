@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaringan Komputer</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #333;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 70px;
+      height: 100%;
+      background: #c1001f;
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      margin: 20px 0;
+      font-size: 22px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: #a0001b;
+    }
+
+    /* Main content */
+    .main {
+      margin-left: 90px;
+      padding: 20px;
+    }
+
+    .header {
+      background: #e60023;
+      padding: 15px;
+      color: white;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .deadline {
+      color: #e60023;
+      font-weight: bold;
+    }
+
+    .upload-box {
+      margin-top: 15px;
+      padding: 20px;
+      border: 2px dashed #e60023;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .upload-box:hover {
+      background: #fff4f4;
+    }
+
+    .comment-box {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .comment-box input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .comment-box button {
+      background: #e60023;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .comment-box button:hover {
+      background: #c1001f;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <a href="#"><i class="fa-solid fa-house"></i></a>
+    <a href="#"><i class="fa-solid fa-user"></i></a>
+    <a href="#"><i class="fa-solid fa-users"></i></a>
+    <a href="#"><i class="fa-solid fa-bell"></i></a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+    <div class="header">
+      <h1>Jaringan Komputer</h1>
+      <p>Rabu, 17 September 2025</p>
+    </div>
+
+    <div class="card">
+      <h2>PBL Kelompok</h2>
+      <p class="deadline">Deadline: 25 September 2025, 23:59</p>
+      <p><b>Instruksi:</b> Buat presentasi berisi rancangan gedung (gambar), jumlah user, sejarah gedung 
+        (termasuk jumlah lantai, jumlah ruangan, dan nama ruangan).</p>
+
+      <div class="upload-box">
+        <i class="fa-solid fa-upload"></i> Pilih file atau tarik ke sini
+      </div>
+
+      <div class="comment-box">
+        <input type="text" placeholder="Tambahkan komentar...">
+        <button>Kirim</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

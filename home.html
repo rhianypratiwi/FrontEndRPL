@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Mahasiswa</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #1e1e1e;
+    }
+
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      background: #c8102e;
+      position: fixed;
+      top: 0;
+      left: 0;
+      color: white;
+      padding-top: 20px;
+      border-radius: 0 20px 20px 0;
+    }
+
+    .sidebar h2 {
+      margin-left: 15px;
+      font-size: 20px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .menu-icon {
+      font-size: 25px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+    }
+
+    .sidebar ul li {
+      padding: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar ul li:hover {
+      background: #a30d25;
+      border-radius: 10px;
+    }
+
+    .sidebar ul li i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    
+    .content {
+      margin-left: 240px;
+      padding: 20px;
+      background: #fff;
+      min-height: 100vh;
+      border-radius: 20px 0 0 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      margin: 0;
+    }
+
+    .profile img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    h2 {
+      margin-top: 30px;
+      border-bottom: 2px solid #000;
+      padding-bottom: 5px;
+    }
+
+    
+    .card-list {
+      margin-top: 15px;
+    }
+
+    .card {
+      background: #c8102e;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card.light {
+      background: #f28a8a;
+      color: #000;
+    }
+
+    .card span {
+      font-size: 12px;
+      font-weight: bold;
+    }
+  </style>
+  
+  <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  
+  <div class="sidebar">
+    <span class="menu-icon">&#9776;</span>
+    <h2>Nama Web</h2>
+
+    <ul>
+      <li><i class="fas fa-home"></i> Home</li>
+      <li><i class="fas fa-user"></i> Profil</li>
+      <li><i class="fas fa-bell"></i> Notifikasi</li>
+    </ul>
+  </div>
+
+  
+  <div class="content">
+    <div class="header">
+      <div>
+        <h1>Hai, lia!</h1>
+        <p>Kamis, 18 september 2025</p>
+      </div>
+      <div class="profile">
+        <img src="https://i.pravatar.cc/100" alt="profile">
+      </div>
+    </div>
+
+    <h2>Mata Kuliah</h2>
+    <div class="card-list">
+      <div class="card">
+        <div>
+          <strong>Jaringan Komputer</strong><br>
+          <small>Yasir Arofat</small>
+        </div>
+        <span>TI-11</span>
+      </div>
+
+      <div class="card">
+        <div>
+          <strong>Rekayasa Perangkat Lunak</strong><br>
+          <small>Yusril Eka Mahandra</small>
+        </div>
+        <span>TI-4</span>
+      </div>
+
+      <div class="card">
+        <div>
+          <strong>Pemrograman Web</strong><br>
+          <small>Ferry Faisal</small>
+        </div>
+        <span>TI-12</span>
+      </div>
+    </div>
+
+    <h2>Tugas</h2>
+    <div class="card-list">
+      <div class="card">
+        <div><strong>PBL Kelompok</strong></div>
+        <span>Sept 25</span>
+      </div>
+
+      <div class="card light">
+        <div><strong>Project RPL</strong></div>
+        <span>Sept 30</span>
+      </div>
+
+      <div class="card">
+        <div><strong>Project Pemrograman</strong></div>
+        <span>Okt 9</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
