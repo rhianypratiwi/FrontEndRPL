@@ -1,157 +1,132 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar Akun</title>
+  <title>Register Page</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
     }
-    .register-card {
-      background: #fff;
-      padding: 30px 25px;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-      width: 350px;
+
+    .container {
+      width: 380px;
+      padding: 30px;
+      border: 2px solid #000;
+      border-radius: 8px;
+      background-color: #fff;
       text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
-    .register-card h1 {
-      margin-bottom: 5px;
+
+    h1 {
       font-size: 24px;
-      color: #1565c0;
+      margin-bottom: 8px;
     }
-    .register-card p {
-      margin: 0 0 20px;
-      color: #666;
-      font-size: 14px;
-    }
-    .register-card input {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
-    .register-card button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #1565c0;
-      color: white;
-      font-size: 15px;
-      cursor: pointer;
-    }
-    .register-card button:hover {
-      background: #0d47a1;
-    }
-    .register-card .link {
+
+    .subtitle {
       display: block;
-      margin-top: 10px;
-      font-size: 13px;
-      color: #1565c0;
+      font-size: 14px;
+      color: #000000;
+      margin-bottom: 25px;
       text-decoration: none;
     }
-    .error {
-      color: red;
-      font-size: 12px;
+
+    .form-group {
       text-align: left;
-      margin-top: -5px;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
       margin-bottom: 5px;
-      display: none;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #b50000;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    button:hover {
+      background-color: #8c0000;
+    }
+
+    .signin-text {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .signin-text a {
+      color: #b50000;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .signin-text a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <div class="register-card">
-    <h1>Buat Akun Baru</h1>
-    <p>Silakan isi data Anda untuk mendaftar</p>
+  <div class="container">
+    <h1>WELCOME, BRO!</h1>
+    <a href="#" class="subtitle">Silakan Buat Akun Terlebih Dahulu</a>
 
-    <form id="registerForm" novalidate>
-      <input type="text" id="fullname" placeholder="Nama Lengkap" required>
-      <div class="error" id="nameError">Nama tidak boleh kosong</div>
+    <form action="register_process.php" method="POST">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
 
-      <input type="email" id="email" placeholder="Email" required>
-      <div class="error" id="emailError">Masukkan email yang valid</div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
 
-      <input type="password" id="password" placeholder="Password (min 6 karakter)" required minlength="6">
-      <div class="error" id="passwordError">Password minimal 6 karakter</div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
 
-      <input type="password" id="confirmPassword" placeholder="Konfirmasi Password" required>
-      <div class="error" id="confirmError">Password tidak cocok</div>
+      <div class="form-group">
+        <label for="confirm-password">Confirm password</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+      </div>
 
-      <button type="submit">Daftar</button>
+      <button type="submit">Regsister</button>
+
+      <div class="signin-text">
+        Already have an account? <a href="login.php">Sign in</a>
+      </div>
     </form>
-
-    <a href="form_login.html" class="link">← Sudah punya akun? Masuk</a>
   </div>
-
-  <script>
-    const form = document.getElementById('registerForm');
-    const fullname = document.getElementById('fullname');
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
-
-    const nameError = document.getElementById('nameError');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
-    const confirmError = document.getElementById('confirmError');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      let valid = true;
-
-      // Validasi nama
-      if (fullname.value.trim() === "") {
-        nameError.style.display = 'block';
-        valid = false;
-      } else {
-        nameError.style.display = 'none';
-      }
-
-      // Validasi email
-      if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-        emailError.style.display = 'block';
-        valid = false;
-      } else {
-        emailError.style.display = 'none';
-      }
-
-      // Validasi password
-      if (password.value.length < 6) {
-        passwordError.style.display = 'block';
-        valid = false;
-      } else {
-        passwordError.style.display = 'none';
-      }
-
-      // Validasi konfirmasi password
-      if (confirmPassword.value !== password.value || confirmPassword.value === "") {
-        confirmError.style.display = 'block';
-        valid = false;
-      } else {
-        confirmError.style.display = 'none';
-      }
-
-      // Jika semua valid
-      if (valid) {
-        alert('Pendaftaran berhasil! (Simulasi Front-End)');
-        form.reset();
-        window.location.href = "login.html";
-      }
-    });
-  </script>
 
 </body>
 </html>
