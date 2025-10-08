@@ -3,29 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
   <title>Form Login</title>
+=======
+  <title>Login</title>
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     body {
+<<<<<<< HEAD
       font-family: Arial, sans-serif;
       background: #d9d9d9;
+=======
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
+      background-color: #f9f9f9;
     }
 
+<<<<<<< HEAD
     .login-container {
       background: #fff;
       padding: 30px 25px;
       border-radius: 10px;
       border: 2px solid #ccc;
       width: 320px;
+=======
+    .container {
+      width: 400px;
+      background-color: #fff;
+      border: 2px solid #000;
+      border-radius: 5px;
+      padding: 40px 30px;
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
       text-align: center;
       box-shadow: 0 6px 12px rgba(0,0,0,0.1);
     }
 
     h1 {
+<<<<<<< HEAD
       font-size: 26px;
       font-weight: bold;
       color: #000;
@@ -35,10 +59,21 @@
     p {
       color: #333;
       font-size: 14px;
+=======
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      font-size: 14px;
+      color: #333;
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
       margin-bottom: 25px;
     }
 
     label {
+<<<<<<< HEAD
       display: block;
       text-align: left;
       font-size: 14px;
@@ -82,17 +117,80 @@
       margin-top: 15px;
       font-size: 14px;
       color: red;
+=======
+      display: block;
+      text-align: left;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+
+    .forgot {
+      display: block;
+      text-align: center;
+      font-size: 14px;
+      color: #b80000;
+      text-decoration: none;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      width: 100%;
+      background-color: #b80000;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .btn:hover {
+      background-color: #990000;
+    }
+
+    .link {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .link a {
+      color: #b80000;
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
       text-decoration: none;
       font-weight: bold;
     }
 
+<<<<<<< HEAD
     .link:hover {
+=======
+    .link a:hover {
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>WELCOME, BRO!</h1>
+    <p class="subtitle">Masukkan email dan password Anda</p>
 
+<<<<<<< HEAD
   <div class="login-container">
     <h1>LOGIN</h1>
     <p>Masukkan email dan password Anda</p>
@@ -122,5 +220,23 @@
     });
   </script>
 
+=======
+    <form action="check_login.php" method="POST">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+      <a href="#" class="forgot">Forgot Password?</a>
+
+      <button type="submit" class="btn">Login</button>
+    </form>
+
+    <div class="link">
+      Don't have an account? <a href="register.html">Sign Up</a>
+    </div>
+  </div>
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
 </body>
 </html>

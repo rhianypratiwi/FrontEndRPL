@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
   <title>Register</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #d9d9d9; /* latar abu-abu */
+=======
+  <title>Register Page</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #fff;
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
       display: flex;
       justify-content: center;
       align-items: center;
@@ -16,6 +24,7 @@
     }
 
     .container {
+<<<<<<< HEAD
       background: #fff;
       border: 2px solid #ccc;
       border-radius: 10px;
@@ -91,6 +100,81 @@
     }
 
     .bottom-text a:hover {
+=======
+      width: 380px;
+      padding: 30px;
+      border: 2px solid #000;
+      border-radius: 8px;
+      background-color: #fff;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      display: block;
+      font-size: 14px;
+      color: #000000;
+      margin-bottom: 25px;
+      text-decoration: none;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #b50000;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    button:hover {
+      background-color: #8c0000;
+    }
+
+    .signin-text {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .signin-text a {
+      color: #b50000;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .signin-text a:hover {
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
       text-decoration: underline;
     }
   </style>
@@ -99,6 +183,7 @@
 
   <div class="container">
     <h1>WELCOME, BRO!</h1>
+<<<<<<< HEAD
     <p class="subtext">Silakan Buat Akun Terlebih Dahulu</p>
 
     <form onsubmit="return goToLogin(event)">
@@ -118,10 +203,40 @@
 
       <div class="bottom-text">
         Already have an account? <a href="form_login.html">Sign in</a>
+=======
+    <a href="#" class="subtitle">Silakan Buat Akun Terlebih Dahulu</a>
+
+    <form action="register_process.php" method="POST">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-password">Confirm password</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+      </div>
+
+      <button type="submit">Regsister</button>
+
+      <div class="signin-text">
+        Already have an account? <a href="login.php">Sign in</a>
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
       </div>
     </form>
   </div>
 
+<<<<<<< HEAD
   <script>
     function goToLogin(event) {
       event.preventDefault(); // biar tidak reload halaman
@@ -131,5 +246,7 @@
     }
   </script>
 
+=======
+>>>>>>> 5a23a433a0a3c8da772b21924fc201b72f5a02aa
 </body>
 </html>
