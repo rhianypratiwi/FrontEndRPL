@@ -3,155 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar Akun</title>
+  <title>Register</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      background: #e0e0e0; /* latar abu-abu muda */
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
     }
-    .register-card {
-      background: #fff;
-      padding: 30px 25px;
+
+    .container {
+      background: #ffffff;
       border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      padding: 30px 25px;
       width: 350px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      border: 1px solid #ccc;
       text-align: center;
     }
-    .register-card h1 {
+
+    h1 {
+      font-size: 26px;
+      font-weight: bold;
       margin-bottom: 5px;
-      font-size: 24px;
-      color: #1565c0;
+      color: #000;
     }
-    .register-card p {
-      margin: 0 0 20px;
-      color: #666;
+
+    p.subtext {
+      color: #444;
+      margin-bottom: 20px;
       font-size: 14px;
     }
-    .register-card input {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
-    .register-card button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #1565c0;
-      color: white;
-      font-size: 15px;
-      cursor: pointer;
-    }
-    .register-card button:hover {
-      background: #0d47a1;
-    }
-    .register-card .link {
-      display: block;
-      margin-top: 10px;
-      font-size: 13px;
-      color: #1565c0;
-      text-decoration: none;
-    }
-    .error {
-      color: red;
-      font-size: 12px;
+
+    form {
       text-align: left;
-      margin-top: -5px;
-      margin-bottom: 5px;
-      display: none;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 4px;
+      margin-top: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #1565c0;
+      box-shadow: 0 0 3px rgba(21, 101, 192, 0.4);
+    }
+
+    button {
+      width: 100%;
+      background: red;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 20px;
+      margin-top: 18px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: darkred;
+    }
+
+    .bottom-text {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #000;
+      text-align: center;
+    }
+
+    .bottom-text a {
+      color: red;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .bottom-text a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <div class="register-card">
-    <h1>Buat Akun Baru</h1>
-    <p>Silakan isi data Anda untuk mendaftar</p>
+  <div class="container">
+    <h1>WELCOME, BRO!</h1>
+    <p class="subtext">Silakan Buat Akun Terlebih Dahulu</p>
 
-    <form id="registerForm" novalidate>
-      <input type="text" id="fullname" placeholder="Nama Lengkap" required>
-      <div class="error" id="nameError">Nama tidak boleh kosong</div>
+    <form>
+      <label for="name">Name</label>
+      <input type="text" id="name">
 
-      <input type="email" id="email" placeholder="Email" required>
-      <div class="error" id="emailError">Masukkan email yang valid</div>
+      <label for="email">Email</label>
+      <input type="email" id="email">
 
-      <input type="password" id="password" placeholder="Password (min 6 karakter)" required minlength="6">
-      <div class="error" id="passwordError">Password minimal 6 karakter</div>
+      <label for="password">Password</label>
+      <input type="password" id="password">
 
-      <input type="password" id="confirmPassword" placeholder="Konfirmasi Password" required>
-      <div class="error" id="confirmError">Password tidak cocok</div>
+      <label for="confirm">Confirm password</label>
+      <input type="password" id="confirm">
 
-      <button type="submit">Daftar</button>
+      <button type="submit">Register</button>
     </form>
 
-    <a href="form_login.html" class="link">← Sudah punya akun? Masuk</a>
+    <div class="bottom-text">
+      Already have an account? <a href="form_login.html">Sign in</a>
+    </div>
   </div>
-
-  <script>
-    const form = document.getElementById('registerForm');
-    const fullname = document.getElementById('fullname');
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
-
-    const nameError = document.getElementById('nameError');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
-    const confirmError = document.getElementById('confirmError');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      let valid = true;
-
-      // Validasi nama
-      if (fullname.value.trim() === "") {
-        nameError.style.display = 'block';
-        valid = false;
-      } else {
-        nameError.style.display = 'none';
-      }
-
-      // Validasi email
-      if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-        emailError.style.display = 'block';
-        valid = false;
-      } else {
-        emailError.style.display = 'none';
-      }
-
-      // Validasi password
-      if (password.value.length < 6) {
-        passwordError.style.display = 'block';
-        valid = false;
-      } else {
-        passwordError.style.display = 'none';
-      }
-
-      // Validasi konfirmasi password
-      if (confirmPassword.value !== password.value || confirmPassword.value === "") {
-        confirmError.style.display = 'block';
-        valid = false;
-      } else {
-        confirmError.style.display = 'none';
-      }
-
-      // Jika semua valid
-      if (valid) {
-        alert('Pendaftaran berhasil! (Simulasi Front-End)');
-        form.reset();
-        window.location.href = "login.html";
-      }
-    });
-  </script>
 
 </body>
 </html>
