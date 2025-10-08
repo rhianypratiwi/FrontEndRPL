@@ -1,108 +1,100 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lupa Password</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #a8edea, #fed6e3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .forgot-card {
-      background: #fff;
-      padding: 30px 25px;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-      width: 350px;
-      text-align: center;
-    }
-    .forgot-card h1 {
-      margin-bottom: 5px;
-      font-size: 24px;
-      color: #b71c1c;
-    }
-    .forgot-card p {
-      margin: 0 0 20px;
-      color: #666;
-      font-size: 14px;
-    }
-    .forgot-card input {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
-    .forgot-card button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #e63946;
-      color: white;
-      font-size: 15px;
-      cursor: pointer;
-    }
-    .forgot-card button:hover {
-      background: #c62828;
-    }
-    .back-link {
-      display: block;
-      margin-top: 15px;
-      font-size: 13px;
-      color: #e63946;
-      text-decoration: none;
-    }
-    .error {
-      color: red;
-      font-size: 12px;
-      text-align: left;
-      margin-top: -5px;
-      margin-bottom: 5px;
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupa Password</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            border: 3px solid #000;
+            padding: 60px 80px;
+            box-sizing: border-box;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 13px;
+            color: #000;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 8px 10px;
+            margin-bottom: 25px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #b70000;
+            color: white;
+            border: none;
+            padding: 8px 30px;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #8b0000;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #b70000;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="forgot-card">
-    <h1>Lupa Password</h1>
-    <p>Masukkan email Anda untuk menerima tautan reset password</p>
+    <div class="container">
+        <h1>LUPA PASSWORD</h1>
+        <p>Masukkan email Anda untuk menerima OTP reset password</p>
+        
+        <form>
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="contoh@email.com" required>
 
-    <form id="forgotForm" novalidate>
-      <input type="email" id="resetEmail" placeholder="Email" required>
-      <div class="error" id="resetError">Masukkan email yang valid</div>
-      <button type="submit">Kirim Link Reset</button>
-    </form>
+            <button type="submit">Kirim Link Reset</button>
+        </form>
 
-    <a href="form_login.html" class="back-link">← Kembali ke Login</a>
-  </div>
-
-  <script>
-    const form = document.getElementById('forgotForm');
-    const resetEmail = document.getElementById('resetEmail');
-    const resetError = document.getElementById('resetError');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      if (!resetEmail.value.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/)) {
-        resetError.style.display = 'block';
-      } else {
-        resetError.style.display = 'none';
-        alert('Tautan reset password telah dikirim ke email Anda (Simulasi)');
-        form.reset();
-      }
-    });
-  </script>
+        <a href="login.html" class="back-link">Kembali ke Login</a>
+    </div>
 
 </body>
 </html>
