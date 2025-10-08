@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Mahasiswa</title>
+    <title>Kelas Mahasiswa</title>
     <style>
         body {
             margin: 0;
@@ -42,6 +42,7 @@
             margin-top: 30px;
         }
         
+        /* Tambahan style untuk tautan di sidebar */
         .sidebar ul a {
             text-decoration: none;
             color: inherit;
@@ -82,46 +83,11 @@
             margin: 0;
         }
 
-        .profile-container {
-            position: relative;
-        }
-
         .profile img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
             object-fit: cover;
-            cursor: pointer;
-        }
-
-        .profile-dropdown {
-            display: none;
-            position: absolute;
-            top: 60px;
-            right: 0;
-            background-color: white;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 8px;
-            overflow: hidden;
-            width: 150px;
-        }
-
-        .profile-dropdown a {
-            display: block;
-            padding: 12px 16px;
-            text-decoration: none;
-            color: #333;
-            display: flex;
-            align-items: center;
-        }
-
-        .profile-dropdown a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .profile-dropdown a i {
-            margin-right: 10px;
         }
 
         h2 {
@@ -163,90 +129,56 @@
     <div class="sidebar">
         <span class="menu-icon">&#9776;</span>
         <h2>Nama Web</h2>
+
         <ul>
-            <a href="homesaya.html"><li><i class="fas fa-home"></i> Home</li></a>
+            <a href="home.html"><li><i class="fas fa-home"></i> Home</li></a>
             <a href="kelas.html"><li><i class="fas fa-book"></i> Kelas</li></a>
+            <li><i class="fas fa-user"></i> Profil</li>
+            <li><i class="fas fa-bell"></i> Notifikasi</li>
         </ul>
     </div>
 
     <div class="content">
         <div class="header">
             <div>
-                <h1>Hai, lia!</h1>
-                <p>Kamis, 18 september 2025</p>
+                <h1>Daftar Kelas</h1>
+                <p>Informasi Kelas dan Ruangan</p>
             </div>
-            <div class="profile-container">
-                <div class="profile">
-                    <img src="https://i.pravatar.cc/100" alt="profile" onclick="toggleDropdown()">
-                </div>
-                <div class="profile-dropdown" id="profileDropdown">
-                    <a href="#"><i class="fas fa-user"></i> Profil</a>
-                    <a href="#"><i class="fas fa-bell"></i> Notifikasi</a>
-                    <a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a>
-                </div>
+            <div class="profile">
+                <img src="https://i.pravatar.cc/100" alt="profile">
             </div>
         </div>
 
-        <h2>Mata Kuliah</h2>
+        <h2>Jadwal Hari Ini</h2>
         <div class="card-list">
             <div class="card">
                 <div>
                     <strong>Jaringan Komputer</strong><br>
-                    <small>Yasir Arofat</small>
+                    <small>Ruangan: Lab Komputer 1</small>
                 </div>
-                <span>TI-11</span>
-            </div>
-
-            <div class="card">
-                <div>
-                    <strong>Rekayasa Perangkat Lunak</strong><br>
-                    <small>Yusril Eka Mahandra</small>
-                </div>
-                <span>TI-4</span>
+                <span>10:00 - 12:00</span>
             </div>
 
             <div class="card">
                 <div>
                     <strong>Pemrograman Web</strong><br>
-                    <small>Ferry Faisal</small>
+                    <small>Ruangan: Kelas Teori 2</small>
                 </div>
-                <span>TI-12</span>
+                <span>13:00 - 15:00</span>
             </div>
         </div>
 
-        <h2>Tugas</h2>
+        <h2>Kelas Lainnya</h2>
         <div class="card-list">
-            <div class="card">
-                <div><strong>PBL Kelompok</strong></div>
-                <span>Sept 25</span>
-            </div>
-
             <div class="card light">
-                <div><strong>Project RPL</strong></div>
-                <span>Sept 30</span>
-            </div>
-
-            <div class="card">
-                <div><strong>Project Pemrograman</strong></div>
-                <span>Okt 9</span>
+                <div>
+                    <strong>Rekayasa Perangkat Lunak</strong><br>
+                    <small>Ruangan: Lab Komputer 2</small>
+                </div>
+                <span>Jumat, 10:00 - 12:00</span>
             </div>
         </div>
     </div>
-    <script>
-        function toggleDropdown() {
-            document.getElementById("profileDropdown").style.display = (document.getElementById("profileDropdown").style.display === 'block') ? 'none' : 'block';
-        }
-        window.onclick = function(event) {
-            if (!event.target.matches('.profile img')) {
-                var dropdowns = document.getElementsByClassName("profile-dropdown");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.style.display === 'block') {
-                        openDropdown.style.display = 'none';
-                    }
-                }
-            }
-        }
-    </script>
+
 </body>
 </html>
