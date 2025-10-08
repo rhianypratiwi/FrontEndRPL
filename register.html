@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #e0e0e0; /* latar abu-abu muda */
+      background: #d9d9d9; /* latar abu-abu */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -16,13 +16,13 @@
     }
 
     .container {
-      background: #ffffff;
-      border-radius: 12px;
+      background: #fff;
+      border: 2px solid #ccc;
+      border-radius: 10px;
       padding: 30px 25px;
-      width: 350px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-      border: 1px solid #ccc;
       text-align: center;
+      width: 320px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
@@ -33,28 +33,25 @@
     }
 
     p.subtext {
-      color: #444;
-      margin-bottom: 20px;
+      color: #333;
       font-size: 14px;
-    }
-
-    form {
-      text-align: left;
+      margin-bottom: 25px;
     }
 
     label {
       display: block;
+      text-align: left;
       font-size: 14px;
-      color: #333;
-      margin-bottom: 4px;
-      margin-top: 10px;
+      color: #222;
+      margin-bottom: 5px;
     }
 
     input {
       width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #bbb;
+      padding: 10px;
+      margin-bottom: 15px;
       border-radius: 6px;
+      border: 1px solid #ccc;
       font-size: 14px;
       box-sizing: border-box;
     }
@@ -67,15 +64,14 @@
 
     button {
       width: 100%;
-      background: red;
-      color: white;
-      padding: 12px;
+      padding: 10px;
+      margin-top: 10px;
       border: none;
       border-radius: 20px;
-      margin-top: 18px;
+      background: red;
+      color: white;
+      font-size: 14px;
       cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
     }
 
     button:hover {
@@ -86,7 +82,6 @@
       margin-top: 15px;
       font-size: 13px;
       color: #000;
-      text-align: center;
     }
 
     .bottom-text a {
@@ -106,26 +101,35 @@
     <h1>WELCOME, BRO!</h1>
     <p class="subtext">Silakan Buat Akun Terlebih Dahulu</p>
 
-    <form>
+    <form onsubmit="return goToLogin(event)">
       <label for="name">Name</label>
-      <input type="text" id="name">
+      <input type="text" id="name" required>
 
       <label for="email">Email</label>
-      <input type="email" id="email">
+      <input type="email" id="email" required>
 
       <label for="password">Password</label>
-      <input type="password" id="password">
+      <input type="password" id="password" required>
 
       <label for="confirm">Confirm password</label>
-      <input type="password" id="confirm">
+      <input type="password" id="confirm" required>
 
       <button type="submit">Register</button>
-    </form>
 
-    <div class="bottom-text">
-      Already have an account? <a href="form_login.html">Sign in</a>
-    </div>
+      <div class="bottom-text">
+        Already have an account? <a href="form_login.html">Sign in</a>
+      </div>
+    </form>
   </div>
+
+  <script>
+    function goToLogin(event) {
+      event.preventDefault(); // biar tidak reload halaman
+      // di sini kamu bisa tambahkan validasi jika mau
+      window.location.href = "form_login.html"; // pindah ke form login
+      return false;
+    }
+  </script>
 
 </body>
 </html>

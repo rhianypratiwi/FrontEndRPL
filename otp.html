@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change Password - OTP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #d9d9d9; /* latar abu-abu */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .otp-container {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      width: 340px;
+      text-align: center;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #333;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .otp-inputs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+
+    .otp-inputs input {
+      width: 45px;
+      height: 45px;
+      text-align: center;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    .otp-inputs input:focus {
+      border-color: #e63946;
+      box-shadow: 0 0 4px rgba(230, 57, 70, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: darkred;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="otp-container">
+    <h1>CHANGE PASSWORD</h1>
+    <p>Kode verifikasi untuk ganti password Anda</p>
+
+    <form id="otpForm">
+      <div class="otp-inputs">
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll('.otp-inputs input');
+    const form = document.getElementById('otpForm');
+
+    // Pindah otomatis ke input berikutnya
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', () => {
+        if (input.value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+    });
+
+    // Saat form disubmit
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Simulasi validasi OTP
+      window.location.href = "changepass.html"; // langsung ke halaman ubah password
+    });
+  </script>
+
+</body>
+</html>

@@ -1,252 +1,246 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Mahasiswa</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #1e1e1e;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard — Sidebar Animasi</title>
 
-        .sidebar {
-            width: 220px;
-            height: 100vh;
-            background: #c8102e;
-            position: fixed;
-            top: 0;
-            left: 0;
-            color: white;
-            padding-top: 20px;
-            border-radius: 0 20px 20px 0;
-        }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-        .sidebar h2 {
-            margin-left: 15px;
-            font-size: 20px;
-            display: inline-block;
-            vertical-align: middle;
-        }
+  <style>
+    :root{
+      --red-1: #c8102e;
+      --red-2: #a10d25;
+      --light-red: #f6b2b6;
+    }
 
-        .menu-icon {
-            font-size: 25px;
-            margin: 0 10px;
-            cursor: pointer;
-        }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family: Inter, Arial, sans-serif;
+      background: #ffffff;
+      color:#222;
+      min-height:100vh;
+      display:flex;
+    }
 
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 30px;
-        }
-        
-        .sidebar ul a {
-            text-decoration: none;
-            color: inherit;
-        }
+    /* === SIDEBAR === */
+    .sidebar {
+      position:fixed;
+      left:0;
+      top:0;
+      height:100vh;
+      display:flex;
+      width:220px;
+      border-radius:0 18px 18px 0;
+      overflow:hidden;
+      box-shadow: 3px 0 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .sidebar ul li {
-            padding: 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
+    /* ✨ Efek ketika kursor ke area sidebar (termasuk border-nya) */
+    .sidebar:hover {
+      transform: translateX(4px);
+      box-shadow: 6px 0 20px rgba(200,16,46,0.3);
+    }
 
-        .sidebar ul li:hover {
-            background: #a30d25;
-            border-radius: 10px;
-        }
+    .sidebar .rail {
+      width:64px;
+      background: var(--red-1);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding-top:18px;
+      gap:18px;
+      border-right:1px solid rgba(255,255,255,0.06);
+      transition: background 0.3s ease;
+    }
 
-        .sidebar ul li i {
-            margin-right: 10px;
-            font-size: 18px;
-        }
-        
-        .content {
-            margin-left: 240px;
-            padding: 20px;
-            background: #fff;
-            min-height: 100vh;
-            border-radius: 20px 0 0 20px;
-        }
+    /* ✨ Warna sedikit berubah saat sidebar di-hover */
+    .sidebar:hover .rail {
+      background: #b00e29;
+    }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .hamburger {
+      font-size:22px;
+      color:#fff;
+      cursor:pointer;
+      transform:translateY(2px);
+    }
 
-        .header h1 {
-            margin: 0;
-        }
+    .rail .icon {
+      width:44px;
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      border-radius:8px;
+      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
 
-        .profile-container {
-            position: relative;
-        }
+    .rail .icon:hover{
+      background: rgba(255,255,255,0.1);
+      transform: translateX(6px);
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.25);
+    }
 
-        .profile img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            cursor: pointer;
-        }
+    .sidebar .panel {
+      flex:1;
+      background: linear-gradient(180deg,var(--red-1),var(--red-2));
+      padding:16px 12px;
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      gap:18px;
+    }
 
-        .profile-dropdown {
-            display: none;
-            position: absolute;
-            top: 60px;
-            right: 0;
-            background-color: white;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 8px;
-            overflow: hidden;
-            width: 150px;
-        }
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding-left:6px;
+    }
+    .brand .title{
+      font-weight:700;
+      letter-spacing:.6px;
+      font-size:16px;
+    }
 
-        .profile-dropdown a {
-            display: block;
-            padding: 12px 16px;
-            text-decoration: none;
-            color: #333;
-            display: flex;
-            align-items: center;
-        }
+    .menu-lines {
+      margin-top: 8px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding-right:6px;
+    }
 
-        .profile-dropdown a:hover {
-            background-color: #f1f1f1;
-        }
+    .menu-line {
+      height:16px;
+      border-radius:8px;
+      background: rgba(255,255,255,0.12);
+      position:relative;
+      overflow:hidden;
+      transition: transform 0.3s ease;
+    }
 
-        .profile-dropdown a i {
-            margin-right: 10px;
-        }
+    /* ✨ Efek garis ikut bergerak kalau sidebar di-hover */
+    .sidebar:hover .menu-line {
+      transform: translateX(4px);
+    }
 
-        h2 {
-            margin-top: 30px;
-            border-bottom: 2px solid #000;
-            padding-bottom: 5px;
-        }
-        
-        .card-list {
-            margin-top: 15px;
-        }
+    .menu-line.active {
+      height:36px;
+      background: rgba(255,255,255,0.95);
+      color: var(--red-1);
+      display:flex;
+      align-items:center;
+      padding-left:12px;
+      font-weight:700;
+      border-radius:8px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    }
 
-        .card {
-            background: #c8102e;
-            color: #fff;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .content {
+      margin-left: 240px;
+      padding:28px;
+      flex:1;
+      background:#fff;
+      min-height:100vh;
+    }
 
-        .card.light {
-            background: #f28a8a;
-            color: #000;
-        }
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+    }
+    .header .greeting h1 { font-size:20px; margin-bottom:4px;}
+    .header .greeting p { color:#666; font-size:13px; margin:0; }
 
-        .card span {
-            font-size: 12px;
-            font-weight: bold;
-        }
-    </style>
-    
-    <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
+    .profile img {
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      object-fit:cover;
+      border:2px solid #eee;
+      cursor:pointer;
+      transition: transform 0.2s;
+    }
+    .profile img:hover {
+      transform: scale(1.05);
+    }
+
+    h2{ margin-top:26px; margin-bottom:8px; font-size:18px;}
+    .card { background:var(--red-1); color:#fff; padding:10px 12px; border-radius:8px; margin-bottom:10px; display:flex;justify-content:space-between; align-items:center; transition: transform 0.25s ease, box-shadow 0.25s ease;}
+    .card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.2);}
+    .card.light { background:#f28a8a; color:#000;}
+  </style>
 </head>
 <body>
-    
-    <div class="sidebar">
-        <span class="menu-icon">&#9776;</span>
-        <h2>Nama Web</h2>
-        <ul>
-            <a href="homesaya.html"><li><i class="fas fa-home"></i> Home</li></a>
-            <a href="kelas.html"><li><i class="fas fa-book"></i> Kelas</li></a>
-        </ul>
+
+  <aside class="sidebar">
+    <!-- rail kiri -->
+    <div class="rail">
+      <div class="hamburger"><i class="fa fa-bars"></i></div>
+      <div class="icon" title="Home"><i class="fa fa-home"></i></div>
+      <div class="icon" title="Profile" id="profileIcon"><i class="fa fa-user"></i></div>
+      <div class="icon" title="Kelas" id="kelasIcon"><i class="fa fa-book"></i></div>
     </div>
 
-    <div class="content">
-        <div class="header">
-            <div>
-                <h1>Hai, lia!</h1>
-                <p>Kamis, 18 september 2025</p>
-            </div>
-            <div class="profile-container">
-                <div class="profile">
-                    <img src="https://i.pravatar.cc/100" alt="profile" onclick="toggleDropdown()">
-                </div>
-                <div class="profile-dropdown" id="profileDropdown">
-                    <a href="#"><i class="fas fa-user"></i> Profil</a>
-                    <a href="#"><i class="fas fa-bell"></i> Notifikasi</a>
-                    <a href="#"><i class="fas fa-sign-out-alt"></i> Keluar</a>
-                </div>
-            </div>
-        </div>
-
-        <h2>Mata Kuliah</h2>
-        <div class="card-list">
-            <div class="card">
-                <div>
-                    <strong>Jaringan Komputer</strong><br>
-                    <small>Yasir Arofat</small>
-                </div>
-                <span>TI-11</span>
-            </div>
-
-            <div class="card">
-                <div>
-                    <strong>Rekayasa Perangkat Lunak</strong><br>
-                    <small>Yusril Eka Mahandra</small>
-                </div>
-                <span>TI-4</span>
-            </div>
-
-            <div class="card">
-                <div>
-                    <strong>Pemrograman Web</strong><br>
-                    <small>Ferry Faisal</small>
-                </div>
-                <span>TI-12</span>
-            </div>
-        </div>
-
-        <h2>Tugas</h2>
-        <div class="card-list">
-            <div class="card">
-                <div><strong>PBL Kelompok</strong></div>
-                <span>Sept 25</span>
-            </div>
-
-            <div class="card light">
-                <div><strong>Project RPL</strong></div>
-                <span>Sept 30</span>
-            </div>
-
-            <div class="card">
-                <div><strong>Project Pemrograman</strong></div>
-                <span>Okt 9</span>
-            </div>
-        </div>
+    <!-- panel kanan -->
+    <div class="panel">
+      <div class="brand">
+        <div class="title">Nama Web</div>
+      </div>
+      <div class="menu-lines">
+        <div class="menu-line active">Jaringan Komputer</div>
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
+      </div>
     </div>
-    <script>
-        function toggleDropdown() {
-            document.getElementById("profileDropdown").style.display = (document.getElementById("profileDropdown").style.display === 'block') ? 'none' : 'block';
-        }
-        window.onclick = function(event) {
-            if (!event.target.matches('.profile img')) {
-                var dropdowns = document.getElementsByClassName("profile-dropdown");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.style.display === 'block') {
-                        openDropdown.style.display = 'none';
-                    }
-                }
-            }
-        }
-    </script>
+  </aside>
+
+  <main class="content">
+    <div class="header">
+      <div class="greeting">
+        <h1>Hai, lia!</h1>
+        <p>Kamis, 18 September 2025</p>
+      </div>
+      <div class="profile">
+        <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
+      </div>
+    </div>
+
+    <h2>Mata Kuliah</h2>
+    <div class="card"> <div><strong>Jaringan Komputer</strong><br><small>Yasir Arofat</small></div> <span>TI-11</span></div>
+    <div class="card"> <div><strong>Rekayasa Perangkat Lunak</strong><br><small>Yusril Eka Mahandra</small></div> <span>TI-4</span></div>
+    <div class="card"> <div><strong>Pemrograman Web</strong><br><small>Ferry Faisal</small></div> <span>TI-12</span></div>
+
+    <h2>Tugas</h2>
+    <div class="card"><div><strong>PBL Kelompok</strong></div><span>Sept 25</span></div>
+    <div class="card light"><div><strong>Project RPL</strong></div><span>Sept 30</span></div>
+    <div class="card"><div><strong>Project Pemrograman</strong></div><span>Okt 9</span></div>
+  </main>
+
+  <script>
+    // Klik ikon profil → ke profil.html
+    document.getElementById('profileIcon').addEventListener('click', function() {
+      window.location.href = 'Profile.html';
+    });
+
+    // Klik foto profil → ke profil.html
+    document.getElementById('profilePhoto').addEventListener('click', function() {
+      window.location.href = 'Profile.html';
+    });
+
+    // Klik ikon kelas → ke kelas.html
+    document.getElementById('kelasIcon').addEventListener('click', function() {
+      window.location.href = 'kelas.html';
+    });
+  </script>
+
 </body>
 </html>

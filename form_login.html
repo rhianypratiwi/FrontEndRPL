@@ -3,134 +3,122 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
+  <title>Form Login</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      background: #d9d9d9;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
     }
-    .login-card {
+
+    .login-container {
       background: #fff;
       padding: 30px 25px;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-      width: 350px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      width: 320px;
       text-align: center;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
     }
-    .login-card h1 {
+
+    h1 {
+      font-size: 26px;
+      font-weight: bold;
+      color: #000;
       margin-bottom: 5px;
-      font-size: 24px;
-      color: #b71c1c;
     }
-    .login-card p {
-      margin: 0 0 20px;
-      color: #666;
+
+    p {
+      color: #333;
       font-size: 14px;
+      margin-bottom: 25px;
     }
-    .login-card input {
+
+    label {
+      display: block;
+      text-align: left;
+      font-size: 14px;
+      color: #000;
+      margin-bottom: 5px;
+    }
+
+    input {
       width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
+      padding: 10px;
       border: 1px solid #ccc;
+      border-radius: 6px;
       font-size: 14px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
     }
-    .login-card button {
+
+    input:focus {
+      outline: none;
+      border-color: #e63946;
+      box-shadow: 0 0 3px rgba(230, 57, 70, 0.4);
+    }
+
+    button {
       width: 100%;
-      padding: 12px;
-      margin-top: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #e63946;
+      padding: 10px;
+      background: red;
       color: white;
+      border: none;
+      border-radius: 20px;
       font-size: 15px;
       cursor: pointer;
     }
-    .login-card button:hover {
-      background: #c62828;
+
+    button:hover {
+      background: darkred;
     }
-    .login-card .link {
+
+    .link {
       display: block;
-      margin-top: 10px;
-      font-size: 13px;
-      color: #e63946;
-      text-decoration: none;
-    }
-    .register {
-      margin-top: 20px;
+      margin-top: 15px;
       font-size: 14px;
-    }
-    .register a {
-      color: #e63946;
+      color: red;
       text-decoration: none;
       font-weight: bold;
     }
-    .error {
-      color: red;
-      font-size: 12px;
-      text-align: left;
-      margin-top: -5px;
-      margin-bottom: 5px;
-      display: none;
+
+    .link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <div class="login-card">
-    <h1>Selamat Datang!</h1>
+  <div class="login-container">
+    <h1>LOGIN</h1>
     <p>Masukkan email dan password Anda</p>
-    
+
     <form id="loginForm" novalidate>
+      <label for="email">Email</label>
       <input type="email" id="email" placeholder="Email" required>
-      <div class="error" id="emailError">Masukkan email yang valid</div>
-      <input type="password" id="password" placeholder="Password" required minlength="6">
-      <div class="error" id="passwordError">Password minimal 6 karakter</div>
-      <button type="submit">Masuk</button>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Password" required>
+
+      <button type="submit">Login</button>
     </form>
 
-    <a href="lupa_pass.html" class="link">Lupa Password?</a>
-
-    <div class="register">
-      Tidak punya akun? <a href="register.html">Daftar Sekarang</a>
-    </div>
+    <a href="forgot_password.html" class="link">Lupa Password?</a>
+    <a href="register.html" class="link">Belum punya akun? Daftar</a>
   </div>
 
   <script>
     const form = document.getElementById('loginForm');
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
 
     form.addEventListener('submit', function(e) {
-      e.preventDefault();
+      e.preventDefault(); // cegah reload
 
-      let valid = true;
-
-      if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-        emailError.style.display = 'block';
-        valid = false;
-      } else {
-        emailError.style.display = 'none';
-      }
-
-      if (password.value.length < 6) {
-        passwordError.style.display = 'block';
-        valid = false;
-      } else {
-        passwordError.style.display = 'none';
-      }
-
-      if (valid) {
-        alert('Login berhasil! (Simulasi Front-End)');
-        form.reset();
-      }
+      // Simulasi login berhasil
+      window.location.href = "home.html"; // pindah ke halaman utama
     });
   </script>
 

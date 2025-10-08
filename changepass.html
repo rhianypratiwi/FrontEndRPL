@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change Password</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #d9d9d9; /* latar abu-abu */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .change-container {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      width: 340px;
+      text-align: center;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-size: 14px;
+      color: #000;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #e63946;
+      box-shadow: 0 0 3px rgba(230, 57, 70, 0.4);
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: darkred;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+      text-align: left;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="change-container">
+    <h1>CHANGE PASSWORD</h1>
+    <form id="changeForm" novalidate>
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Masukkan nama" required>
+      <div class="error" id="nameError">Nama tidak boleh kosong</div>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Masukkan email" required>
+      <div class="error" id="emailError">Masukkan email yang valid</div>
+
+      <label for="password">Change password</label>
+      <input type="password" id="password" placeholder="Password baru" required minlength="6">
+      <div class="error" id="passwordError">Password minimal 6 karakter</div>
+
+      <label for="confirmPassword">Confirm password</label>
+      <input type="password" id="confirmPassword" placeholder="Konfirmasi password" required>
+      <div class="error" id="confirmError">Password tidak cocok</div>
+
+      <button type="submit">Change</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('changeForm');
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const confirmError = document.getElementById('confirmError');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+
+      // Validasi nama
+      if (name.value.trim() === "") {
+        nameError.style.display = 'block';
+        valid = false;
+      } else {
+        nameError.style.display = 'none';
+      }
+
+      // Validasi email
+      if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        emailError.style.display = 'block';
+        valid = false;
+      } else {
+        emailError.style.display = 'none';
+      }
+
+      // Validasi password
+      if (password.value.length < 6) {
+        passwordError.style.display = 'block';
+        valid = false;
+      } else {
+        passwordError.style.display = 'none';
+      }
+
+      // Validasi konfirmasi password
+      if (confirmPassword.value !== password.value || confirmPassword.value === "") {
+        confirmError.style.display = 'block';
+        valid = false;
+      } else {
+        confirmError.style.display = 'none';
+      }
+
+      // Jika semua valid → kembali ke halaman login
+      if (valid) {
+        alert('Password berhasil diubah! (Simulasi Front-End)');
+        window.location.href = "form_login.html";
+      }
+    });
+  </script>
+
+</body>
+</html>
