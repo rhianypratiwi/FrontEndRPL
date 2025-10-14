@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #d9d9d9; /* latar abu-abu */
+      background: #d9d9d9;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -48,6 +48,7 @@
       font-size: 14px;
       margin-bottom: 15px;
       box-sizing: border-box;
+      background-color: #f5f5f5;
     }
 
     input:focus {
@@ -85,83 +86,68 @@
 <body>
 
   <div class="change-container">
-    <h1>CHANGE PASSWORD</h1>
+    <h1>UBAH PASSWORD</h1>
     <form id="changeForm" novalidate>
-      <label for="name">Name</label>
-      <input type="text" id="name" placeholder="Masukkan nama" required>
-      <div class="error" id="nameError">Nama tidak boleh kosong</div>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Masukkan email" required>
-      <div class="error" id="emailError">Masukkan email yang valid</div>
-
-      <label for="password">Change password</label>
+      <label for="password">Password Baru</label>
       <input type="password" id="password" placeholder="Password baru" required minlength="6">
       <div class="error" id="passwordError">Password minimal 6 karakter</div>
 
-      <label for="confirmPassword">Confirm password</label>
+      <label for="confirmPassword">Konfirmasi Password</label>
       <input type="password" id="confirmPassword" placeholder="Konfirmasi password" required>
       <div class="error" id="confirmError">Password tidak cocok</div>
 
-      <button type="submit">Change</button>
+      <button type="submit">Simpan Perubahan</button>
     </form>
   </div>
 
   <script>
-    const form = document.getElementById('changeForm');
-    const name = document.getElementById('name');
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
-
-    const nameError = document.getElementById('nameError');
-    const emailError = document.getElementById('emailError');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
     const passwordError = document.getElementById('passwordError');
     const confirmError = document.getElementById('confirmError');
+    const form = document.getElementById('changeForm');
+
+    const currentEmail = localStorage.getItem('currentEmail');
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+
+    const foundUser = users.find(u => u.email === currentEmail);
+
+    if (!foundUser) {
+      alert("Akun tidak ditemukan, silakan login ulang.");
+      window.location.href = "form_login.html";
+    }
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       let valid = true;
+      passwordError.style.display = 'none';
+      confirmError.style.display = 'none';
 
-      // Validasi nama
-      if (name.value.trim() === "") {
-        nameError.style.display = 'block';
-        valid = false;
-      } else {
-        nameError.style.display = 'none';
-      }
-
-      // Validasi email
-      if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-        emailError.style.display = 'block';
-        valid = false;
-      } else {
-        emailError.style.display = 'none';
-      }
-
-      // Validasi password
-      if (password.value.length < 6) {
+      if (passwordInput.value.length < 6) {
         passwordError.style.display = 'block';
         valid = false;
-      } else {
-        passwordError.style.display = 'none';
       }
 
-      // Validasi konfirmasi password
-      if (confirmPassword.value !== password.value || confirmPassword.value === "") {
+      if (confirmPasswordInput.value !== passwordInput.value || confirmPasswordInput.value === "") {
         confirmError.style.display = 'block';
         valid = false;
-      } else {
-        confirmError.style.display = 'none';
       }
 
-      // Jika semua valid → kembali ke halaman login
-      if (valid) {
-        alert('Password berhasil diubah! (Simulasi Front-End)');
-        window.location.href = "form_login.html";
-      }
+      if (!valid) return;
+
+      const updatedUsers = users.map(user => {
+        if (user.email === currentEmail) {
+          return { ...user, password: passwordInput.value };
+        }
+        return user;
+      });
+
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      alert("Password berhasil diubah!");
+      localStorage.removeItem('currentEmail');
+      window.location.href = "form_login.html";
     });
   </script>
-
 </body>
 </html>

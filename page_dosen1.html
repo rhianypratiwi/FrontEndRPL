@@ -2,131 +2,357 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kelas Jaringan Komputer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Dosen</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff5f5;
       margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1e1e1e;
     }
 
-    header {
-      background-color: #c0392b;
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      background: #c8102e;
+      position: fixed;
+      top: 0;
+      left: 0;
       color: white;
+      padding-top: 20px;
+      border-radius: 0 20px 20px 0;
+      box-shadow: 3px 0 8px rgba(0,0,0,0.2);
+    }
+
+    .menu-icon {
+      font-size: 25px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+    }
+
+    .sidebar ul li {
+      padding: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s;
+    }
+
+    .sidebar ul li:hover, .active {
+      background: #a30d25;
+      border-radius: 10px;
+    }
+
+    .sidebar ul li i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .content {
+      margin-left: 240px;
       padding: 20px;
+      background: #fff;
+      min-height: 100vh;
+      border-radius: 20px 0 0 20px;
+      transition: 0.3s;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .header p {
+      margin: 2px 0;
+      font-size: 14px;
+      color: gray;
+    }
+
+    .right-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
       position: relative;
     }
 
-    header h1 {
-      margin: 0;
+    .notification {
+      position: relative;
+      font-size: 22px;
+      color: gray;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    header p {
-      margin: 5px 0 0;
+    .notification:hover {
+      color: #c8102e;
     }
 
-    .profile-top {
+    /* 🔔 Dropdown notifikasi */
+    .notif-dropdown {
+      display: none;
       position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background-color: #e74c3c;
+      right: 70px;
+      top: 40px;
+      background: #fff;
+      color: #333;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 250px;
+      padding: 10px;
+      z-index: 20;
+    }
+
+    .notif-dropdown p {
+      margin: 0;
+      padding: 8px 10px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+
+    .notif-dropdown p:last-child {
+      border-bottom: none;
+    }
+
+    .notif-dropdown p:hover {
+      background: #f5f5f5;
+    }
+
+    .profile img {
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      border: 2px solid white;
+      border: 2px solid #ddd;
+      object-fit: cover;
+      cursor: pointer;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 30px auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(192, 57, 43, 0.2);
+    /* Dropdown profil */
+    .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 60px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      width: 150px;
+      z-index: 10;
     }
 
-    .announcement {
-      margin-bottom: 20px;
+    .dropdown a {
+      display: block;
+      padding: 10px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .dropdown a:hover {
+      background: #f5f5f5;
     }
 
     .announcement input {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #e74c3c;
-      border-radius: 6px;
-      background-color: #fff8f8;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: 0.3s;
+      margin-top: 15px;
+    }
+
+    .announcement input:focus {
+      border-color: #c8102e;
+      box-shadow: 0 0 6px rgba(200,16,46,0.4);
     }
 
     .post {
+      background: #fff;
+      border: 1px solid #f0a3a3;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 15px;
       display: flex;
       align-items: flex-start;
-      border-top: 1px solid #f2dede;
-      padding: 15px 0;
+      justify-content: space-between;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
     }
 
-    .profile-circle {
-      width: 50px;
-      height: 50px;
-      background-color: #e74c3c;
+    .avatar {
+      width: 40px;
+      height: 40px;
+      background: #e57373;
       border-radius: 50%;
-      margin-right: 15px;
-      flex-shrink: 0;
+      margin-right: 10px;
     }
 
-    .post-content {
-      flex-grow: 1;
+    .post-info strong {
+      font-size: 15px;
     }
 
-    .post-content h4 {
-      margin: 0;
-      color: #b03a2e;
+    .post-info small {
+      color: gray;
+      font-size: 12px;
     }
 
-    .post-content p {
-      margin: 5px 0 0;
-      color: #7f1d1d;
+    .kelas-list {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
     }
 
-    .timestamp {
-      font-size: 0.85em;
-      color: #a94442;
+    .kelas-item {
+      background: #c8102e;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      flex: 1 1 150px;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .kelas-item:hover {
+      background: #a30d25;
+      transform: scale(1.05);
     }
   </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-  <header>
-    <div class="profile-top"></div>
-    <h1>Kelas: Jaringan Komputer</h1>
-    <p>Jam: 07.00 - 18.00 WIB</p>
-  </header>
+  <div class="sidebar">
+    <span class="menu-icon">&#9776;</span>
+    <ul>
+      <li onclick="showPage('home')" class="active"><i class="fas fa-home"></i> Home</li>
+      <li onclick="showPage('kelas')"><i class="fas fa-chalkboard"></i> Kelas</li>
+      <li onclick="showPage('profile')"><i class="fas fa-user"></i> Profile</li>
+    </ul>
+  </div>
 
-  <div class="container">
-    <div class="announcement">
-      <label for="announcement"><strong>Umumkan Sesuatu:</strong></label>
-      <input type="text" id="announcement" placeholder="Tulis pengumuman di sini...">
-    </div>
+  <div class="content">
+    <div class="header">
+      <div>
+        <h1>Jaringan Komputer</h1>
+        <p>07.00 - 18.00</p>
+      </div>
 
-    <div class="post">
-      <div class="profile-circle"></div>
-      <div class="post-content">
-        <h4>Yasir Arafat</h4>
-        <span class="timestamp">13 September</span>
-        <p>Selamat datang di kelas Jaringan Komputer! Silakan cek materi di modul pertama.</p>
+      <div class="right-header">
+        <div class="notification" id="notifBtn">
+          <i class="fas fa-bell"></i>
+          <div class="notif-dropdown" id="notifDropdown">
+            <p>📢 Dosen menambahkan tugas baru</p>
+            <p>📅 Jadwal kuliah berubah hari ini</p>
+            <p>✅ Nilai Pemrograman Web sudah keluar</p>
+          </div>
+        </div>
+
+        <div class="profile" onclick="toggleDropdown()">
+          <img src="https://i.pravatar.cc/100" alt="profile">
+          <div class="dropdown" id="profileDropdown">
+            <a href="#">Profil</a>
+            <a href="#">Logout</a>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="post">
-      <div class="profile-circle"></div>
-      <div class="post-content">
-        <h4>Yasir Arafat</h4>
-        <span class="timestamp">13 September</span>
-        <p>Jangan lupa tugas minggu ini dikumpulkan sebelum hari Jumat.</p>
+    <!-- 🏠 HOME -->
+    <div id="home" class="page">
+      <div class="announcement">
+        <input type="text" placeholder="Umumkan sesuatu...">
       </div>
+
+      <div class="post">
+        <div class="post-left">
+          <div class="avatar"></div>
+          <div class="post-info">
+            <strong>Yasir Arafat</strong>
+            <small>Sep 13</small>
+          </div>
+        </div>
+        <div class="post-right">⋮</div>
+      </div>
+
+      <div class="post">
+        <div class="post-left">
+          <div class="avatar"></div>
+          <div class="post-info">
+            <strong>Yasir Arafat</strong>
+            <small>Sep 13</small>
+          </div>
+        </div>
+        <div class="post-right">⋮</div>
+      </div>
+    </div>
+
+    <!-- 🏫 KELAS -->
+    <div id="kelas" class="page" style="display:none;">
+      <h2>Daftar Kelas</h2>
+      <div class="kelas-list">
+        <div class="kelas-item">Kelas A</div>
+        <div class="kelas-item">Kelas B</div>
+        <div class="kelas-item">Kelas C</div>
+        <div class="kelas-item">Kelas D</div>
+        <div class="kelas-item">Kelas E</div>
+      </div>
+    </div>
+
+    <!-- 👤 PROFILE -->
+    <div id="profile" class="page" style="display:none;">
+      <h2>Profil Dosen</h2>
+      <p>Nama: Yasir Arafat</p>
+      <p>Mata Kuliah: Jaringan Komputer</p>
+      <p>Email: yasir@example.com</p>
     </div>
   </div>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll(".page").forEach(page => page.style.display = "none");
+      document.getElementById(pageId).style.display = "block";
+      document.querySelectorAll(".sidebar ul li").forEach(li => li.classList.remove("active"));
+      event.target.closest("li").classList.add("active");
+    }
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById("profileDropdown");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    // 🔔 Toggle notifikasi
+    document.getElementById("notifBtn").addEventListener("click", function() {
+      const notif = document.getElementById("notifDropdown");
+      notif.style.display = notif.style.display === "block" ? "none" : "block";
+    });
+
+    // Tutup dropdown saat klik di luar
+    window.onclick = function(event) {
+      if (!event.target.closest('.profile') && !event.target.closest('#notifBtn')) {
+        document.getElementById("profileDropdown").style.display = "none";
+        document.getElementById("notifDropdown").style.display = "none";
+      }
+    }
+  </script>
 
 </body>
 </html>

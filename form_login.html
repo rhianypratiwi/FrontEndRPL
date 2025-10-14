@@ -56,12 +56,6 @@
       box-sizing: border-box;
     }
 
-    input:focus {
-      outline: none;
-      border-color: #e63946;
-      box-shadow: 0 0 3px rgba(230, 57, 70, 0.4);
-    }
-
     .error {
       color: red;
       font-size: 12px;
@@ -105,7 +99,7 @@
     <h1>LOGIN</h1>
     <p>Masukkan email dan password Anda</p>
 
-    <form id="loginForm" novalidate>
+    <form id="loginForm" method="post" novalidate>
       <label for="email">Email</label>
       <input type="email" id="email" placeholder="Email" required>
       <div id="emailError" class="error">Email harus diisi!</div>
@@ -113,6 +107,8 @@
       <label for="password">Password</label>
       <input type="password" id="password" placeholder="Password" required>
       <div id="passwordError" class="error">Password harus diisi!</div>
+
+      <div id="loginError" class="error">Email atau password salah!</div>
 
       <button type="submit">Login</button>
     </form>
@@ -127,31 +123,46 @@
     const passwordInput = document.getElementById('password');
     const emailError = document.getElementById('emailError');
     const passwordError = document.getElementById('passwordError');
+    const loginError = document.getElementById('loginError');
 
     form.addEventListener('submit', function(e) {
-      e.preventDefault(); // cegah reload
+      e.preventDefault();
 
       let valid = true;
 
-      // Reset error messages
+      // Reset pesan error
       emailError.style.display = 'none';
       passwordError.style.display = 'none';
+      loginError.style.display = 'none';
 
-      // Validasi email
+      // Validasi input kosong
       if (emailInput.value.trim() === '') {
         emailError.style.display = 'block';
         valid = false;
       }
 
-      // Validasi password
       if (passwordInput.value.trim() === '') {
         passwordError.style.display = 'block';
         valid = false;
       }
 
-      // Jika semua valid, redirect ke home.html
-      if (valid) {
-        window.location.href = "home.html";
+      if (!valid) return;
+
+      // Ambil semua user dari localStorage
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+
+      // Cari user yang cocok
+      const foundUser = users.find(u => u.email === emailInput.value && u.password === passwordInput.value);
+
+      if (foundUser) {
+        // Simpan user yang sedang login
+        localStorage.setItem('loggedInUser', JSON.stringify(foundUser));
+        localStorage.setItem('isLoggedIn', 'true');
+
+        // Arahkan ke home.html
+        window.location.href = 'home.html';
+      } else {
+        loginError.style.display = 'block';
       }
     });
   </script>

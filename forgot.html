@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lupa Password</title>
   <style>
     body {
@@ -22,7 +22,7 @@
       border: 2px solid #ccc;
       width: 320px;
       text-align: center;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
@@ -71,6 +71,14 @@
       display: none;
     }
 
+    .success {
+      color: green;
+      font-size: 13px;
+      margin-top: 10px;
+      font-weight: bold;
+      display: none;
+    }
+
     button {
       width: 100%;
       padding: 10px;
@@ -102,41 +110,68 @@
   </style>
 </head>
 <body>
-
   <div class="forgot-container">
     <h1>LUPA PASSWORD</h1>
-    <p>Masukkan email Anda untuk menerima OTP reset password</p>
+    <p>Masukkan email Anda untuk reset password</p>
 
     <form id="forgotForm" novalidate>
       <label for="resetEmail">Email</label>
-      <input type="email" id="resetEmail" placeholder="contoh@email.com" required>
-      <div class="error" id="resetError">Masukkan email yang valid</div>
+      <input type="email" id="resetEmail" placeholder="contoh@email.com" required />
+      <div class="error" id="resetError">Masukkan email yang valid!</div>
+      <div class="error" id="notFoundError">Email tidak ditemukan!</div>
 
       <button type="submit">Kirim Link Reset</button>
+      <div class="success" id="successMessage">Email ditemukan! Mengarahkan ke halaman OTP...</div>
     </form>
 
     <a href="form_login.html" class="back-link">Kembali ke Login</a>
   </div>
 
   <script>
-    const form = document.getElementById('forgotForm');
-    const resetEmail = document.getElementById('resetEmail');
-    const resetError = document.getElementById('resetError');
+    const form = document.getElementById("forgotForm");
+    const resetEmail = document.getElementById("resetEmail");
+    const resetError = document.getElementById("resetError");
+    const notFoundError = document.getElementById("notFoundError");
+    const successMessage = document.getElementById("successMessage");
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      // cek format email
+      resetError.style.display = "none";
+      notFoundError.style.display = "none";
+      successMessage.style.display = "none";
+
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!resetEmail.value.trim() || !resetEmail.value.match(emailPattern)) {
-        resetError.style.display = 'block';
-      } else {
-        resetError.style.display = 'none';
-        // Simulasi pengiriman email sukses, langsung ke halaman OTP
-        window.location.href = "otp.html";
+      const emailValue = resetEmail.value.trim();
+
+      if (!emailValue) {
+        resetError.textContent = "Email harus diisi!";
+        resetError.style.display = "block";
+        return;
       }
+
+      if (!emailValue.match(emailPattern)) {
+        resetError.textContent = "Masukkan email yang valid!";
+        resetError.style.display = "block";
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const foundUser = users.find(u => u.email === emailValue);
+
+      if (!foundUser) {
+        notFoundError.style.display = "block";
+        return;
+      }
+
+      // Simpan email sementara untuk proses ubah password
+      localStorage.setItem("currentEmail", emailValue);
+
+      successMessage.style.display = "block";
+      setTimeout(() => {
+        window.location.href = "otp.html";
+      }, 1500);
     });
   </script>
-
 </body>
 </html>

@@ -3,221 +3,240 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dashboard — Sidebar Animasi</title>
-
+  <title>Dashboard — SETRUM</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
-    :root{
-      --red-1: #c8102e;
-      --red-2: #a10d25;
-      --light-red: #f6b2b6;
+    :root {
+      --red: #c8102e;
+      --hover-red: #a10d25;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family: Inter, Arial, sans-serif;
-      background: #ffffff;
-      color:#222;
-      min-height:100vh;
-      display:flex;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      background: #fff;
+      display: flex;
+      min-height: 100vh;
     }
 
     /* === SIDEBAR === */
     .sidebar {
-      position:fixed;
-      left:0;
-      top:0;
-      height:100vh;
-      display:flex;
-      width:220px;
-      border-radius:0 18px 18px 0;
-      overflow:hidden;
-      box-shadow: 3px 0 12px rgba(0,0,0,0.08);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    /* ✨ Efek ketika kursor ke area sidebar (termasuk border-nya) */
-    .sidebar:hover {
-      transform: translateX(4px);
-      box-shadow: 6px 0 20px rgba(200,16,46,0.3);
-    }
-
-    .sidebar .rail {
-      width:64px;
-      background: var(--red-1);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      padding-top:18px;
-      gap:18px;
-      border-right:1px solid rgba(255,255,255,0.06);
-      transition: background 0.3s ease;
-    }
-
-    /* ✨ Warna sedikit berubah saat sidebar di-hover */
-    .sidebar:hover .rail {
-      background: #b00e29;
-    }
-
-    .hamburger {
-      font-size:22px;
-      color:#fff;
-      cursor:pointer;
-      transform:translateY(2px);
-    }
-
-    .rail .icon {
-      width:44px;
-      height:44px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      border-radius:8px;
-      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
-      cursor: pointer;
-    }
-
-    .rail .icon:hover{
-      background: rgba(255,255,255,0.1);
-      transform: translateX(6px);
-      box-shadow: inset 0 0 8px rgba(255,255,255,0.25);
-    }
-
-    .sidebar .panel {
-      flex:1;
-      background: linear-gradient(180deg,var(--red-1),var(--red-2));
-      padding:16px 12px;
-      color:#fff;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start;
-      gap:18px;
+      width: 240px;
+      background: var(--red);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      border-radius: 0 10px 10px 0;
     }
 
     .brand {
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding-left:6px;
-    }
-    .brand .title{
-      font-weight:700;
-      letter-spacing:.6px;
-      font-size:16px;
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
     }
 
-    .menu-lines {
-      margin-top: 8px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      padding-right:6px;
+    .menu {
+      display: flex;
+      flex-direction: column;
     }
 
-    .menu-line {
-      height:16px;
-      border-radius:8px;
-      background: rgba(255,255,255,0.12);
-      position:relative;
-      overflow:hidden;
-      transition: transform 0.3s ease;
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: background 0.3s ease;
     }
 
-    /* ✨ Efek garis ikut bergerak kalau sidebar di-hover */
-    .sidebar:hover .menu-line {
-      transform: translateX(4px);
+    .menu a:hover,
+    .menu a.active {
+      background: var(--hover-red);
     }
 
-    .menu-line.active {
-      height:36px;
-      background: rgba(255,255,255,0.95);
-      color: var(--red-1);
-      display:flex;
-      align-items:center;
-      padding-left:12px;
-      font-weight:700;
-      border-radius:8px;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    .menu i {
+      width: 20px;
+      text-align: center;
+      font-size: 18px;
     }
 
+    /* === CONTENT === */
     .content {
-      margin-left: 240px;
-      padding:28px;
-      flex:1;
-      background:#fff;
-      min-height:100vh;
+      flex: 1;
+      padding: 30px;
     }
 
-    .header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:20px;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .header .greeting h1 { font-size:20px; margin-bottom:4px;}
-    .header .greeting p { color:#666; font-size:13px; margin:0; }
+
+    /* Bagian kanan header */
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-text {
+      text-align: right;
+    }
+
+    .profile-text h1 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .profile-text p {
+      color: #555;
+      font-size: 13px;
+    }
 
     .profile img {
-      width:46px;
-      height:46px;
-      border-radius:50%;
-      object-fit:cover;
-      border:2px solid #eee;
-      cursor:pointer;
-      transition: transform 0.2s;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #eee;
+      cursor: pointer;
+      transition: transform 0.2s ease;
     }
+
     .profile img:hover {
       transform: scale(1.05);
     }
 
-    h2{ margin-top:26px; margin-bottom:8px; font-size:18px;}
-    .card { background:var(--red-1); color:#fff; padding:10px 12px; border-radius:8px; margin-bottom:10px; display:flex;justify-content:space-between; align-items:center; transition: transform 0.25s ease, box-shadow 0.25s ease;}
-    .card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.2);}
-    .card.light { background:#f28a8a; color:#000;}
+    h2 {
+      margin-top: 26px;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .card {
+      background: var(--red);
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card.light {
+      background: #f28a8a;
+      color: #000;
+    }
+
+    /* === LOGOUT POPUP === */
+    .logout-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--red);
+      color: #fff;
+      padding: 25px 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      z-index: 1000;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -45%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+    .logout-popup h3 {
+      margin-bottom: 10px;
+    }
+
+    .logout-popup button {
+      background: #fff;
+      border: none;
+      padding: 8px 20px;
+      margin: 5px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .logout-popup button.yes {
+      color: var(--red);
+    }
+
+    .logout-popup button.cancel {
+      background: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+    }
+
+    .logout-popup button.cancel:hover {
+      background: #fff;
+      color: var(--red);
+    }
   </style>
 </head>
 <body>
 
   <aside class="sidebar">
-    <!-- rail kiri -->
-    <div class="rail">
-      <div class="hamburger"><i class="fa fa-bars"></i></div>
-      <div class="icon" title="Home"><i class="fa fa-home"></i></div>
-      <div class="icon" title="Profile" id="profileIcon"><i class="fa fa-user"></i></div>
-      <div class="icon" title="Kelas" id="kelasIcon"><i class="fa fa-book"></i></div>
-    </div>
-
-    <!-- panel kanan -->
-    <div class="panel">
-      <div class="brand">
-        <div class="title">Nama Web</div>
-      </div>
-      <div class="menu-lines">
-        <div class="menu-line active">Jaringan Komputer</div>
-        <div class="menu-line"></div>
-        <div class="menu-line"></div>
-        <div class="menu-line"></div>
-      </div>
-    </div>
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="#" class="active"><i class="fa fa-home"></i> Beranda</a>
+      <a href="Profile.html"><i class="fa fa-user"></i> Profil</a>
+      <a href="kelas.html"><i class="fa fa-book"></i> Kelas</a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+    </nav>
   </aside>
 
   <main class="content">
     <div class="header">
-      <div class="greeting">
-        <h1>Hai, lia!</h1>
-        <p>Kamis, 18 September 2025</p>
-      </div>
-      <div class="profile">
-        <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
+      <h2></h2>
+      <div class="profile-section">
+        <div class="profile-text">
+          <h1 id="greetName">Hai, pengguna!</h1>
+          <p id="todayDate"></p>
+        </div>
+        <div class="profile">
+          <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
+        </div>
       </div>
     </div>
 
     <h2>Mata Kuliah</h2>
-    <div class="card"> <div><strong>Jaringan Komputer</strong><br><small>Yasir Arofat</small></div> <span>TI-11</span></div>
-    <div class="card"> <div><strong>Rekayasa Perangkat Lunak</strong><br><small>Yusril Eka Mahandra</small></div> <span>TI-4</span></div>
-    <div class="card"> <div><strong>Pemrograman Web</strong><br><small>Ferry Faisal</small></div> <span>TI-12</span></div>
+    <div class="card">
+      <div><strong>Jaringan Komputer</strong><br><small>Yasir Arofat</small></div>
+      <span>TI-11</span>
+    </div>
+    <div class="card">
+      <div><strong>Rekayasa Perangkat Lunak</strong><br><small>Yusril Eka Mahandra</small></div>
+      <span>TI-4</span>
+    </div>
+    <div class="card">
+      <div><strong>Pemrograman Web</strong><br><small>Ferry Faisal</small></div>
+      <span>TI-12</span>
+    </div>
 
     <h2>Tugas</h2>
     <div class="card"><div><strong>PBL Kelompok</strong></div><span>Sept 25</span></div>
@@ -225,21 +244,82 @@
     <div class="card"><div><strong>Project Pemrograman</strong></div><span>Okt 9</span></div>
   </main>
 
+  <!-- === POPUP KONFIRMASI LOGOUT === -->
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Are you sure?</p>
+    <button class="yes" id="yesLogout">Yes</button>
+    <button class="cancel" id="cancelLogout">Cancel</button>
+  </div>
+
   <script>
-    // Klik ikon profil → ke profil.html
-    document.getElementById('profileIcon').addEventListener('click', function() {
-      window.location.href = 'Profile.html';
-    });
+  // === Ambil data login ===
+  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+  if (!loggedInUser || !loggedInUser.name) {
+    window.location.href = 'form_login.html';
+  }
 
-    // Klik foto profil → ke profil.html
-    document.getElementById('profilePhoto').addEventListener('click', function() {
-      window.location.href = 'Profile.html';
-    });
+  const username = loggedInUser.username || loggedInUser.name || "guest";
+  const profileKey = `profileData_${username}`;
+  const imageKey = `profileImage_${username}`;
 
-    // Klik ikon kelas → ke kelas.html
-    document.getElementById('kelasIcon').addEventListener('click', function() {
-      window.location.href = 'kelas.html';
-    });
+  const greetName = document.getElementById('greetName');
+  const profilePhoto = document.getElementById('profilePhoto');
+
+  // === Nama profil ===
+  const profileData = JSON.parse(localStorage.getItem(profileKey));
+  if (profileData && profileData.nama) {
+    greetName.textContent = `Hai, ${profileData.nama}!`;
+  } else {
+    greetName.textContent = `Hai, ${loggedInUser.name}!`;
+  }
+
+  // === Foto profil ===
+  const savedImage = localStorage.getItem(imageKey);
+  profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
+
+  // === Klik foto ke profil ===
+  profilePhoto.addEventListener('click', () => {
+    window.location.href = 'Profile.html';
+  });
+
+  // === Tanggal hari ini ===
+  const today = new Date();
+  const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+  document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
+
+  // === Update otomatis jika ada perubahan ===
+  window.addEventListener('storage', (event) => {
+    if (event.key === imageKey) {
+      profilePhoto.src = event.newValue || "https://i.pravatar.cc/100";
+    }
+    if (event.key === profileKey) {
+      const updatedData = JSON.parse(event.newValue);
+      greetName.textContent = updatedData?.nama
+        ? `Hai, ${updatedData.nama}!`
+        : `Hai, ${loggedInUser.name}!`;
+    }
+  });
+
+  // === LOGOUT POPUP ===
+  const logoutBtn = document.getElementById('logoutBtn');
+  const logoutPopup = document.getElementById('logoutPopup');
+  const yesLogout = document.getElementById('yesLogout');
+  const cancelLogout = document.getElementById('cancelLogout');
+
+  logoutBtn.addEventListener('click', () => {
+    logoutPopup.style.display = 'block';
+  });
+
+  cancelLogout.addEventListener('click', () => {
+    logoutPopup.style.display = 'none';
+  });
+
+  yesLogout.addEventListener('click', () => {
+    localStorage.removeItem('loggedInUser');
+    logoutPopup.style.display = 'none';
+    window.location.href = 'form_login.html';
+  });
   </script>
 
 </body>

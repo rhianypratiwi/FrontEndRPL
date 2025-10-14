@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #d9d9d9; /* latar abu-abu */
+      background: #d9d9d9;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -56,12 +56,6 @@
       box-sizing: border-box;
     }
 
-    input:focus {
-      outline: none;
-      border-color: #1565c0;
-      box-shadow: 0 0 3px rgba(21, 101, 192, 0.4);
-    }
-
     button {
       width: 100%;
       padding: 10px;
@@ -101,7 +95,7 @@
     <h1>WELCOME, BRO!</h1>
     <p class="subtext">Silakan Buat Akun Terlebih Dahulu</p>
 
-    <form onsubmit="return goToLogin(event)">
+    <form onsubmit="return registerUser(event)">
       <label for="name">Name</label>
       <input type="text" id="name" required>
 
@@ -123,10 +117,38 @@
   </div>
 
   <script>
-    function goToLogin(event) {
-      event.preventDefault(); // biar tidak reload halaman
-      // di sini kamu bisa tambahkan validasi jika mau
-      window.location.href = "form_login.html"; // pindah ke form login
+    function registerUser(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const confirm = document.getElementById("confirm").value.trim();
+
+      if (password !== confirm) {
+        alert("Password dan konfirmasi tidak cocok!");
+        return false;
+      }
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      // Cek apakah email sudah terdaftar
+      const existingUser = users.find(u => u.email === email);
+      if (existingUser) {
+        alert("Email sudah terdaftar! Silakan login.");
+        window.location.href = "form_login.html";
+        return false;
+      }
+
+      // Tambahkan user baru ke array
+      const newUser = { name, email, password };
+      users.push(newUser);
+
+      // Simpan kembali ke localStorage
+      localStorage.setItem("users", JSON.stringify(users));
+
+      alert("Registrasi berhasil! Silakan login.");
+      window.location.href = "form_login.html";
       return false;
     }
   </script>

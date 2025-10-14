@@ -1,125 +1,342 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Profil</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Profil — SETRUM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --red: #c8102e;
+      --hover-red: #a10d25;
+      --green: #00b33c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      background: #fff;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      width: 240px;
+      background: var(--red);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      border-radius: 0 10px 10px 0;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      background: var(--hover-red);
+    }
+
+    .menu i {
+      width: 20px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    /* === CONTENT === */
+    .content {
+      flex: 1;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .profile-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ddd;
+      cursor: pointer;
+    }
+
+    .menu-popup {
+      display: none;
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--red);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .menu-popup button {
+      display: block;
+      background: none;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .menu-popup button:hover {
+      background: var(--hover-red);
+    }
+
+    form {
+      max-width: 400px;
+      margin: 20px auto 0;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button.save {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 20px;
+      background: var(--green);
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    /* === LOGOUT POPUP === */
+    .logout-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--red);
+      color: #fff;
+      padding: 25px 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    .logout-popup h3 {
+      margin-bottom: 10px;
+    }
+
+    .logout-popup button {
+      background: #fff;
+      border: none;
+      padding: 8px 20px;
+      margin: 5px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .logout-popup button.yes {
+      color: var(--red);
+    }
+
+    .logout-popup button.cancel {
+      background: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+    }
+
+    .logout-popup button.cancel:hover {
+      background: #fff;
+      color: var(--red);
+    }
+  </style>
 </head>
 <body>
-  <div class="wrapper">
 
-    <!-- NAVBAR -->
-    <div class="navbar">
-      <i class="fas fa-home"></i>
-      <i class="fas fa-user"></i>
-      <i class="fas fa-bell"></i>
-    </div>
-  
-    <!-- CARD FORM -->
-    <div class="container">
-      <!-- FORM KIRI -->
-      <div class="form-section">
-        <div class="form-group">
-          <label for="nama">Nama</label>
-          <input type="text" id="nama">
-        </div>
-        <div class="form-group">
-          <label for="nim">NIM</label>
-          <input type="text" id="nim">
-        </div>
-        <div class="form-group">
-          <label for="jurusan">Jurusan</label>
-          <input type="text" id="jurusan">
-        </div>
-        <div class="form-group">
-          <label for="prodi">Prodi</label>
-          <input type="text" id="prodi">
-        </div>
-      </div>
-  
-      <!-- PROFIL KANAN -->
-      <div class="profile-section">
-        <div class="profile-wrapper">
-          <!-- Foto profil -->
-          <img src="img/default.png" alt="Profile" class="profile-img" id="profile-img">
-          
-          
+  <!-- === SIDEBAR === -->
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home.html"><i class="fa fa-home"></i> Beranda</a>
+      <a href="#" class="active"><i class="fa fa-user"></i> Profil</a>
+      <a href="kelas.html"><i class="fa fa-book"></i> Kelas</a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+    </nav>
+  </aside>
 
-          <!-- Ikon pensil -->
-          <div class="edit-icon" id="editBtn">
-            <i class="fas fa-pencil-alt"></i>
-          </div>
-
-          <!-- Dropdown menu -->
-          <div class="profile-menu" id="profileMenu">
-            <button onclick="triggerFileInput()">Change profile</button>
-            <button onclick="deleteProfile()">Delete</button>
-          </div>
-
-          <!-- Input file (hidden) -->
-          <input type="file" id="fileInput" accept="image/*" style="display: none;">
-
-          
-        </div>
-
-        <!-- Tombol Logout -->
-        <button class="logout-btn">Logout</button>
+  <!-- === CONTENT === -->
+  <main class="content">
+    <div class="profile-wrapper">
+      <img src="https://i.pravatar.cc/150" alt="Foto Profil" id="profileImage" class="profile-pic">
+      <div class="menu-popup" id="menuPopup">
+        <button id="changeBtn">Change profile</button>
+        <button id="deleteBtn">Delete</button>
       </div>
     </div>
+
+    <form id="profileForm">
+      <label>Nama</label>
+      <input type="text" id="nama">
+
+      <label>NIM</label>
+      <input type="text" id="nim">
+
+      <label>Kelas</label>
+      <input type="text" id="kelas">
+
+      <label>Prodi</label>
+      <input type="text" id="prodi">
+
+      <button class="save">Simpan</button>
+    </form>
+  </main>
+
+  <!-- === LOGOUT POPUP === -->
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Are you sure?</p>
+    <button class="yes" id="yesLogout">Yes</button>
+    <button class="cancel" id="cancelLogout">Cancel</button>
   </div>
 
   <script>
-    const editBtn = document.getElementById("editBtn");
-    const menu = document.getElementById("profileMenu");
-    const fileInput = document.getElementById("fileInput");
-    const profileImg = document.getElementById("profile-img");
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser')) || {};
+    const username = loggedInUser.username || loggedInUser.name || "guest";
 
-    // klik ikon pensil → toggle menu
-    editBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
+
+    const profileImage = document.getElementById('profileImage');
+    const menuPopup = document.getElementById('menuPopup');
+    const changeBtn = document.getElementById('changeBtn');
+    const deleteBtn = document.getElementById('deleteBtn');
+
+    // === Load profile data ===
+    const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+    document.getElementById('nama').value = profileData.nama || '';
+    document.getElementById('nim').value = profileData.nim || '';
+    document.getElementById('kelas').value = profileData.kelas || '';
+    document.getElementById('prodi').value = profileData.prodi || '';
+
+    const savedImage = localStorage.getItem(imageKey);
+    if (savedImage) profileImage.src = savedImage;
+
+    // === Profile image menu ===
+    profileImage.addEventListener('click', () => {
+      menuPopup.style.display = menuPopup.style.display === 'block' ? 'none' : 'block';
     });
 
-    // klik di luar → nutup menu
-    document.addEventListener("click", (e) => {
-      if (!menu.contains(e.target) && !editBtn.contains(e.target)) {
-        menu.style.display = "none";
-      }
-    });
-
-    // buka file picker
-    function triggerFileInput() {
-      fileInput.click();
-    }
-
-    // update foto setelah pilih file
-    fileInput.addEventListener("change", (event) => {
-      const file = event.target.files[0];
-      if (file) {
+    changeBtn.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = e => {
+        const file = e.target.files[0];
         const reader = new FileReader();
-        reader.onload = (e) => {
-          profileImg.src = e.target.result; // ganti foto profil
+        reader.onload = () => {
+          localStorage.setItem(imageKey, reader.result);
+          profileImage.src = reader.result;
         };
         reader.readAsDataURL(file);
+      };
+      input.click();
+      menuPopup.style.display = 'none';
+    });
+
+    deleteBtn.addEventListener('click', () => {
+      localStorage.removeItem(imageKey);
+      profileImage.src = "https://i.pravatar.cc/150";
+      menuPopup.style.display = 'none';
+    });
+
+    document.getElementById('profileForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = {
+        nama: document.getElementById('nama').value,
+        nim: document.getElementById('nim').value,
+        kelas: document.getElementById('kelas').value,
+        prodi: document.getElementById('prodi').value
+      };
+      localStorage.setItem(profileKey, JSON.stringify(data));
+      alert('Profil berhasil disimpan!');
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.profile-wrapper')) {
+        menuPopup.style.display = 'none';
       }
     });
 
-    // hapus foto → jadi default
-    function deleteProfile() {
-      if (confirm("Apakah yakin ingin menghapus foto profil?")) {
-        profileImg.src = "img/default.png";
+    // === Logout Function ===
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
 
-        profileImg.onerror = () => {
-      console.error("⚠️ Gambar default.png tidak ditemukan di folder /img/");
-      alert("File default.png tidak ada. Pastikan letaknya di folder /img/");
-    };
-      }
-    }
+    logoutBtn.addEventListener('click', () => {
+      logoutPopup.style.display = 'block';
+    });
+
+    cancelLogout.addEventListener('click', () => {
+      logoutPopup.style.display = 'none';
+    });
+
+    yesLogout.addEventListener('click', () => {
+      localStorage.removeItem('loggedInUser');
+      logoutPopup.style.display = 'none';
+      window.location.href = 'form_login.html';
+    });
   </script>
-  
+
 </body>
-
-
 </html>

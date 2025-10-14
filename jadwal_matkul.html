@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pilih Kelas — SETRUM</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jadwal Kelas — SETRUM</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
@@ -11,7 +11,6 @@
       --red: #c8102e;
       --hover-red: #a10d25;
       --gray-bg: #d9d9d9;
-      --light-gray: #f9f9f9;
     }
 
     * {
@@ -22,12 +21,12 @@
 
     body {
       font-family: "Inter", Arial, sans-serif;
-      background: #fff;
       display: flex;
       min-height: 100vh;
+      background: #fff;
     }
 
-    /* === SIDEBAR === */
+    /* SIDEBAR */
     .sidebar {
       width: 240px;
       background: var(--red);
@@ -43,7 +42,6 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 40px;
-      letter-spacing: 1px;
     }
 
     .menu {
@@ -73,21 +71,21 @@
       font-size: 18px;
     }
 
-    /* === CONTENT === */
+    /* CONTENT */
     .content {
       flex: 1;
       padding: 30px 50px;
     }
 
     .header {
-      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-bottom: 20px;
     }
 
-    .profile-group {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 20px;
+    .greeting {
+      text-align: right;
     }
 
     .greeting h1 {
@@ -96,14 +94,17 @@
     }
 
     .greeting p {
-      color: #555;
       font-size: 13px;
-      margin: 0;
+      color: #555;
+    }
+
+    .profile {
+      margin-top: 10px;
     }
 
     .profile img {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid #eee;
@@ -115,9 +116,8 @@
       transform: scale(1.05);
     }
 
-    /* === MAIN CONTENT === */
     h2 {
-      font-size: 22px;
+      font-size: 24px;
       margin-bottom: 8px;
     }
 
@@ -127,29 +127,6 @@
       margin-bottom: 30px;
     }
 
-    .class-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .class-card {
-      background: var(--gray-bg);
-      color: #000;
-      border: none;
-      padding: 20px 40px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.25s ease;
-    }
-
-    .class-card:hover {
-      background: #bfbfbf;
-      transform: translateY(-3px);
-    }
-
     @media (max-width: 768px) {
       .sidebar {
         width: 200px;
@@ -157,13 +134,11 @@
       .content {
         padding: 20px;
       }
-      .class-container {
-        flex-direction: column;
-      }
-      .profile-group {
-        flex-direction: column-reverse;
+      .header {
         align-items: flex-start;
-        gap: 10px;
+      }
+      .greeting {
+        text-align: left;
       }
     }
   </style>
@@ -176,38 +151,31 @@
     <nav class="menu">
       <a href="home.html"><i class="fa fa-home"></i> Beranda</a>
       <a href="Profile.html"><i class="fa fa-user"></i> Profil</a>
-      <a href="#" class="active"><i class="fa fa-book"></i> Kelas</a>
-      <a href="form_login.html"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+      <a href="kelas.html"><i class="fa fa-book"></i> Kelas</a>
+      <a href="logout.html"><i class="fa fa-sign-out-alt"></i> Keluar</a>
     </nav>
   </aside>
 
   <!-- MAIN CONTENT -->
   <main class="content">
     <div class="header">
-      <div class="profile-group">
-        <div class="greeting">
-          <h1 id="greetName">Hai, pengguna!</h1>
-          <p id="todayDate"></p>
-        </div>
-        <div class="profile">
-          <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
-        </div>
+      <div class="greeting">
+        <h1 id="greetName">Hai, pengguna!</h1>
+        <p id="todayDate"></p>
+      </div>
+      <div class="profile">
+        <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
       </div>
     </div>
 
-    <h2>Pilih Kelas Anda</h2>
-    <p class="subtitle">Klik kelas Anda untuk melihat jadwal perkuliahan.</p>
+    <h2>Jadwal Kelas</h2>
+    <p class="subtitle">Jadwal lengkap untuk kelas Anda</p>
 
-    <div class="class-container">
-      <button class="class-card" onclick="selectClass('A')">Kelas A</button>
-      <button class="class-card" onclick="selectClass('B')">Kelas B</button>
-      <button class="class-card" onclick="selectClass('C')">Kelas C</button>
-      <button class="class-card" onclick="selectClass('D')">Kelas D</button>
-      <button class="class-card" onclick="selectClass('E')">Kelas E</button>
-    </div>
+    <!-- Tambahkan konten jadwal di sini jika diperlukan -->
   </main>
 
   <script>
+    // Ambil data user dari localStorage
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || !loggedInUser.name) {
       window.location.href = 'form_login.html';
@@ -220,6 +188,7 @@
     const greetName = document.getElementById('greetName');
     const profilePhoto = document.getElementById('profilePhoto');
 
+    // Nama pengguna
     const profileData = JSON.parse(localStorage.getItem(profileKey));
     if (profileData && profileData.nama) {
       greetName.textContent = `Hai, ${profileData.nama}!`;
@@ -227,33 +196,19 @@
       greetName.textContent = `Hai, ${loggedInUser.name}!`;
     }
 
+    // Foto profil
     const savedImage = localStorage.getItem(imageKey);
     profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
 
+    // Klik menuju profil
     profilePhoto.addEventListener('click', () => {
       window.location.href = 'Profile.html';
     });
 
+    // Tanggal hari ini
     const today = new Date();
     const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
     document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
-
-    function selectClass(kelas) {
-      localStorage.setItem('selectedClass', kelas);
-      window.location.href = `jadwal_matkul.html?kelas=${kelas}`;
-    }
-
-    window.addEventListener('storage', (event) => {
-      if (event.key === imageKey) {
-        profilePhoto.src = event.newValue || "https://i.pravatar.cc/100";
-      }
-      if (event.key === profileKey) {
-        const updatedData = JSON.parse(event.newValue);
-        greetName.textContent = updatedData?.nama
-          ? `Hai, ${updatedData.nama}!`
-          : `Hai, ${loggedInUser.name}!`;
-      }
-    });
   </script>
 
 </body>

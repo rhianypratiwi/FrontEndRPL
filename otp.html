@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Change Password - OTP</title>
+  <title>Verifikasi OTP</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #d9d9d9; /* latar abu-abu */
+      background: #d9d9d9;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -79,8 +79,8 @@
 <body>
 
   <div class="otp-container">
-    <h1>CHANGE PASSWORD</h1>
-    <p>Kode verifikasi untuk ganti password Anda</p>
+    <h1>VERIFIKASI OTP</h1>
+    <p>Masukkan kode 6 digit untuk lanjut ubah password</p>
 
     <form id="otpForm">
       <div class="otp-inputs">
@@ -91,7 +91,7 @@
         <input type="text" maxlength="1" required>
         <input type="text" maxlength="1" required>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit">Verifikasi</button>
     </form>
   </div>
 
@@ -99,7 +99,6 @@
     const inputs = document.querySelectorAll('.otp-inputs input');
     const form = document.getElementById('otpForm');
 
-    // Pindah otomatis ke input berikutnya
     inputs.forEach((input, index) => {
       input.addEventListener('input', () => {
         if (input.value.length === 1 && index < inputs.length - 1) {
@@ -108,11 +107,10 @@
       });
     });
 
-    // Saat form disubmit
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      // Simulasi validasi OTP
-      window.location.href = "changepass.html"; // langsung ke halaman ubah password
+      // OTP valid (simulasi)
+      window.location.href = "changepass.html";
     });
   </script>
 
