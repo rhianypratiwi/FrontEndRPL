@@ -49,11 +49,19 @@
     input {
       width: 100%;
       padding: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 5px;
       border-radius: 6px;
       border: 1px solid #ccc;
       font-size: 14px;
       box-sizing: border-box;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+      text-align: left;
+      margin-bottom: 10px;
+      display: block;
     }
 
     button {
@@ -97,16 +105,20 @@
 
     <form onsubmit="return registerUser(event)">
       <label for="name">Name</label>
-      <input type="text" id="name" required>
+      <input type="text" id="name">
+      <span class="error" id="errorName"></span>
 
       <label for="email">Email</label>
-      <input type="email" id="email" required>
+      <input type="email" id="email">
+      <span class="error" id="errorEmail"></span>
 
       <label for="password">Password</label>
-      <input type="password" id="password" required>
+      <input type="password" id="password">
+      <span class="error" id="errorPassword"></span>
 
       <label for="confirm">Confirm password</label>
-      <input type="password" id="confirm" required>
+      <input type="password" id="confirm">
+      <span class="error" id="errorConfirm"></span>
 
       <button type="submit">Register</button>
 
@@ -125,14 +137,45 @@
       const password = document.getElementById("password").value.trim();
       const confirm = document.getElementById("confirm").value.trim();
 
-      if (password !== confirm) {
-        alert("Password dan konfirmasi tidak cocok!");
-        return false;
+      const errorName = document.getElementById("errorName");
+      const errorEmail = document.getElementById("errorEmail");
+      const errorPassword = document.getElementById("errorPassword");
+      const errorConfirm = document.getElementById("errorConfirm");
+
+      // Reset error messages
+      errorName.textContent = "";
+      errorEmail.textContent = "";
+      errorPassword.textContent = "";
+      errorConfirm.textContent = "";
+
+      let isValid = true;
+
+      if (!name) {
+        errorName.textContent = "Nama harus diisi";
+        isValid = false;
       }
 
-      let users = JSON.parse(localStorage.getItem("users")) || [];
+      if (!email) {
+        errorEmail.textContent = "Email harus diisi";
+        isValid = false;
+      }
 
-      // Cek apakah email sudah terdaftar
+      if (!password) {
+        errorPassword.textContent = "Password harus diisi";
+        isValid = false;
+      }
+
+      if (!confirm) {
+        errorConfirm.textContent = "Konfirmasi password harus diisi";
+        isValid = false;
+      } else if (password && confirm && password !== confirm) {
+        errorConfirm.textContent = "Password dan konfirmasi tidak cocok";
+        isValid = false;
+      }
+
+      if (!isValid) return false;
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
       const existingUser = users.find(u => u.email === email);
       if (existingUser) {
         alert("Email sudah terdaftar! Silakan login.");
@@ -140,11 +183,8 @@
         return false;
       }
 
-      // Tambahkan user baru ke array
       const newUser = { name, email, password };
       users.push(newUser);
-
-      // Simpan kembali ke localStorage
       localStorage.setItem("users", JSON.stringify(users));
 
       alert("Registrasi berhasil! Silakan login.");
