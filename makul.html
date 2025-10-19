@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mata Kuliah — SETRUM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --red: #c8102e;
+      --hover-red: #a10d25;
+      --light-gray: #f5f5f5;
+      --muted: #666;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      background: #fff;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      width: 240px;
+      background: var(--red);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      border-radius: 0 10px 10px 0;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      background: var(--hover-red);
+    }
+
+    .menu i {
+      width: 20px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    /* === CONTENT === */
+    .content {
+      flex: 1;
+      padding: 30px 50px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .greeting {
+      text-align: right;
+    }
+
+    .greeting h1 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .greeting p {
+      color: #555;
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .profile img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #eee;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .profile img:hover {
+      transform: scale(1.05);
+    }
+
+    /* === MAIN CONTENT === */
+    h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .breadcrumb {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .card-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #c8102e;
+      color: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      transition: transform 0.2s ease, background 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      background: #a10d25;
+      transform: translateY(-3px);
+    }
+
+    .card.secondary {
+      background: #e9a7a7;
+      color: #000;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .card p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .card .code {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+      .content {
+        padding: 20px;
+      }
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home.html"><i class="fa fa-home"></i> Beranda</a>
+      <a href="profile.html"><i class="fa fa-user"></i> Profil</a>
+      <a href="#" class="active"><i class="fa fa-book"></i> Kelas</a>
+      <a href="form_login.html"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+    <div class="topbar">
+      <div>
+        <div class="breadcrumb">Kelas › Mata Kuliah</div>
+        <h2>Mata Kuliah</h2>
+      </div>
+      <div class="greeting">
+        <h1 id="greetName">Hai, pengguna!</h1>
+        <p id="todayDate"></p>
+      </div>
+      <div class="profile">
+        <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto" />
+      </div>
+    </div>
+
+    <div class="card-container" id="cardContainer">
+      <div class="card">
+        <div>
+          <h3>Jaringan Komputer</h3>
+          <p>Yassir Arafat</p>
+        </div>
+        <div class="code">TI-11</div>
+      </div>
+
+      <div class="card secondary">
+        <div>
+          <h3>Rekayasa Perangkat Lunak</h3>
+          <p>Yusril Eka Mahendra</p>
+        </div>
+        <div class="code">TI-4</div>
+      </div>
+
+      <div class="card">
+        <div>
+          <h3>Pemrograman Web</h3>
+          <p>Ferry Faisal</p>
+        </div>
+        <div class="code">TI-12</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // === SISTEM LOGIN & PROFIL ===
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!loggedInUser || !loggedInUser.name) {
+      window.location.href = "form_login.html";
+    }
+
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
+
+    const greetName = document.getElementById("greetName");
+    const profilePhoto = document.getElementById("profilePhoto");
+
+    const profileData = JSON.parse(localStorage.getItem(profileKey));
+    if (profileData && profileData.nama) {
+      greetName.textContent = `Hai, ${profileData.nama}!`;
+    } else {
+      greetName.textContent = `Hai, ${loggedInUser.name}!`;
+    }
+
+    const savedImage = localStorage.getItem(imageKey);
+    profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
+
+    profilePhoto.addEventListener("click", () => {
+      window.location.href = "Profile.html";
+    });
+
+    // === TANGGAL OTOMATIS ===
+    const today = new Date();
+    const options = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+    document.getElementById("todayDate").textContent = today.toLocaleDateString("id-ID", options);
+  </script>
+
+</body>
+</html>
