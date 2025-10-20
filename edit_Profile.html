@@ -164,7 +164,6 @@
     </nav>
   </aside>
 
-
   <main class="content">
     <div class="content-inner">
       <div class="top-row" style="position:relative;">
@@ -216,18 +215,15 @@
   </div>
 
   <script>
-    // ✅ Ambil data login dengan pengecekan lebih aman
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || (!loggedInUser.username && !loggedInUser.name)) {
       window.location.href = 'form_login.html';
     }
 
-    // Pastikan nama unik pengguna
     const username = loggedInUser.username || loggedInUser.name || "guest";
     const profileKey = `profileData_${username}`;
     const imageKey = `profileImage_${username}`;
 
-    // Elemen DOM
     const profileImage = document.getElementById('profileImage');
     const nameInput = document.getElementById('nama');
     const nimInput = document.getElementById('nim');
@@ -236,7 +232,6 @@
     const nameDisplay = document.getElementById('nameDisplay');
     const roleDisplay = document.getElementById('roleDisplay');
 
-    // Muat data profil
     const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
     const savedImage = localStorage.getItem(imageKey);
 
@@ -249,7 +244,7 @@
     roleDisplay.textContent = profileData.prodi ? ('Mahasiswa | ' + profileData.prodi) : 'Mahasiswa | Teknik Informatika';
     if (savedImage) profileImage.src = savedImage;
 
-    // Ganti foto profil
+    // Ganti foto profil dengan resize & compress
     function openFileDialogAndSave() {
       const input = document.createElement('input');
       input.type = 'file';
@@ -257,10 +252,39 @@
       input.onchange = e => {
         const file = e.target.files[0];
         if (!file) return;
+
         const reader = new FileReader();
         reader.onload = () => {
-          localStorage.setItem(imageKey, reader.result);
-          profileImage.src = reader.result;
+          const img = new Image();
+          img.src = reader.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const maxWidth = 300;
+            const maxHeight = 300;
+            let width = img.width;
+            let height = img.height;
+
+            if(width > height){
+              if(width > maxWidth){
+                height = Math.round(height * (maxWidth / width));
+                width = maxWidth;
+              }
+            } else {
+              if(height > maxHeight){
+                width = Math.round(width * (maxHeight / height));
+                height = maxHeight;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+            localStorage.setItem(imageKey, dataUrl);
+            profileImage.src = dataUrl;
+          };
         };
         reader.readAsDataURL(file);
       };
@@ -270,7 +294,6 @@
     document.getElementById('btnChangeSmall').addEventListener('click', openFileDialogAndSave);
     document.getElementById('changeBtn').addEventListener('click', () => { openFileDialogAndSave(); document.getElementById('menuPopup').style.display='none'; });
 
-    // Hapus foto
     document.getElementById('btnDeleteSmall').addEventListener('click', () => {
       localStorage.removeItem(imageKey);
       profileImage.src = "https://i.pravatar.cc/150";
@@ -281,7 +304,6 @@
       document.getElementById('menuPopup').style.display='none';
     });
 
-    // Klik foto => popup menu
     profileImage.addEventListener('click', (e) => {
       const popup = document.getElementById('menuPopup');
       popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
@@ -292,12 +314,10 @@
       }
     });
 
-    // Tombol batal
     document.getElementById('btnCancel').addEventListener('click', () => {
       window.location.href = 'profile.html';
     });
 
-    // Tombol simpan
     document.getElementById('btnSave').addEventListener('click', () => {
       const data = {
         nama: nameInput.value.trim(),
@@ -311,7 +331,6 @@
       window.location.href = 'profile.html';
     });
 
-    // Logout popup
     const logoutBtn = document.getElementById('logoutBtn');
     const logoutPopup = document.getElementById('logoutPopup');
     const yesLogout = document.getElementById('yesLogout');
