@@ -129,13 +129,10 @@
       e.preventDefault();
 
       let valid = true;
-
-      // Reset pesan error
       emailError.style.display = 'none';
       passwordError.style.display = 'none';
       loginError.style.display = 'none';
 
-      // Validasi input kosong
       if (emailInput.value.trim() === '') {
         emailError.style.display = 'block';
         valid = false;
@@ -148,19 +145,24 @@
 
       if (!valid) return;
 
-      // Ambil semua user dari localStorage
       const users = JSON.parse(localStorage.getItem('users')) || [];
-
-      // Cari user yang cocok
       const foundUser = users.find(u => u.email === emailInput.value && u.password === passwordInput.value);
 
       if (foundUser) {
-        // Simpan user yang sedang login
         localStorage.setItem('loggedInUser', JSON.stringify(foundUser));
         localStorage.setItem('isLoggedIn', 'true');
 
-        // Arahkan ke home.html
-        window.location.href = 'home.html';
+        // 🔥 Tambahan logika: cek apakah profil user sudah pernah diisi
+        const username = foundUser.username || foundUser.name || foundUser.email;
+        const profileKey = `profileData_${username}`;
+        const profileData = JSON.parse(localStorage.getItem(profileKey));
+
+        if (profileData && profileData.nama && profileData.nim && profileData.kelas && profileData.prodi) {
+          window.location.href = 'home.html'; // sudah isi profil lengkap
+        } else {
+          window.location.href = 'Profile.html'; // baru login pertama kali
+        }
+
       } else {
         loginError.style.display = 'block';
       }

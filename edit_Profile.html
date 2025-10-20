@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Edit Profil — SETRUM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --red: #c8102e;
+      --hover-red: #a10d25;
+      --green: #00b33c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      background: #fff;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 240px;
+      background: var(--red);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      border-radius: 0 10px 10px 0;
+    }
+    .brand { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 40px; letter-spacing: 1px; }
+    .menu { display: flex; flex-direction: column; }
+    .menu a {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 24px; text-decoration: none; color: #fff; font-weight: 500;
+      transition: background 0.3s ease;
+    }
+    .menu a:hover, .menu a.active { background: var(--hover-red); }
+    .menu i { width: 20px; text-align: center; font-size: 18px; }
+
+    .content {
+      flex: 1;
+      padding: 40px;
+      text-align: left;
+    }
+
+    .content-inner {
+      max-width: 760px;
+      margin-left: 20px;
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-left: 60px;
+      margin-top: 20px;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ddd;
+      background: #f2f2f2;
+    }
+
+    .pic-controls {
+      display: flex;
+      gap: 8px;
+      margin-left: 8px;
+    }
+
+    .pic-controls button {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #bbb;
+      background: #fff;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .pic-controls button:hover { background: #f4f4f4; }
+
+    .profile-info h3 { margin: 0; font-size: 20px; font-weight: 700; color: #222; }
+    .profile-info p { margin: 6px 0 0 0; color: #666; font-size: 13px; }
+
+    .form-area {
+      margin-left: 60px;
+      margin-top: 24px;
+      width: 420px;
+    }
+    label { display:block; font-weight:700; font-size:13px; margin-bottom:6px; color:#222; }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .actions {
+      margin-left: 60px;
+      margin-top: 10px;
+      display: flex;
+      gap: 12px;
+    }
+    .btn-cancel {
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid #999;
+      background: #fff;
+      cursor: pointer;
+    }
+    .btn-save {
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: none;
+      background: var(--green);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .menu-popup {
+      display: none;
+      position: absolute;
+      right: -120px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--red);
+      border-radius: 6px;
+      overflow: hidden;
+      z-index: 50;
+    }
+    .menu-popup button {
+      display: block; background: none; border: none; color: #fff;
+      padding: 8px 16px; width: 140px; text-align: left; cursor: pointer; font-size: 14px;
+    }
+    .menu-popup button:hover { background: var(--hover-red); }
+
+    .logout-popup {
+      display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: var(--red); color: #fff; padding: 25px 30px; border-radius: 10px; text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 1000;
+    }
+    .logout-popup h3 { margin-bottom: 10px; }
+    .logout-popup button { background: #fff; border: none; padding: 8px 20px; margin: 5px; border-radius:6px; font-weight:600; cursor:pointer;}
+    .logout-popup button.yes { color: var(--red); }
+    .logout-popup button.cancel { background: transparent; border: 1px solid #fff; color: #fff; }
+    .logout-popup button.cancel:hover { background: #fff; color: var(--red); }
+  </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home.html"><i class="fa fa-home"></i> Beranda</a>
+      <a href="MataKuliah.html"><i class="fa fa-book"></i> Kelas</a>
+      <a href="profile.html" class="active"><i class="fa fa-user"></i> Profil</a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+    </nav>
+  </aside>
+
+
+  <main class="content">
+    <div class="content-inner">
+      <div class="top-row" style="position:relative;">
+        <img id="profileImage" class="profile-pic" src="https://i.pravatar.cc/150" alt="Foto Profil">
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div class="profile-info">
+              <h3 id="nameDisplay">Lia Ali</h3>
+              <p id="roleDisplay">Mahasiswa | Teknik Informatika</p>
+            </div>
+          </div>
+          <div class="pic-controls" style="margin-top:10px;">
+            <button id="btnChangeSmall">Ganti foto profil</button>
+            <button id="btnDeleteSmall">Hapus</button>
+          </div>
+        </div>
+        <div class="menu-popup" id="menuPopup">
+          <button id="changeBtn">Change profile</button>
+          <button id="deleteBtn">Delete</button>
+        </div>
+      </div>
+
+      <div class="form-area">
+        <label for="nama">Nama</label>
+        <input type="text" id="nama">
+
+        <label for="nim">NIM</label>
+        <input type="text" id="nim">
+
+        <label for="kelas">Kelas</label>
+        <input type="text" id="kelas">
+
+        <label for="prodi">Prodi</label>
+        <input type="text" id="prodi">
+      </div>
+
+      <div class="actions">
+        <button class="btn-cancel" id="btnCancel">Batal</button>
+        <button class="btn-save" id="btnSave">Simpan Perubahan</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Are you sure?</p>
+    <button class="yes" id="yesLogout">Yes</button>
+    <button class="cancel" id="cancelLogout">Cancel</button>
+  </div>
+
+  <script>
+    // ✅ Ambil data login dengan pengecekan lebih aman
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || (!loggedInUser.username && !loggedInUser.name)) {
+      window.location.href = 'form_login.html';
+    }
+
+    // Pastikan nama unik pengguna
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
+
+    // Elemen DOM
+    const profileImage = document.getElementById('profileImage');
+    const nameInput = document.getElementById('nama');
+    const nimInput = document.getElementById('nim');
+    const kelasInput = document.getElementById('kelas');
+    const prodiInput = document.getElementById('prodi');
+    const nameDisplay = document.getElementById('nameDisplay');
+    const roleDisplay = document.getElementById('roleDisplay');
+
+    // Muat data profil
+    const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+    const savedImage = localStorage.getItem(imageKey);
+
+    nameInput.value = profileData.nama || loggedInUser.name || 'Lia Ali';
+    nimInput.value = profileData.nim || '';
+    kelasInput.value = profileData.kelas || '';
+    prodiInput.value = profileData.prodi || 'Teknik Informatika';
+
+    nameDisplay.textContent = profileData.nama || loggedInUser.name || 'Lia Ali';
+    roleDisplay.textContent = profileData.prodi ? ('Mahasiswa | ' + profileData.prodi) : 'Mahasiswa | Teknik Informatika';
+    if (savedImage) profileImage.src = savedImage;
+
+    // Ganti foto profil
+    function openFileDialogAndSave() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          localStorage.setItem(imageKey, reader.result);
+          profileImage.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      };
+      input.click();
+    }
+
+    document.getElementById('btnChangeSmall').addEventListener('click', openFileDialogAndSave);
+    document.getElementById('changeBtn').addEventListener('click', () => { openFileDialogAndSave(); document.getElementById('menuPopup').style.display='none'; });
+
+    // Hapus foto
+    document.getElementById('btnDeleteSmall').addEventListener('click', () => {
+      localStorage.removeItem(imageKey);
+      profileImage.src = "https://i.pravatar.cc/150";
+    });
+    document.getElementById('deleteBtn').addEventListener('click', () => {
+      localStorage.removeItem(imageKey);
+      profileImage.src = "https://i.pravatar.cc/150";
+      document.getElementById('menuPopup').style.display='none';
+    });
+
+    // Klik foto => popup menu
+    profileImage.addEventListener('click', (e) => {
+      const popup = document.getElementById('menuPopup');
+      popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.top-row')) {
+        document.getElementById('menuPopup').style.display = 'none';
+      }
+    });
+
+    // Tombol batal
+    document.getElementById('btnCancel').addEventListener('click', () => {
+      window.location.href = 'profile.html';
+    });
+
+    // Tombol simpan
+    document.getElementById('btnSave').addEventListener('click', () => {
+      const data = {
+        nama: nameInput.value.trim(),
+        nim: nimInput.value.trim(),
+        kelas: kelasInput.value.trim(),
+        prodi: prodiInput.value.trim()
+      };
+      localStorage.setItem(profileKey, JSON.stringify(data));
+      nameDisplay.textContent = data.nama || 'Lia Ali';
+      roleDisplay.textContent = data.prodi ? ('Mahasiswa | ' + data.prodi) : 'Mahasiswa | Teknik Informatika';
+      window.location.href = 'profile.html';
+    });
+
+    // Logout popup
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+
+    logoutBtn.addEventListener('click', () => {
+      logoutPopup.style.display = 'block';
+    });
+
+    cancelLogout.addEventListener('click', () => {
+      logoutPopup.style.display = 'none';
+    });
+
+    yesLogout.addEventListener('click', () => {
+      localStorage.removeItem('loggedInUser');
+      logoutPopup.style.display = 'none';
+      window.location.href = 'form_login.html';
+    });
+  </script>
+</body>
+</html>

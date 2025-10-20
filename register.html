@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register</title>
+  <title>Sign Up</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #d9d9d9;
+      background: #f4f4f4;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -17,16 +17,16 @@
 
     .container {
       background: #fff;
-      border: 2px solid #ccc;
+      border: 1px solid #ccc;
       border-radius: 10px;
-      padding: 30px 25px;
+      padding: 30px 35px;
+      width: 400px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
       text-align: center;
-      width: 320px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: bold;
       margin-bottom: 5px;
       color: #000;
@@ -42,18 +42,27 @@
       display: block;
       text-align: left;
       font-size: 14px;
-      color: #222;
+      color: #000;
       margin-bottom: 5px;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 10px;
       margin-bottom: 5px;
       border-radius: 6px;
-      border: 1px solid #ccc;
+      border: 1px solid #bbb;
       font-size: 14px;
       box-sizing: border-box;
+      background: #fafafa;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #c00;
+      box-shadow: 0 0 5px rgba(204, 0, 0, 0.4);
+      background: #fff;
     }
 
     .error {
@@ -61,27 +70,37 @@
       font-size: 12px;
       text-align: left;
       margin-bottom: 10px;
-      display: block;
+      min-height: 14px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row .field {
+      flex: 1;
     }
 
     button {
       width: 100%;
       padding: 10px;
-      margin-top: 10px;
       border: none;
-      border-radius: 20px;
-      background: red;
-      color: white;
-      font-size: 14px;
+      border-radius: 6px;
+      background: #c00;
+      color: #fff;
+      font-size: 15px;
       cursor: pointer;
+      margin-top: 5px;
+      transition: background 0.3s;
     }
 
     button:hover {
-      background: darkred;
+      background: #900;
     }
 
     .bottom-text {
-      margin-top: 15px;
+      margin-top: 12px;
       font-size: 13px;
       color: #000;
     }
@@ -100,8 +119,8 @@
 <body>
 
   <div class="container">
-    <h1>WELCOME, BRO!</h1>
-    <p class="subtext">Silakan Buat Akun Terlebih Dahulu</p>
+    <h1>Sign Up!</h1>
+    <p class="subtext">Silakan buat akun terlebih dahulu</p>
 
     <form onsubmit="return registerUser(event)">
       <label for="name">Name</label>
@@ -112,15 +131,28 @@
       <input type="email" id="email">
       <span class="error" id="errorEmail"></span>
 
-      <label for="password">Password</label>
-      <input type="password" id="password">
-      <span class="error" id="errorPassword"></span>
+      <div class="row">
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password">
+          <span class="error" id="errorPassword"></span>
+        </div>
+        <div class="field">
+          <label for="confirm">Confirm Password</label>
+          <input type="password" id="confirm">
+          <span class="error" id="errorConfirm"></span>
+        </div>
+      </div>
 
-      <label for="confirm">Confirm password</label>
-      <input type="password" id="confirm">
-      <span class="error" id="errorConfirm"></span>
+      <label for="role">Role</label>
+      <select id="role">
+        <option value="">-- Pilih Role --</option>
+        <option value="Mahasiswa">Mahasiswa</option>
+        <option value="Dosen">Dosen</option>
+      </select>
+      <span class="error" id="errorRole"></span>
 
-      <button type="submit">Register</button>
+      <button type="submit">Sign Up</button>
 
       <div class="bottom-text">
         Already have an account? <a href="form_login.html">Sign in</a>
@@ -132,58 +164,68 @@
     function registerUser(event) {
       event.preventDefault();
 
+      // Ambil nilai
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
       const confirm = document.getElementById("confirm").value.trim();
+      const role = document.getElementById("role").value;
 
+      // Ambil elemen error
       const errorName = document.getElementById("errorName");
       const errorEmail = document.getElementById("errorEmail");
       const errorPassword = document.getElementById("errorPassword");
       const errorConfirm = document.getElementById("errorConfirm");
+      const errorRole = document.getElementById("errorRole");
 
-      // Reset error messages
+      // Reset error
       errorName.textContent = "";
       errorEmail.textContent = "";
       errorPassword.textContent = "";
       errorConfirm.textContent = "";
+      errorRole.textContent = "";
 
       let isValid = true;
 
       if (!name) {
-        errorName.textContent = "Nama harus diisi";
+        errorName.textContent = "Nama harus diisi.";
         isValid = false;
       }
 
       if (!email) {
-        errorEmail.textContent = "Email harus diisi";
+        errorEmail.textContent = "Email harus diisi.";
         isValid = false;
       }
 
       if (!password) {
-        errorPassword.textContent = "Password harus diisi";
+        errorPassword.textContent = "Password harus diisi.";
         isValid = false;
       }
 
       if (!confirm) {
-        errorConfirm.textContent = "Konfirmasi password harus diisi";
+        errorConfirm.textContent = "Konfirmasi password harus diisi.";
         isValid = false;
       } else if (password && confirm && password !== confirm) {
-        errorConfirm.textContent = "Password dan konfirmasi tidak cocok";
+        errorConfirm.textContent = "Password dan konfirmasi tidak cocok.";
+        isValid = false;
+      }
+
+      if (!role) {
+        errorRole.textContent = "Role harus dipilih.";
         isValid = false;
       }
 
       if (!isValid) return false;
 
+      // Simpan data user ke localStorage
       let users = JSON.parse(localStorage.getItem("users")) || [];
       const existingUser = users.find(u => u.email === email);
       if (existingUser) {
-        alert("Email sudah terdaftar! Silakan login.");
-        window.location.href = "form_login.html";
+        errorEmail.textContent = "Email sudah terdaftar.";
         return false;
       }
 
-      const newUser = { name, email, password };
+      const newUser = { name, email, password, role };
       users.push(newUser);
       localStorage.setItem("users", JSON.stringify(users));
 
