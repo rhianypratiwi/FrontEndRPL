@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mata Kuliah — SETRUM</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
@@ -34,6 +34,8 @@
       flex-direction: column;
       padding: 20px 0;
       border-radius: 0 10px 10px 0;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
     }
 
     .brand {
@@ -75,18 +77,22 @@
     .content {
       flex: 1;
       padding: 30px;
+      transition: all 0.3s ease;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
     .profile-section {
       display: flex;
       align-items: center;
       gap: 12px;
+      flex-shrink: 0;
     }
 
     .profile-text {
@@ -123,7 +129,7 @@
       font-size: 18px;
     }
 
-    /* === Kartu Mata Kuliah === */
+    /* === KARTU MATA KULIAH === */
     .card {
       background: var(--red);
       color: #fff;
@@ -164,7 +170,7 @@
       font-size: 15px;
     }
 
-    /* === LOGOUT POPUP === */
+    /* === POPUP LOGOUT === */
     .logout-popup {
       display: none;
       position: fixed;
@@ -184,10 +190,6 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translate(-50%, -45%); }
       to { opacity: 1; transform: translate(-50%, -50%); }
-    }
-
-    .logout-popup h3 {
-      margin-bottom: 10px;
     }
 
     .logout-popup button {
@@ -213,6 +215,93 @@
     .logout-popup button.cancel:hover {
       background: #fff;
       color: var(--red);
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 200px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-radius: 0;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+      }
+
+      .brand {
+        display: none;
+      }
+
+      .menu {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+      }
+
+      .menu a {
+        padding: 10px;
+        font-size: 14px;
+        gap: 6px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .profile-section {
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+
+      .profile-text {
+        text-align: left;
+      }
+
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 15px;
+      }
+
+      .card span {
+        align-self: flex-end;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .menu a i {
+        font-size: 16px;
+      }
+      .menu a {
+        font-size: 13px;
+        gap: 4px;
+      }
+      .card {
+        font-size: 14px;
+        padding: 14px 16px;
+      }
+      .profile img {
+        width: 40px;
+        height: 40px;
+      }
     }
   </style>
 </head>
@@ -246,24 +335,13 @@
       Kelas &gt; <span style="font-weight: 700; color: #000;">Mata Kuliah</span>
     </p>
 
-
     <div style="margin-top: 25px;">
-      <div class="card" id="mk1">
-        <div><strong>Jaringan Komputer</strong><small>Yasir Arafat</small></div>
-        <span>TI-11</span>
-      </div>
-      <div class="card light" id="mk2">
-        <div><strong>Rekayasa Perangkat Lunak</strong><small>Yusril Eka Mahendra</small></div>
-        <span>TI-4</span>
-      </div>
-      <div class="card" id="mk3">
-        <div><strong>Pemrograman Web</strong><small>Ferry Faisal</small></div>
-        <span>TI-12</span>
-      </div>
+      <div class="card"><div><strong>Jaringan Komputer</strong><small>Yasir Arafat</small></div><span>TI-11</span></div>
+      <div class="card light"><div><strong>Rekayasa Perangkat Lunak</strong><small>Yusril Eka Mahendra</small></div><span>TI-4</span></div>
+      <div class="card"><div><strong>Pemrograman Web</strong><small>Ferry Faisal</small></div><span>TI-12</span></div>
     </div>
   </main>
 
-  <!-- === POPUP LOGOUT === -->
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
     <p>Apakah Anda yakin ingin keluar?</p>
@@ -294,15 +372,13 @@
     const savedImage = localStorage.getItem(imageKey);
     profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
 
-    profilePhoto.addEventListener('click', () => {
-      window.location.href = 'Profile.html';
-    });
+    profilePhoto.addEventListener('click', () => window.location.href = 'Profile.html');
 
     const today = new Date();
-    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-    document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
+    document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    });
 
-    // === LOGOUT ===
     const logoutBtn = document.getElementById('logoutBtn');
     const logoutPopup = document.getElementById('logoutPopup');
     const yesLogout = document.getElementById('yesLogout');
@@ -316,13 +392,9 @@
       window.location.href = 'form_login.html';
     });
 
-    // === LINK KE POSTINGAN ===
     document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', () => {
-        window.location.href = 'postingan.html';
-      });
+      card.addEventListener('click', () => window.location.href = 'postingan.html');
     });
   </script>
-
 </body>
 </html>

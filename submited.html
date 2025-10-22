@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Submitted — SETRUM</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
@@ -19,9 +19,10 @@
       background: #fff;
       display: flex;
       min-height: 100vh;
+      flex-direction: row;
     }
 
-    /* === SIDEBAR === (tidak diubah) */
+    /* === SIDEBAR === */
     .sidebar {
       width: 240px;
       background: var(--red);
@@ -30,8 +31,18 @@
       flex-direction: column;
       padding: 20px 0;
       border-radius: 0 10px 10px 0;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
     }
-    .brand { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 40px; letter-spacing: 1px; }
+
+    .brand { 
+      font-size: 22px; 
+      font-weight: 700; 
+      text-align: center; 
+      margin-bottom: 40px; 
+      letter-spacing: 1px; 
+    }
+
     .menu { display: flex; flex-direction: column; }
     .menu a {
       display: flex; align-items: center; gap: 12px;
@@ -45,22 +56,24 @@
     .content {
       flex: 1;
       padding: 30px;
+      transition: all 0.3s ease;
     }
 
-    /* header bar: left empty (title area), right profile */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    /* profile block at top-right (matching home header) */
     .profile-section {
       display: flex;
       align-items: center;
       gap: 12px;
       text-align: right;
     }
+
     .profile-text h1 {
       font-size: 18px;
       margin-bottom: 4px;
@@ -70,6 +83,7 @@
       color: #555;
       font-size: 13px;
     }
+
     .profile img {
       width: 48px;
       height: 48px;
@@ -81,22 +95,25 @@
     }
     .profile img:hover { transform: scale(1.05); }
 
-    /* breadcrumb (kecil, di bawah header kanan) */
     .breadcrumb {
       margin-top: 8px;
       text-align: right;
       color: #777;
       font-size: 13px;
+      flex-wrap: wrap;
+      display: flex;
+      justify-content: flex-end;
+      gap: 4px;
     }
     .breadcrumb a { color: #777; text-decoration: none; }
-    .breadcrumb .sep { margin: 0 6px; color: #999; }
+    .breadcrumb .sep { color: #999; }
 
-    /* === CONTENT BLOCKS === */
     .page-title {
       font-size: 28px;
       font-weight: 700;
       margin-top: 14px;
       margin-bottom: 14px;
+      word-wrap: break-word;
     }
 
     .status {
@@ -110,8 +127,19 @@
       font-weight: 700;
       margin-bottom: 18px;
       border: 1px solid #cfe8d2;
+      flex-wrap: wrap;
     }
-    .status i { background: #0a6b2f; color: #fff; border-radius: 50%; padding: 4px; width: 24px; height: 24px; display:flex; align-items:center; justify-content:center; }
+    .status i { 
+      background: #0a6b2f; 
+      color: #fff; 
+      border-radius: 50%; 
+      padding: 4px; 
+      width: 24px; 
+      height: 24px; 
+      display:flex; 
+      align-items:center; 
+      justify-content:center; 
+    }
 
     .info-box {
       border: 2px solid #f0bcbc;
@@ -121,13 +149,15 @@
       background: #fff;
       color: #222;
       margin-top: 14px;
+      word-wrap: break-word;
     }
+
     .info-box .deadline { color: var(--red); font-weight:700; margin-bottom: 6px; }
     .info-box p { line-height: 1.6; margin-bottom: 10px; }
     .info-list { margin-top: 8px; }
     .info-list div { margin-bottom: 6px; }
 
-    /* logout popup (preserved) */
+    /* === LOGOUT POPUP === */
     .logout-popup {
       display: none;
       position: fixed;
@@ -149,9 +179,68 @@
     .logout-popup button.cancel { background: transparent; border:1px solid #fff; color:#fff; }
     .logout-popup button.cancel:hover { background:#fff; color:var(--red); }
 
-    @media (max-width:900px){
-      .content { padding: 18px; }
-      .info-box { max-width: 100%; }
+    /* === RESPONSIVE === */
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        border-radius: 0;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+      }
+      .brand {
+        margin: 0;
+        font-size: 18px;
+      }
+      .menu {
+        flex-direction: row;
+        gap: 10px;
+      }
+      .menu a {
+        padding: 10px;
+        font-size: 14px;
+      }
+      .content {
+        padding: 16px;
+      }
+      .profile-section {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+      }
+      .breadcrumb {
+        justify-content: flex-start;
+        text-align: left;
+      }
+      .info-box {
+        max-width: 100%;
+        padding: 16px;
+      }
+      .page-title {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .profile-section {
+        flex-direction: column-reverse;
+        align-items: flex-end;
+      }
+      .profile img {
+        width: 40px;
+        height: 40px;
+      }
+      .sidebar {
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .menu a {
+        font-size: 12px;
+        padding: 6px;
+      }
     }
   </style>
 </head>
@@ -169,12 +258,11 @@
 
   <main class="content">
     <div class="header">
-      <div><!-- left intentionally empty --></div>
-
+      <div></div>
       <div class="profile-section">
         <div class="profile-text">
           <h1 id="greetName">Hai, pengguna!</h1>
-          <p id="todayDate">Kamis, 18 september 2025</p>
+          <p id="todayDate">Kamis, 18 September 2025</p>
         </div>
         <div class="profile">
           <img id="profilePhoto" src="https://i.pravatar.cc/100" alt="profil">
@@ -182,10 +270,7 @@
       </div>
     </div>
 
-
-    <div class="breadcrumb" id="breadcrumb">
-      <!-- akan diisi lewat JS -->
-    </div>
+    <div class="breadcrumb" id="breadcrumb"></div>
 
     <div class="page-title" id="pageTitle">PBL Kelompok</div>
 
@@ -198,12 +283,9 @@
     </div>
 
     <div class="info-box" id="infoBox">
-      <div class="deadline">Deadline 25 sept 2025, 23.59</div>
+      <div class="deadline">Deadline 25 Sept 2025, 23.59</div>
       <div style="font-size:12px; color:#777; margin-bottom:12px;">100 point</div>
-
-      <p>
-        Presentasi : rancangan gedung (gambar), jumlah user, sejarah gedung (termasuk berapa jumlah lantai, berapa ruangan, nama ruangan)
-      </p>
+      <p>Presentasi : rancangan gedung (gambar), jumlah user, sejarah gedung (termasuk berapa jumlah lantai, berapa ruangan, nama ruangan)</p>
 
       <div class="info-list">
         <div><strong>Dosen:</strong> Yasir Arafat</div>
@@ -213,7 +295,6 @@
         <div><strong>Semester:</strong> 5</div>
       </div>
     </div>
-
   </main>
 
   <div class="logout-popup" id="logoutPopup">
@@ -224,7 +305,6 @@
   </div>
 
   <script>
-    // cek login
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || (!loggedInUser.name && !loggedInUser.username)) {
       window.location.href = 'form_login.html';
@@ -233,25 +313,18 @@
     const username = loggedInUser.username || loggedInUser.name || 'guest';
     const profileKey = `profileData_${username}`;
     const imageKey = `profileImage_${username}`;
-
-    // tampilkan nama & foto profil sama seperti home
     const profileData = JSON.parse(localStorage.getItem(profileKey));
     const savedImage = localStorage.getItem(imageKey);
     document.getElementById('greetName').textContent = profileData?.nama ? `Hai, ${profileData.nama}!` : `Hai, ${loggedInUser.name || 'Pengguna'}!`;
     if (savedImage) document.getElementById('profilePhoto').src = savedImage;
 
-    // tanggal hari ini (format lokal)
     const today = new Date();
     const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
     document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
 
-    // baca selectedCourse/selectedTask dari localStorage (di-set dari halaman lain)
     const selectedCourse = localStorage.getItem('selectedCourse') || 'Jaringan Komputer';
     const selectedTask = localStorage.getItem('selectedTask') || 'PBL Kelompok';
-
-    // set breadcrumb dan judul halaman sesuai
     const breadcrumbEl = document.getElementById('breadcrumb');
-    // menggunakan tanda › seperti permintaan
     breadcrumbEl.innerHTML = `
       <a href="MataKuliah.html">Kelas</a>
       <span class="sep">›</span>
@@ -261,50 +334,23 @@
       <span class="sep">›</span>
       <span style="color:#000; font-weight:600;">Submitted</span>
     `;
-    // judul
     document.getElementById('pageTitle').textContent = selectedTask;
-
-    // info course text
     document.getElementById('infoCourse').textContent = selectedCourse;
 
-    // klik foto -> ke profile
     document.getElementById('profilePhoto').addEventListener('click', () => {
       window.location.href = 'Profile.html';
     });
 
-    // logout popup
     const logoutBtn = document.getElementById('logoutBtn');
     const logoutPopup = document.getElementById('logoutPopup');
     const yesLogout = document.getElementById('yesLogout');
     const cancelLogout = document.getElementById('cancelLogout');
-
-    if (logoutBtn) {
-      logoutBtn.addEventListener('click', () => logoutPopup.style.display = 'block');
-    }
+    logoutBtn.addEventListener('click', () => logoutPopup.style.display = 'block');
     cancelLogout.addEventListener('click', () => logoutPopup.style.display = 'none');
     yesLogout.addEventListener('click', () => {
       localStorage.removeItem('loggedInUser');
       logoutPopup.style.display = 'none';
       window.location.href = 'form_login.html';
-    });
-
-    // update profil/foto jika diubah di tab lain
-    window.addEventListener('storage', (e) => {
-      if (e.key === imageKey) {
-        document.getElementById('profilePhoto').src = e.newValue || 'https://i.pravatar.cc/100';
-      }
-      if (e.key === profileKey) {
-        const updated = JSON.parse(e.newValue || '{}');
-        document.getElementById('greetName').textContent = updated?.nama ? `Hai, ${updated.nama}!` : `Hai, ${loggedInUser.name || 'Pengguna'}!`;
-      }
-      if (e.key === 'selectedCourse' || e.key === 'selectedTask') {
-        const sc = localStorage.getItem('selectedCourse') || selectedCourse;
-        const st = localStorage.getItem('selectedTask') || selectedTask;
-        document.getElementById('infoCourse').textContent = sc;
-        document.getElementById('pageTitle').textContent = st;
-        breadcrumbEl.querySelector('a:nth-child(1)').href = 'MataKuliah.html';
-        breadcrumbEl.querySelector('a:nth-child(2)').textContent = sc;
-      }
     });
   </script>
 </body>

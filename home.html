@@ -34,6 +34,7 @@
       flex-direction: column;
       padding: 20px 0;
       border-radius: 0 10px 10px 0;
+      transition: all 0.3s ease;
     }
 
     .brand {
@@ -75,12 +76,15 @@
     .content {
       flex: 1;
       padding: 30px;
+      transition: all 0.3s ease;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .profile-section {
@@ -196,6 +200,77 @@
       background: #fff;
       color: var(--red);
     }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-radius: 0;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px 0;
+      }
+
+      .brand {
+        font-size: 18px;
+        margin-bottom: 0;
+      }
+
+      .menu {
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .menu a {
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .profile-section {
+        justify-content: flex-end;
+        width: 100%;
+      }
+
+      .profile-text h1 {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .menu a span {
+        display: none;
+      }
+
+      .menu a i {
+        font-size: 20px;
+      }
+
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .profile-section {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .profile img {
+        width: 40px;
+        height: 40px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -203,10 +278,10 @@
   <aside class="sidebar">
     <div class="brand">SETRUM</div>
     <nav class="menu">
-      <a href="#" class="active"><i class="fa fa-home"></i> Beranda</a>
-      <a href="MataKuliah.html"><i class="fa fa-book"></i> Kelas</a>
-      <a href="Profile.html"><i class="fa fa-user"></i> Profil</a>
-      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+      <a href="#" class="active"><i class="fa fa-home"></i><span>Beranda</span></a>
+      <a href="MataKuliah.html"><i class="fa fa-book"></i><span>Kelas</span></a>
+      <a href="Profile.html"><i class="fa fa-user"></i><span>Profil</span></a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span>Keluar</span></a>
     </nav>
   </aside>
 
@@ -244,7 +319,6 @@
     <div class="card" id="task3"><div><strong>Project Pemrograman</strong></div><span>Okt 9</span></div>
   </main>
 
-  <!-- === POPUP KONFIRMASI LOGOUT === -->
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
     <p>Are you sure?</p>
@@ -253,16 +327,12 @@
   </div>
 
   <script>
-  // === Ambil data login ===
   const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-  if (!loggedInUser || !loggedInUser.name) {
-    window.location.href = 'form_login.html';
-  }
+  if (!loggedInUser || !loggedInUser.name) window.location.href = 'form_login.html';
 
   const username = loggedInUser.username || loggedInUser.name || "guest";
   const profileKey = `profileData_${username}`;
   const imageKey = `profileImage_${username}`;
-
   const greetName = document.getElementById('greetName');
   const profilePhoto = document.getElementById('profilePhoto');
 
@@ -274,55 +344,50 @@
   const savedImage = localStorage.getItem(imageKey);
   profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
 
-  profilePhoto.addEventListener('click', () => {
-    window.location.href = 'Profile.html';
-  });
+  profilePhoto.addEventListener('click', () => window.location.href = 'Profile.html');
 
   const today = new Date();
   const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
   document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
 
-  // === Klik Mata Kuliah ke postingan.html ===
-  document.getElementById('matkul1').addEventListener('click', () => {
+  document.getElementById('matkul1').onclick = () => {
     localStorage.setItem('selectedCourse', 'Jaringan Komputer');
     window.location.href = 'postingan.html';
-  });
-  document.getElementById('matkul2').addEventListener('click', () => {
+  };
+  document.getElementById('matkul2').onclick = () => {
     localStorage.setItem('selectedCourse', 'Rekayasa Perangkat Lunak');
     window.location.href = 'postingan.html';
-  });
-  document.getElementById('matkul3').addEventListener('click', () => {
+  };
+  document.getElementById('matkul3').onclick = () => {
     localStorage.setItem('selectedCourse', 'Pemrograman Web');
     window.location.href = 'postingan.html';
-  });
+  };
 
-  // === Klik Tugas ke submit.html ===
-  document.getElementById('task1').addEventListener('click', () => {
+  document.getElementById('task1').onclick = () => {
     localStorage.setItem('selectedTask', 'PBL Kelompok');
     window.location.href = 'submit.html';
-  });
-  document.getElementById('task2').addEventListener('click', () => {
+  };
+  document.getElementById('task2').onclick = () => {
     localStorage.setItem('selectedTask', 'Project RPL');
     window.location.href = 'submit.html';
-  });
-  document.getElementById('task3').addEventListener('click', () => {
+  };
+  document.getElementById('task3').onclick = () => {
     localStorage.setItem('selectedTask', 'Project Pemrograman');
     window.location.href = 'submit.html';
-  });
+  };
 
-  // === LOGOUT ===
   const logoutBtn = document.getElementById('logoutBtn');
   const logoutPopup = document.getElementById('logoutPopup');
   const yesLogout = document.getElementById('yesLogout');
   const cancelLogout = document.getElementById('cancelLogout');
 
-  logoutBtn.addEventListener('click', () => logoutPopup.style.display = 'block');
-  cancelLogout.addEventListener('click', () => logoutPopup.style.display = 'none');
-  yesLogout.addEventListener('click', () => {
+  logoutBtn.onclick = () => logoutPopup.style.display = 'block';
+  cancelLogout.onclick = () => logoutPopup.style.display = 'none';
+  yesLogout.onclick = () => {
     localStorage.removeItem('loggedInUser');
     logoutPopup.style.display = 'none';
     window.location.href = 'form_login.html';
-  });
+  };
   </script>
 
 </body>

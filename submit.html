@@ -34,6 +34,7 @@
       flex-direction: column;
       padding: 20px 0;
       border-radius: 0 10px 10px 0;
+      flex-shrink: 0;
     }
 
     .brand {
@@ -82,6 +83,8 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .profile-section {
@@ -256,34 +259,97 @@
       color: var(--red);
     }
 
-    /* === NAV PATH === */
-    .path {
-      font-size: 13px;
-      color: #777;
-      margin-bottom: 25px;
+    /* === RESPONSIVE === */
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border-radius: 0;
+        padding: 10px 20px;
+      }
+
+      .brand {
+        display: block;
+        font-size: 20px;
+        margin: 0;
+      }
+
+      .menu {
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .menu a {
+        padding: 10px;
+        gap: 6px;
+        font-size: 14px;
+      }
+
+      .content {
+        padding: 20px;
+      }
     }
 
-    .path span {
-      color: var(--red);
-      font-weight: 600;
+    @media (max-width: 480px) {
+      .menu a span,
+      .menu a small {
+        display: none;
+      }
+
+      .menu i {
+        font-size: 18px;
+      }
+
+      .sidebar {
+        justify-content: space-between;
+        padding: 10px 12px;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .profile-section {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .comment-box {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .comment-box button {
+        align-self: flex-end;
+      }
     }
   </style>
 </head>
-<body>
 
+<body>
   <aside class="sidebar">
     <div class="brand">SETRUM</div>
     <nav class="menu">
-      <a href="home.html"><i class="fa fa-home"></i> Beranda</a>
-      <a href="MataKuliah.html" class="active"><i class="fa fa-book"></i> Kelas</a>
-      <a href="Profile.html"><i class="fa fa-user"></i> Profil</a>
-      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+      <a href="home.html"><i class="fa fa-home"></i><span> Beranda</span></a>
+      <a href="MataKuliah.html" class="active"><i class="fa fa-book"></i><span> Kelas</span></a>
+      <a href="Profile.html"><i class="fa fa-user"></i><span> Profil</span></a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span> Keluar</span></a>
     </nav>
   </aside>
 
   <main class="content">
     <div class="header">
-      <h2></h2>
       <div class="profile-section">
         <div class="profile-text">
           <h1 id="greetName">Hai, pengguna!</h1>
@@ -295,7 +361,7 @@
       </div>
     </div>
 
-   <p style="font-size: 14px; color: #555; margin-bottom: 20px; text-align: right;">
+    <p style="font-size: 14px; color: #555; margin-bottom: 20px; text-align: right;">
       Kelas &gt; Mata Kuliah &gt; <span style="font-weight: 700; color: #000;">Tugas</span>
     </p>
 
@@ -318,7 +384,6 @@
     </div>
   </main>
 
-  <!-- === POPUP LOGOUT === -->
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
     <p>Apakah Anda yakin ingin keluar?</p>
@@ -355,7 +420,6 @@
     const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
     document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
 
-    // Upload file
     const uploadBox = document.getElementById('uploadBox');
     const fileInput = document.getElementById('fileInput');
 
@@ -364,9 +428,7 @@
       e.preventDefault();
       uploadBox.style.borderColor = '#a10d25';
     });
-    uploadBox.addEventListener('dragleave', () => {
-      uploadBox.style.borderColor = '#ccc';
-    });
+    uploadBox.addEventListener('dragleave', () => uploadBox.style.borderColor = '#ccc');
     uploadBox.addEventListener('drop', e => {
       e.preventDefault();
       uploadBox.style.borderColor = '#ccc';
@@ -376,13 +438,10 @@
       alert(`File "${e.target.files[0].name}" berhasil dipilih!`);
     });
 
-    // Tombol pesawat: langsung ke submited.html
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.addEventListener('click', () => {
+    document.getElementById('submitBtn').addEventListener('click', () => {
       window.location.href = 'submited.html';
     });
 
-    // Logout
     const logoutBtn = document.getElementById('logoutBtn');
     const logoutPopup = document.getElementById('logoutPopup');
     const yesLogout = document.getElementById('yesLogout');
@@ -396,6 +455,5 @@
       window.location.href = 'form_login.html';
     });
   </script>
-
 </body>
 </html>

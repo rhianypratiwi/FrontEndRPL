@@ -34,6 +34,7 @@
       flex-direction: column;
       padding: 20px 0;
       border-radius: 0 10px 10px 0;
+      transition: all 0.3s ease;
     }
 
     .brand {
@@ -75,12 +76,15 @@
     .content {
       flex: 1;
       padding: 30px;
+      transition: all 0.3s ease;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .profile-section {
@@ -135,6 +139,7 @@
       font-size: 13px;
       color: #777;
       margin-bottom: 20px;
+      text-align: right;
     }
 
     .breadcrumb span {
@@ -231,6 +236,86 @@
       background: #fff;
       color: var(--red);
     }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-radius: 0;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px 0;
+      }
+
+      .brand {
+        font-size: 18px;
+        margin-bottom: 0;
+      }
+
+      .menu {
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .menu a {
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .profile-section {
+        justify-content: flex-end;
+        width: 100%;
+      }
+
+      .profile-text h1 {
+        font-size: 16px;
+      }
+
+      .breadcrumb {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .menu a span {
+        display: none;
+      }
+
+      .menu a i {
+        font-size: 20px;
+      }
+
+      .post-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .profile-section {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .profile img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .breadcrumb {
+        font-size: 12px;
+        text-align: left;
+      }
+    }
   </style>
 </head>
 <body>
@@ -238,16 +323,16 @@
   <aside class="sidebar">
     <div class="brand">SETRUM</div>
     <nav class="menu">
-      <a href="home.html"><i class="fa fa-home"></i> Beranda</a>
-      <a href="MataKuliah.html" class="active"><i class="fa fa-book"></i> Kelas</a>
-      <a href="Profile.html"><i class="fa fa-user"></i> Profil</a>
-      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+      <a href="home.html"><i class="fa fa-home"></i><span>Beranda</span></a>
+      <a href="MataKuliah.html" class="active"><i class="fa fa-book"></i><span>Kelas</span></a>
+      <a href="Profile.html"><i class="fa fa-user"></i><span>Profil</span></a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span>Keluar</span></a>
     </nav>
   </aside>
 
   <main class="content">
     <div class="header">
-      <h2>Jaringan Komputer</h2>
+      <h2 id="courseTitle">Jaringan Komputer</h2>
       <div class="profile-section">
         <div class="profile-text">
           <h1 id="greetName">Hai, pengguna!</h1>
@@ -259,8 +344,8 @@
       </div>
     </div>
 
-    <p style="font-size: 14px; color: #555; margin-bottom: 20px; text-align: right;">
-      Kelas &gt; Mata Kuliah &gt; <span style="font-weight: 700; color: #000;">Postingan</span>
+    <p class="breadcrumb">
+      Kelas &gt; Mata Kuliah &gt; <span>Postingan</span>
     </p>
 
     <div style="margin-top: 20px;">
@@ -290,7 +375,6 @@
     </div>
   </main>
 
-  <!-- === POPUP LOGOUT === -->
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
     <p>Apakah Anda yakin ingin keluar?</p>
@@ -299,7 +383,6 @@
   </div>
 
   <script>
-    // === Ambil data login ===
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || !loggedInUser.name) {
       window.location.href = 'form_login.html';
@@ -311,20 +394,19 @@
 
     const greetName = document.getElementById('greetName');
     const profilePhoto = document.getElementById('profilePhoto');
+    const courseTitle = document.getElementById('courseTitle');
+
+    const selectedCourse = localStorage.getItem('selectedCourse');
+    if (selectedCourse) courseTitle.textContent = selectedCourse;
 
     const profileData = JSON.parse(localStorage.getItem(profileKey));
-    if (profileData && profileData.nama) {
-      greetName.textContent = `Hai, ${profileData.nama}!`;
-    } else {
-      greetName.textContent = `Hai, ${loggedInUser.name}!`;
-    }
+    greetName.textContent = profileData && profileData.nama 
+      ? `Hai, ${profileData.nama}!`
+      : `Hai, ${loggedInUser.name}!`;
 
     const savedImage = localStorage.getItem(imageKey);
     profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
-
-    profilePhoto.addEventListener('click', () => {
-      window.location.href = 'Profile.html';
-    });
+    profilePhoto.addEventListener('click', () => window.location.href = 'Profile.html');
 
     const today = new Date();
     const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
@@ -335,13 +417,13 @@
     const yesLogout = document.getElementById('yesLogout');
     const cancelLogout = document.getElementById('cancelLogout');
 
-    logoutBtn.addEventListener('click', () => logoutPopup.style.display = 'block');
-    cancelLogout.addEventListener('click', () => logoutPopup.style.display = 'none');
-    yesLogout.addEventListener('click', () => {
+    logoutBtn.onclick = () => logoutPopup.style.display = 'block';
+    cancelLogout.onclick = () => logoutPopup.style.display = 'none';
+    yesLogout.onclick = () => {
       localStorage.removeItem('loggedInUser');
       logoutPopup.style.display = 'none';
       window.location.href = 'form_login.html';
-    });
+    };
   </script>
 
 </body>

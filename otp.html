@@ -13,6 +13,7 @@
       align-items: center;
       height: 100vh;
       margin: 0;
+      padding: 15px;
     }
 
     .otp-container {
@@ -28,12 +29,13 @@
     h1 {
       font-size: 24px;
       margin-bottom: 6px;
+      color: #000;
     }
 
     p {
       font-size: 14px;
       color: #333;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     .otp-inputs {
@@ -117,6 +119,37 @@
     button:hover {
       background: #a10d25;
     }
+
+    /* ✅ RESPONSIVE untuk layar kecil */
+    @media (max-width: 480px) {
+      .otp-container {
+        width: 100%;
+        padding: 25px 20px;
+      }
+
+      .otp-inputs {
+        gap: 6px;
+      }
+
+      .otp-inputs input {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+
+      button {
+        font-size: 13.5px;
+        padding: 9px 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -159,6 +192,7 @@
     const errorNew = document.getElementById('error-new');
     const errorConfirm = document.getElementById('error-confirm');
 
+    // Auto focus ke input berikutnya
     inputs.forEach((input, index) => {
       input.addEventListener('input', () => {
         if (input.value.length === 1 && index < inputs.length - 1) {
