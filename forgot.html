@@ -107,6 +107,27 @@
     .back-link:hover {
       text-decoration: underline;
     }
+
+    /* ✅ Responsif untuk layar kecil */
+    @media (max-width: 480px) {
+      .forgot-container {
+        width: 90%;
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 9px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -141,6 +162,7 @@
       notFoundError.style.display = "none";
       successMessage.style.display = "none";
 
+      // ✅ Regex email yang benar
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const emailValue = resetEmail.value.trim();
 

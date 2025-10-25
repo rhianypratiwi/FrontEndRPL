@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dashboard — SETRUM</title>
+  <title>Postingan — SETRUM</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
@@ -121,33 +121,69 @@
       transform: scale(1.05);
     }
 
-    h2 {
+    /* === POSTING STYLE === */
+    .page-title {
       margin-top: 26px;
-      margin-bottom: 8px;
-      font-size: 18px;
+      font-size: 22px;
+      font-weight: 700;
     }
 
-    .card {
-      background: var(--red);
-      color: #fff;
-      padding: 10px 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      cursor: pointer;
+    .page-subtitle {
+      color: #555;
+      font-size: 14px;
+      margin-top: 4px;
+      margin-bottom: 20px;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    .breadcrumb {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 20px;
+      text-align: right;
     }
 
-    .card.light {
-      background: #f28a8a;
+    .breadcrumb span {
       color: #000;
+      font-weight: 500;
+    }
+
+    .post-card {
+      border: 1.5px solid #f1b1b1;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: transform 0.2s ease;
+    }
+
+    .post-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .post-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #f4b2b2;
+      flex-shrink: 0;
+    }
+
+    .post-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-info strong {
+      font-size: 15px;
+      color: #000;
+    }
+
+    .post-info small {
+      font-size: 13px;
+      color: #777;
+      margin-top: 3px;
     }
 
     /* === LOGOUT POPUP === */
@@ -243,6 +279,10 @@
       .profile-text h1 {
         font-size: 16px;
       }
+
+      .breadcrumb {
+        text-align: left;
+      }
     }
 
     @media (max-width: 600px) {
@@ -254,7 +294,7 @@
         font-size: 20px;
       }
 
-      .card {
+      .post-card {
         flex-direction: column;
         align-items: flex-start;
         gap: 6px;
@@ -270,6 +310,11 @@
         width: 40px;
         height: 40px;
       }
+
+      .breadcrumb {
+        font-size: 12px;
+        text-align: left;
+      }
     }
   </style>
 </head>
@@ -278,23 +323,16 @@
   <aside class="sidebar">
     <div class="brand">SETRUM</div>
     <nav class="menu">
-<<<<<<< HEAD
-      <a href="#" class="active"><i class="fa fa-home"></i> Beranda</a>
-      <a href="profile.html"><i class="fa fa-user"></i> Profil</a>
-      <a href="makul.html"><i class="fa fa-book"></i> Kelas</a>
-      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
-=======
-      <a href="#" class="active"><i class="fa fa-home"></i><span>Beranda</span></a>
-      <a href="MataKuliah.html"><i class="fa fa-book"></i><span>Kelas</span></a>
+      <a href="home.html"><i class="fa fa-home"></i><span>Beranda</span></a>
+      <a href="MataKuliah.html" class="active"><i class="fa fa-book"></i><span>Kelas</span></a>
       <a href="Profile.html"><i class="fa fa-user"></i><span>Profil</span></a>
       <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span>Keluar</span></a>
->>>>>>> aff77034133cd1198ef7bccf0aef05c01f9d92e4
     </nav>
   </aside>
 
   <main class="content">
     <div class="header">
-      <h2></h2>
+      <h2 id="courseTitle">Jaringan Komputer</h2>
       <div class="profile-section">
         <div class="profile-text">
           <h1 id="greetName">Hai, pengguna!</h1>
@@ -306,95 +344,86 @@
       </div>
     </div>
 
-    <h2>Mata Kuliah</h2>
-    <div class="card" id="matkul1">
-      <div><strong>Jaringan Komputer</strong><br><small>Yasir Arafat</small></div>
-      <span>TI-11</span>
-    </div>
-    <div class="card" id="matkul2">
-      <div><strong>Rekayasa Perangkat Lunak</strong><br><small>Yusril Eka Mahandra</small></div>
-      <span>TI-4</span>
-    </div>
-    <div class="card" id="matkul3">
-      <div><strong>Pemrograman Web</strong><br><small>Ferry Faisal</small></div>
-      <span>TI-12</span>
-    </div>
+    <p class="breadcrumb">
+      Kelas &gt; Mata Kuliah &gt; <span>Postingan</span>
+    </p>
 
-    <h2>Tugas</h2>
-    <div class="card" id="task1"><div><strong>PBL Kelompok</strong></div><span>Sept 25</span></div>
-    <div class="card light" id="task2"><div><strong>Project RPL</strong></div><span>Sept 30</span></div>
-    <div class="card" id="task3"><div><strong>Project Pemrograman</strong></div><span>Okt 9</span></div>
+    <div style="margin-top: 20px;">
+      <div class="post-card">
+        <div class="post-avatar"></div>
+        <div class="post-info">
+          <strong>Yasir Arafat</strong>
+          <small>Okt 3</small>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-avatar"></div>
+        <div class="post-info">
+          <strong>Yasir Arafat</strong>
+          <small>Sep 13</small>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-avatar"></div>
+        <div class="post-info">
+          <strong>Yasir Arafat</strong>
+          <small>Sep 7</small>
+        </div>
+      </div>
+    </div>
   </main>
 
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
-    <p>Are you sure?</p>
-    <button class="yes" id="yesLogout">Yes</button>
-    <button class="cancel" id="cancelLogout">Cancel</button>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
   </div>
 
   <script>
-  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-  if (!loggedInUser || !loggedInUser.name) window.location.href = 'form_login.html';
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.name) {
+      window.location.href = 'form_login.html';
+    }
 
-  const username = loggedInUser.username || loggedInUser.name || "guest";
-  const profileKey = `profileData_${username}`;
-  const imageKey = `profileImage_${username}`;
-  const greetName = document.getElementById('greetName');
-  const profilePhoto = document.getElementById('profilePhoto');
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
 
-  const profileData = JSON.parse(localStorage.getItem(profileKey));
-  greetName.textContent = profileData && profileData.nama 
-    ? `Hai, ${profileData.nama}!`
-    : `Hai, ${loggedInUser.name}!`;
+    const greetName = document.getElementById('greetName');
+    const profilePhoto = document.getElementById('profilePhoto');
+    const courseTitle = document.getElementById('courseTitle');
 
-  const savedImage = localStorage.getItem(imageKey);
-  profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
+    const selectedCourse = localStorage.getItem('selectedCourse');
+    if (selectedCourse) courseTitle.textContent = selectedCourse;
 
-  profilePhoto.addEventListener('click', () => window.location.href = 'Profile.html');
+    const profileData = JSON.parse(localStorage.getItem(profileKey));
+    greetName.textContent = profileData && profileData.nama 
+      ? `Hai, ${profileData.nama}!`
+      : `Hai, ${loggedInUser.name}!`;
 
-  const today = new Date();
-  const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-  document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
+    const savedImage = localStorage.getItem(imageKey);
+    profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
+    profilePhoto.addEventListener('click', () => window.location.href = 'Profile.html');
 
-  document.getElementById('matkul1').onclick = () => {
-    localStorage.setItem('selectedCourse', 'Jaringan Komputer');
-    window.location.href = 'postingan.html';
-  };
-  document.getElementById('matkul2').onclick = () => {
-    localStorage.setItem('selectedCourse', 'Rekayasa Perangkat Lunak');
-    window.location.href = 'postingan.html';
-  };
-  document.getElementById('matkul3').onclick = () => {
-    localStorage.setItem('selectedCourse', 'Pemrograman Web');
-    window.location.href = 'postingan.html';
-  };
+    const today = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
 
-  document.getElementById('task1').onclick = () => {
-    localStorage.setItem('selectedTask', 'PBL Kelompok');
-    window.location.href = 'submit.html';
-  };
-  document.getElementById('task2').onclick = () => {
-    localStorage.setItem('selectedTask', 'Project RPL');
-    window.location.href = 'submit.html';
-  };
-  document.getElementById('task3').onclick = () => {
-    localStorage.setItem('selectedTask', 'Project Pemrograman');
-    window.location.href = 'submit.html';
-  };
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
 
-  const logoutBtn = document.getElementById('logoutBtn');
-  const logoutPopup = document.getElementById('logoutPopup');
-  const yesLogout = document.getElementById('yesLogout');
-  const cancelLogout = document.getElementById('cancelLogout');
-
-  logoutBtn.onclick = () => logoutPopup.style.display = 'block';
-  cancelLogout.onclick = () => logoutPopup.style.display = 'none';
-  yesLogout.onclick = () => {
-    localStorage.removeItem('loggedInUser');
-    logoutPopup.style.display = 'none';
-    window.location.href = 'form_login.html';
-  };
+    logoutBtn.onclick = () => logoutPopup.style.display = 'block';
+    cancelLogout.onclick = () => logoutPopup.style.display = 'none';
+    yesLogout.onclick = () => {
+      localStorage.removeItem('loggedInUser');
+      logoutPopup.style.display = 'none';
+      window.location.href = 'form_login.html';
+    };
   </script>
 
 </body>

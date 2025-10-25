@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mata Kuliah — SETRUM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --red: #c8102e;
+      --hover-red: #a10d25;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      background: #fff;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* === SIDEBAR === */
+    .sidebar {
+      width: 240px;
+      background: var(--red);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      border-radius: 0 10px 10px 0;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      background: var(--hover-red);
+    }
+
+    .menu i {
+      width: 20px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    /* === CONTENT === */
+    .content {
+      flex: 1;
+      padding: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .profile-text {
+      text-align: right;
+    }
+
+    .profile-text h1 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .profile-text p {
+      color: #555;
+      font-size: 13px;
+    }
+
+    .profile img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #eee;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .profile img:hover {
+      transform: scale(1.05);
+    }
+
+    h2 {
+      margin-top: 26px;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    /* === KARTU MATA KULIAH === */
+    .card {
+      background: var(--red);
+      color: #fff;
+      padding: 18px 20px;
+      border-radius: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card.light {
+      background: #f28a8a;
+      color: #000;
+    }
+
+    .card div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .card small {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .card span {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    /* === POPUP LOGOUT === */
+    .logout-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--red);
+      color: #fff;
+      padding: 25px 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      z-index: 1000;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -45%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+    .logout-popup button {
+      background: #fff;
+      border: none;
+      padding: 8px 20px;
+      margin: 5px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .logout-popup button.yes {
+      color: var(--red);
+    }
+
+    .logout-popup button.cancel {
+      background: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+    }
+
+    .logout-popup button.cancel:hover {
+      background: #fff;
+      color: var(--red);
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 200px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-radius: 0;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+      }
+
+      .brand {
+        display: none;
+      }
+
+      .menu {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+      }
+
+      .menu a {
+        padding: 10px;
+        font-size: 14px;
+        gap: 6px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .profile-section {
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+
+      .profile-text {
+        text-align: left;
+      }
+
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 15px;
+      }
+
+      .card span {
+        align-self: flex-end;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .menu a i {
+        font-size: 16px;
+      }
+      .menu a {
+        font-size: 13px;
+        gap: 4px;
+      }
+      .card {
+        font-size: 14px;
+        padding: 14px 16px;
+      }
+      .profile img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home.html"><i class="fa fa-home"></i> Beranda</a>
+      <a href="#" class="active"><i class="fa fa-book"></i> Kelas</a>
+      <a href="Profile.html"><i class="fa fa-user"></i> Profil</a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="header">
+      <h2>Mata Kuliah</h2>
+      <div class="profile-section">
+        <div class="profile-text">
+          <h1 id="greetName">Hai, pengguna!</h1>
+          <p id="todayDate"></p>
+        </div>
+        <div class="profile">
+          <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
+        </div>
+      </div>
+    </div>
+    
+    <p style="font-size: 14px; color: #555; margin-bottom: 20px; text-align: right;">
+      Kelas &gt; <span style="font-weight: 700; color: #000;">Mata Kuliah</span>
+    </p>
+
+    <div style="margin-top: 25px;">
+      <div class="card"><div><strong>Jaringan Komputer</strong><small>Yasir Arafat</small></div><span>TI-11</span></div>
+      <div class="card light"><div><strong>Rekayasa Perangkat Lunak</strong><small>Yusril Eka Mahendra</small></div><span>TI-4</span></div>
+      <div class="card"><div><strong>Pemrograman Web</strong><small>Ferry Faisal</small></div><span>TI-12</span></div>
+    </div>
+  </main>
+
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+  <script>
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.name) {
+      window.location.href = 'form_login.html';
+    }
+
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
+
+    const greetName = document.getElementById('greetName');
+    const profilePhoto = document.getElementById('profilePhoto');
+
+    const profileData = JSON.parse(localStorage.getItem(profileKey));
+    if (profileData && profileData.nama) {
+      greetName.textContent = `Hai, ${profileData.nama}!`;
+    } else {
+      greetName.textContent = `Hai, ${loggedInUser.name || "Pengguna"}!`;
+    }
+
+    const savedImage = localStorage.getItem(imageKey);
+    profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
+
+    profilePhoto.addEventListener('click', () => window.location.href = 'Profile.html');
+
+    const today = new Date();
+    document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    });
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+
+    logoutBtn.addEventListener('click', () => logoutPopup.style.display = 'block');
+    cancelLogout.addEventListener('click', () => logoutPopup.style.display = 'none');
+    yesLogout.addEventListener('click', () => {
+      localStorage.removeItem('loggedInUser');
+      logoutPopup.style.display = 'none';
+      window.location.href = 'form_login.html';
+    });
+
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => window.location.href = 'postingan.html');
+    });
+  </script>
+</body>
+</html>
