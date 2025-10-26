@@ -279,13 +279,11 @@
       Kelas &gt; Mata Kuliah &gt; <span style="font-weight: 700; color: #000;">Tugas</span>
     </p>
 
-    <div class="task-title">PBL Kelompok</div>
-    <div class="deadline"><i class="fa-solid fa-calendar"></i> Deadline 25 Sept 2025, 23.59</div>
-    <div class="points">100 point</div>
+    <div class="task-title" id="taskTitle">Judul Tugas</div>
+    <div class="deadline" id="taskDeadline"><i class="fa-solid fa-calendar"></i> Deadline</div>
+    <div class="points" id="taskPoints">Poin</div>
 
-    <div class="task-desc">
-      Presentasi: rancangan gedung (gambar), jumlah user, sejarah gedung (termasuk berapa jumlah lantai, berapa ruangan, nama ruangan)
-    </div>
+    <div class="task-desc" id="taskDesc">Deskripsi tugas akan muncul di sini.</div>
 
     <div class="upload-box" id="uploadBox">
       <i class="fa-solid fa-upload"></i> Pilih file atau tarik ke sini
@@ -309,7 +307,6 @@
   </div>
 
   <script>
-    // ===== CEK LOGIN =====
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || !loggedInUser.name) {
       window.location.href = 'form_login.html';
@@ -341,12 +338,43 @@
       window.location.href = 'Profile.html';
     });
 
-    // ===== TANGGAL =====
     const today = new Date();
     const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
     document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
 
-    // ===== FILE UPLOAD =====
+    // === TUGAS DINAMIS ===
+    const selectedTask = localStorage.getItem('selectedTask');
+
+    const taskData = {
+      "PBL Kelompok": {
+        title: "PBL Kelompok",
+        deadline: "Deadline 25 Sept 2025, 23.59",
+        points: "100 point",
+        desc: "Presentasi: rancangan gedung (gambar), jumlah user, sejarah gedung (termasuk berapa jumlah lantai, berapa ruangan, nama ruangan)"
+      },
+      "Project RPL": {
+        title: "Project RPL",
+        deadline: "Deadline 30 Sept 2025, 23.59",
+        points: "100 point",
+        desc: "Bangun prototipe aplikasi dengan pendekatan waterfall dan dokumentasi lengkap."
+      },
+      "Project Pemrograman": {
+        title: "Project Pemrograman",
+        deadline: "Deadline 9 Okt 2025, 23.59",
+        points: "100 point",
+        desc: "Buat website responsif menggunakan HTML, CSS, dan JavaScript dengan fitur login sederhana."
+      }
+    };
+
+    const task = taskData[selectedTask];
+    if (task) {
+      document.getElementById('taskTitle').textContent = task.title;
+      document.getElementById('taskDeadline').innerHTML = `<i class="fa-solid fa-calendar"></i> ${task.deadline}`;
+      document.getElementById('taskPoints').textContent = task.points;
+      document.getElementById('taskDesc').textContent = task.desc;
+    }
+
+    // === FILE UPLOAD ===
     const uploadBox = document.getElementById('uploadBox');
     const fileInput = document.getElementById('fileInput');
     const fileName = document.getElementById('fileName');
@@ -370,12 +398,11 @@
         return;
       }
 
-      // Simulasi kirim file
       localStorage.setItem(`uploadedFile_${username}`, file.name);
       window.location.href = 'submited.html';
     });
 
-    // ===== LOGOUT =====
+    // === LOGOUT ===
     document.getElementById('logoutBtn').addEventListener('click', () => {
       document.getElementById('logoutPopup').style.display = 'block';
     });

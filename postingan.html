@@ -265,7 +265,7 @@
 
   <main class="content">
     <div class="header">
-      <h2 id="courseTitle">Jaringan Komputer</h2>
+      <h2 id="courseTitle">Mata Kuliah</h2>
       <div class="profile-section">
         <div class="profile-text">
           <h1 id="greetName">Hai, pengguna!</h1>
@@ -279,31 +279,7 @@
 
     <p class="breadcrumb">Kelas &gt; Mata Kuliah &gt; <span>Postingan</span></p>
 
-    <div style="margin-top: 20px;">
-      <div class="post-card">
-        <div class="post-avatar"></div>
-        <div class="post-info">
-          <strong>Yasir Arafat</strong>
-          <small>Okt 3</small>
-        </div>
-      </div>
-
-      <div class="post-card">
-        <div class="post-avatar"></div>
-        <div class="post-info">
-          <strong>Yasir Arafat</strong>
-          <small>Sep 13</small>
-        </div>
-      </div>
-
-      <div class="post-card">
-        <div class="post-avatar"></div>
-        <div class="post-info">
-          <strong>Yasir Arafat</strong>
-          <small>Sep 7</small>
-        </div>
-      </div>
-    </div>
+    <div id="postContainer" style="margin-top: 20px;"></div>
   </main>
 
   <div class="logout-popup" id="logoutPopup">
@@ -338,7 +314,7 @@
       profilePhoto.src = savedImage;
     } else {
       profilePhoto.removeAttribute('src');
-      profilePhoto.removeAttribute('alt'); // ✅ hilangkan teks
+      profilePhoto.removeAttribute('alt');
       profilePhoto.style.background = "#fff";
       profilePhoto.style.border = "2px solid #eee";
     }
@@ -361,6 +337,43 @@
       logoutPopup.style.display = 'none';
       window.location.href = 'form_login.html';
     };
+
+    // Data dinamis postingan
+    const postData = {
+      "Jaringan Komputer": [
+        { nama: "Yasir Arafat", tanggal: "Okt 3" },
+        { nama: "Yasir Arafat", tanggal: "Sep 13" },
+        { nama: "Yasir Arafat", tanggal: "Sep 7" }
+      ],
+      "Rekayasa Perangkat Lunak": [
+        { nama: "Yusril Eka Mahandra", tanggal: "Okt 2" },
+        { nama: "Yusril Eka Mahandra", tanggal: "Sep 20" },
+        { nama: "Yusril Eka Mahandra", tanggal: "Sep 5" }
+      ],
+      "Pemrograman Web": [
+        { nama: "Ferry Faisal", tanggal: "Okt 1" },
+        { nama: "Ferry Faisal", tanggal: "Sep 18" },
+        { nama: "Ferry Faisal", tanggal: "Sep 3" }
+      ]
+    };
+
+    const postContainer = document.getElementById('postContainer');
+    postContainer.innerHTML = "";
+
+    const posts = postData[selectedCourse] || [];
+
+    posts.forEach(post => {
+      const card = document.createElement('div');
+      card.className = 'post-card';
+      card.innerHTML = `
+        <div class="post-avatar"></div>
+        <div class="post-info">
+          <strong>${post.nama}</strong>
+          <small>${post.tanggal}</small>
+        </div>
+      `;
+      postContainer.appendChild(card);
+    });
   </script>
 </body>
 </html>

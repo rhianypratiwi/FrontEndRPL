@@ -358,8 +358,15 @@
       window.location.href = 'form_login.html';
     });
 
+    // === Navigasi ke postingan.html sesuai mata kuliah ===
     document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', () => window.location.href = 'postingan.html');
+      card.addEventListener('click', () => {
+        const namaMatkul = card.querySelector('strong')?.textContent?.trim();
+        if (namaMatkul) {
+          localStorage.setItem('selectedCourse', namaMatkul);
+          window.location.href = 'postingan.html';
+        }
+      });
     });
   </script>
 </body>
