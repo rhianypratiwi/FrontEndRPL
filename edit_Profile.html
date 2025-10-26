@@ -34,7 +34,6 @@
       flex-direction: column;
       padding: 20px 0;
       border-radius: 0 10px 10px 0;
-      transition: all 0.3s ease;
     }
 
     .brand {
@@ -94,13 +93,15 @@
       flex-wrap: wrap;
     }
 
+    /* ✅ Foto profil bulat sempurna */
     .profile-pic {
       width: 100px;
       height: 100px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid #ddd;
-      background: #f2f2f2;
+      background: #fff;
+      display: block;
     }
 
     .pic-controls {
@@ -225,12 +226,8 @@
       color: var(--red);
     }
 
-    /* === RESPONSIVE === */
     @media (max-width: 900px) {
-      body {
-        flex-direction: column;
-      }
-
+      body { flex-direction: column; }
       .sidebar {
         width: 100%;
         border-radius: 0;
@@ -239,60 +236,13 @@
         align-items: center;
         padding: 10px 0;
       }
-
-      .brand {
-        display: none;
-      }
-
-      .menu {
-        flex-direction: row;
-        gap: 10px;
-      }
-
-      .menu a {
-        padding: 8px 10px;
-        font-size: 14px;
-      }
-
-      .content {
-        padding: 20px;
-      }
-
-      .top-row {
-        justify-content: center;
-        text-align: center;
-      }
-
-      .profile-pic {
-        width: 80px;
-        height: 80px;
-      }
-
-      .form-area {
-        margin: 0 auto;
-      }
-
-      .actions {
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .menu a span {
-        display: none;
-      }
-
-      .menu a i {
-        font-size: 20px;
-      }
-
-      .menu a {
-        padding: 8px;
-      }
-
-      .profile-info h3 {
-        font-size: 16px;
-      }
+      .brand { display: none; }
+      .menu { flex-direction: row; gap: 10px; }
+      .menu a { padding: 8px 10px; font-size: 14px; }
+      .content { padding: 20px; }
+      .top-row { justify-content: center; text-align: center; }
+      .profile-pic { width: 80px; height: 80px; }
+      .actions { justify-content: center; }
     }
   </style>
 </head>
@@ -310,10 +260,10 @@
   <main class="content">
     <div class="content-inner">
       <div class="top-row">
-        <img id="profileImage" class="profile-pic" src="https://i.pravatar.cc/150" alt="Foto Profil">
+        <img id="profileImage" class="profile-pic" alt="Foto Profil">
         <div>
           <div class="profile-info">
-            <h3 id="nameDisplay">Lia Ali</h3>
+            <h3 id="nameDisplay">Nama Pengguna</h3>
             <p id="roleDisplay">Mahasiswa | Teknik Informatika</p>
           </div>
           <div class="pic-controls">
@@ -326,13 +276,10 @@
       <div class="form-area">
         <label for="nama">Nama</label>
         <input type="text" id="nama">
-
         <label for="nim">NIM</label>
         <input type="text" id="nim">
-
         <label for="kelas">Kelas</label>
         <input type="text" id="kelas">
-
         <label for="prodi">Prodi</label>
         <input type="text" id="prodi">
       </div>
@@ -372,14 +319,22 @@
     const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
     const savedImage = localStorage.getItem(imageKey);
 
-    nameInput.value = profileData.nama || loggedInUser.name || 'Lia Ali';
+    nameInput.value = profileData.nama || loggedInUser.name || 'Pengguna';
     nimInput.value = profileData.nim || '';
     kelasInput.value = profileData.kelas || '';
     prodiInput.value = profileData.prodi || 'Teknik Informatika';
 
-    nameDisplay.textContent = profileData.nama || loggedInUser.name || 'Lia Ali';
+    nameDisplay.textContent = profileData.nama || loggedInUser.name || 'Pengguna';
     roleDisplay.textContent = profileData.prodi ? ('Mahasiswa | ' + profileData.prodi) : 'Mahasiswa | Teknik Informatika';
-    if (savedImage) profileImage.src = savedImage;
+
+    if (savedImage) {
+      profileImage.src = savedImage;
+    } else {
+      profileImage.removeAttribute('src');
+      profileImage.removeAttribute('alt'); // ⬅️ ini bikin kosong total
+      profileImage.style.background = "#fff";
+      profileImage.style.border = "3px solid #ddd";
+    }
 
     document.getElementById('btnChangeSmall').addEventListener('click', () => {
       const input = document.createElement('input');
@@ -418,9 +373,13 @@
       input.click();
     });
 
+    // ✅ Sekarang bulat putih penuh & tanpa teks saat foto dihapus
     document.getElementById('btnDeleteSmall').addEventListener('click', () => {
       localStorage.removeItem(imageKey);
-      profileImage.src = "https://i.pravatar.cc/150";
+      profileImage.removeAttribute('src');
+      profileImage.removeAttribute('alt');
+      profileImage.style.background = "#fff";
+      profileImage.style.border = "3px solid #ddd";
     });
 
     document.getElementById('btnCancel').addEventListener('click', () => {
@@ -440,10 +399,6 @@
 
     document.getElementById('logoutBtn').addEventListener('click', () => {
       document.getElementById('logoutPopup').style.display = 'block';
-    });
-
-    document.getElementById('cancelLogout').addEventListener('click', () => {
-      document.getElementById('logoutPopup').style.display = 'none';
     });
 
     document.getElementById('yesLogout').addEventListener('click', () => {

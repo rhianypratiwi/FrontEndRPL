@@ -34,7 +34,6 @@
       flex-direction: column;
       padding: 20px 0;
       border-radius: 0 10px 10px 0;
-      transition: all 0.3s ease;
     }
 
     .brand {
@@ -42,7 +41,6 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 40px;
-      letter-spacing: 1px;
     }
 
     .menu {
@@ -76,7 +74,6 @@
     .content {
       flex: 1;
       padding: 30px;
-      transition: all 0.3s ease;
     }
 
     .header {
@@ -107,12 +104,14 @@
       font-size: 13px;
     }
 
+    /* ✅ foto profil bulat putih */
     .profile img {
       width: 48px;
       height: 48px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid #eee;
+      background: #fff;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
@@ -121,18 +120,10 @@
       transform: scale(1.05);
     }
 
-    /* === POSTING STYLE === */
     .page-title {
       margin-top: 26px;
       font-size: 22px;
       font-weight: 700;
-    }
-
-    .page-subtitle {
-      color: #555;
-      font-size: 14px;
-      margin-top: 4px;
-      margin-bottom: 20px;
     }
 
     .breadcrumb {
@@ -166,7 +157,8 @@
       width: 46px;
       height: 46px;
       border-radius: 50%;
-      background: #f4b2b2;
+      background: #fff; /* ✅ full putih */
+      border: 2px solid #f1b1b1;
       flex-shrink: 0;
     }
 
@@ -208,10 +200,6 @@
       to { opacity: 1; transform: translate(-50%, -50%); }
     }
 
-    .logout-popup h3 {
-      margin-bottom: 10px;
-    }
-
     .logout-popup button {
       background: #fff;
       border: none;
@@ -237,12 +225,10 @@
       color: var(--red);
     }
 
-    /* === RESPONSIVE === */
     @media (max-width: 900px) {
       body {
         flex-direction: column;
       }
-
       .sidebar {
         width: 100%;
         border-radius: 0;
@@ -251,69 +237,16 @@
         align-items: center;
         padding: 10px 0;
       }
-
-      .brand {
-        font-size: 18px;
-        margin-bottom: 0;
-      }
-
       .menu {
         flex-direction: row;
         gap: 10px;
       }
-
       .menu a {
         padding: 8px 10px;
         font-size: 14px;
       }
-
       .content {
         padding: 20px;
-      }
-
-      .profile-section {
-        justify-content: flex-end;
-        width: 100%;
-      }
-
-      .profile-text h1 {
-        font-size: 16px;
-      }
-
-      .breadcrumb {
-        text-align: left;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .menu a span {
-        display: none;
-      }
-
-      .menu a i {
-        font-size: 20px;
-      }
-
-      .post-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-      }
-
-      .profile-section {
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-      }
-
-      .profile img {
-        width: 40px;
-        height: 40px;
-      }
-
-      .breadcrumb {
-        font-size: 12px;
-        text-align: left;
       }
     }
   </style>
@@ -339,14 +272,12 @@
           <p id="todayDate"></p>
         </div>
         <div class="profile">
-          <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
+          <img id="profilePhoto" alt="Foto Profil">
         </div>
       </div>
     </div>
 
-    <p class="breadcrumb">
-      Kelas &gt; Mata Kuliah &gt; <span>Postingan</span>
-    </p>
+    <p class="breadcrumb">Kelas &gt; Mata Kuliah &gt; <span>Postingan</span></p>
 
     <div style="margin-top: 20px;">
       <div class="post-card">
@@ -399,13 +330,19 @@
     const selectedCourse = localStorage.getItem('selectedCourse');
     if (selectedCourse) courseTitle.textContent = selectedCourse;
 
-    const profileData = JSON.parse(localStorage.getItem(profileKey));
-    greetName.textContent = profileData && profileData.nama 
-      ? `Hai, ${profileData.nama}!`
-      : `Hai, ${loggedInUser.name}!`;
+    const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+    greetName.textContent = profileData.nama ? `Hai, ${profileData.nama}!` : `Hai, ${loggedInUser.name}!`;
 
     const savedImage = localStorage.getItem(imageKey);
-    profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
+    if (savedImage) {
+      profilePhoto.src = savedImage;
+    } else {
+      profilePhoto.removeAttribute('src');
+      profilePhoto.removeAttribute('alt'); // ✅ hilangkan teks
+      profilePhoto.style.background = "#fff";
+      profilePhoto.style.border = "2px solid #eee";
+    }
+
     profilePhoto.addEventListener('click', () => window.location.href = 'Profile.html');
 
     const today = new Date();
@@ -425,6 +362,5 @@
       window.location.href = 'form_login.html';
     };
   </script>
-
 </body>
 </html>

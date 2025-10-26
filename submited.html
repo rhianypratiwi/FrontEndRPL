@@ -90,9 +90,15 @@
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid #eee;
-      cursor: pointer;
-      transition: transform 0.2s ease;
+      background-color: #fff; /* ⬅ lingkaran putih */
+      display: block;
     }
+
+    .profile img.empty {
+      background-color: #fff;
+      border: 2px solid #ddd;
+    }
+
     .profile img:hover { transform: scale(1.05); }
 
     .breadcrumb {
@@ -178,70 +184,6 @@
     .logout-popup button.yes { color: var(--red); }
     .logout-popup button.cancel { background: transparent; border:1px solid #fff; color:#fff; }
     .logout-popup button.cancel:hover { background:#fff; color:var(--red); }
-
-    /* === RESPONSIVE === */
-    @media (max-width: 900px) {
-      body {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        border-radius: 0;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        padding: 10px;
-      }
-      .brand {
-        margin: 0;
-        font-size: 18px;
-      }
-      .menu {
-        flex-direction: row;
-        gap: 10px;
-      }
-      .menu a {
-        padding: 10px;
-        font-size: 14px;
-      }
-      .content {
-        padding: 16px;
-      }
-      .profile-section {
-        flex-direction: row-reverse;
-        justify-content: flex-end;
-      }
-      .breadcrumb {
-        justify-content: flex-start;
-        text-align: left;
-      }
-      .info-box {
-        max-width: 100%;
-        padding: 16px;
-      }
-      .page-title {
-        font-size: 22px;
-      }
-    }
-
-    @media (max-width: 500px) {
-      .profile-section {
-        flex-direction: column-reverse;
-        align-items: flex-end;
-      }
-      .profile img {
-        width: 40px;
-        height: 40px;
-      }
-      .sidebar {
-        flex-wrap: wrap;
-        gap: 5px;
-      }
-      .menu a {
-        font-size: 12px;
-        padding: 6px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -262,10 +204,10 @@
       <div class="profile-section">
         <div class="profile-text">
           <h1 id="greetName">Hai, pengguna!</h1>
-          <p id="todayDate">Kamis, 18 September 2025</p>
+          <p id="todayDate"></p>
         </div>
         <div class="profile">
-          <img id="profilePhoto" src="https://i.pravatar.cc/100" alt="profil">
+          <img id="profilePhoto" alt="">
         </div>
       </div>
     </div>
@@ -315,8 +257,17 @@
     const imageKey = `profileImage_${username}`;
     const profileData = JSON.parse(localStorage.getItem(profileKey));
     const savedImage = localStorage.getItem(imageKey);
+    const profilePhoto = document.getElementById('profilePhoto');
+
     document.getElementById('greetName').textContent = profileData?.nama ? `Hai, ${profileData.nama}!` : `Hai, ${loggedInUser.name || 'Pengguna'}!`;
-    if (savedImage) document.getElementById('profilePhoto').src = savedImage;
+
+    if (savedImage) {
+      profilePhoto.src = savedImage;
+    } else {
+      profilePhoto.removeAttribute('src');
+      profilePhoto.removeAttribute('alt');
+      profilePhoto.classList.add('empty');
+    }
 
     const today = new Date();
     const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
@@ -337,7 +288,7 @@
     document.getElementById('pageTitle').textContent = selectedTask;
     document.getElementById('infoCourse').textContent = selectedCourse;
 
-    document.getElementById('profilePhoto').addEventListener('click', () => {
+    profilePhoto.addEventListener('click', () => {
       window.location.href = 'Profile.html';
     });
 

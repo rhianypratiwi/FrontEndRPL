@@ -109,17 +109,23 @@
       font-size: 13px;
     }
 
+    /* === FOTO PROFIL === */
+    .profile-placeholder, 
     .profile img {
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      object-fit: cover;
       border: 2px solid #eee;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
 
-    .profile img:hover {
+    .profile-placeholder {
+      background: #fff;
+    }
+
+    .profile img:hover,
+    .profile-placeholder:hover {
       transform: scale(1.05);
     }
 
@@ -218,12 +224,6 @@
     }
 
     /* === RESPONSIVE DESIGN === */
-    @media (max-width: 1024px) {
-      .sidebar {
-        width: 200px;
-      }
-    }
-
     @media (max-width: 768px) {
       body {
         flex-direction: column;
@@ -258,47 +258,7 @@
         padding: 20px;
       }
 
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .profile-section {
-        flex-direction: row;
-        justify-content: flex-start;
-      }
-
-      .profile-text {
-        text-align: left;
-      }
-
-      .card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        font-size: 15px;
-      }
-
-      .card span {
-        align-self: flex-end;
-        font-size: 14px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .menu a i {
-        font-size: 16px;
-      }
-      .menu a {
-        font-size: 13px;
-        gap: 4px;
-      }
-      .card {
-        font-size: 14px;
-        padding: 14px 16px;
-      }
-      .profile img {
+      .profile img, .profile-placeholder {
         width: 40px;
         height: 40px;
       }
@@ -325,9 +285,7 @@
           <h1 id="greetName">Hai, pengguna!</h1>
           <p id="todayDate"></p>
         </div>
-        <div class="profile">
-          <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
-        </div>
+        <div class="profile" id="profileContainer"></div>
       </div>
     </div>
     
@@ -360,19 +318,27 @@
     const imageKey = `profileImage_${username}`;
 
     const greetName = document.getElementById('greetName');
-    const profilePhoto = document.getElementById('profilePhoto');
+    const profileContainer = document.getElementById('profileContainer');
 
     const profileData = JSON.parse(localStorage.getItem(profileKey));
-    if (profileData && profileData.nama) {
-      greetName.textContent = `Hai, ${profileData.nama}!`;
-    } else {
-      greetName.textContent = `Hai, ${loggedInUser.name || "Pengguna"}!`;
-    }
+    greetName.textContent = profileData?.nama
+      ? `Hai, ${profileData.nama}!`
+      : `Hai, ${loggedInUser.name || "Pengguna"}!`;
 
     const savedImage = localStorage.getItem(imageKey);
-    profilePhoto.src = savedImage || "https://i.pravatar.cc/100";
 
-    profilePhoto.addEventListener('click', () => window.location.href = 'Profile.html');
+    if (savedImage) {
+      const img = document.createElement("img");
+      img.src = savedImage;
+      img.alt = "profil";
+      img.addEventListener('click', () => window.location.href = 'Profile.html');
+      profileContainer.appendChild(img);
+    } else {
+      const placeholder = document.createElement("div");
+      placeholder.className = "profile-placeholder";
+      placeholder.addEventListener('click', () => window.location.href = 'Profile.html');
+      profileContainer.appendChild(placeholder);
+    }
 
     const today = new Date();
     document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', {
