@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Form Login</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: Arial, sans-serif;
@@ -31,26 +29,9 @@
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
 
-    h1 {
-      font-size: 26px;
-      font-weight: bold;
-      color: #000;
-      margin-bottom: 5px;
-    }
-
-    p {
-      color: #333;
-      font-size: 14px;
-      margin-bottom: 25px;
-    }
-
-    label {
-      display: block;
-      text-align: left;
-      font-size: 14px;
-      color: #000;
-      margin-bottom: 5px;
-    }
+    h1 { font-size: 26px; font-weight: bold; color: #000; margin-bottom: 5px; }
+    p { color: #333; font-size: 14px; margin-bottom: 25px; }
+    label { display: block; text-align: left; font-size: 14px; color: #000; margin-bottom: 5px; }
 
     input {
       width: 100%;
@@ -59,7 +40,6 @@
       border-radius: 6px;
       font-size: 14px;
       margin-bottom: 5px;
-      box-sizing: border-box;
     }
 
     .error {
@@ -81,10 +61,7 @@
       cursor: pointer;
       transition: background 0.2s ease;
     }
-
-    button:hover {
-      background: darkred;
-    }
+    button:hover { background: darkred; }
 
     .link {
       display: block;
@@ -94,56 +71,26 @@
       text-decoration: none;
       font-weight: bold;
     }
+    .link:hover { text-decoration: underline; }
 
-    .link:hover {
-      text-decoration: underline;
-    }
-
-    /* 🔹 Responsif di HP */
     @media (max-width: 600px) {
-      body {
-        padding: 10px;
-        align-items: flex-start;
-      }
-
+      body { padding: 10px; align-items: flex-start; }
       .login-container {
         width: 100%;
         max-width: none;
         margin-top: 60px;
         padding: 25px 20px;
       }
-
-      h1 {
-        font-size: 22px;
-      }
-
-      p, label, input, button, .link {
-        font-size: 14px;
-      }
-
-      button {
-        padding: 12px;
-      }
+      h1 { font-size: 22px; }
+      p, label, input, button, .link { font-size: 14px; }
+      button { padding: 12px; }
     }
 
-    /* 🔹 Responsif di layar sangat kecil (HP mini) */
     @media (max-width: 380px) {
-      .login-container {
-        margin-top: 40px;
-        padding: 20px 15px;
-      }
-
-      h1 {
-        font-size: 20px;
-      }
-
-      p {
-        font-size: 13px;
-      }
-
-      button {
-        font-size: 14px;
-      }
+      .login-container { margin-top: 40px; padding: 20px 15px; }
+      h1 { font-size: 20px; }
+      p { font-size: 13px; }
+      button { font-size: 14px; }
     }
   </style>
 </head>
@@ -191,12 +138,10 @@
         emailError.style.display = "block";
         valid = false;
       }
-
       if (passwordInput.value.trim() === "") {
         passwordError.style.display = "block";
         valid = false;
       }
-
       if (!valid) return;
 
       const users = JSON.parse(localStorage.getItem("users")) || [];
@@ -208,25 +153,26 @@
         localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
         localStorage.setItem("isLoggedIn", "true");
 
-        const username = foundUser.username || foundUser.name || foundUser.email;
-        const profileKey = `profileData_${username}`;
-        const profileData = JSON.parse(localStorage.getItem(profileKey));
-
-        if (
-          profileData &&
-          profileData.nama &&
-          profileData.nim &&
-          profileData.kelas &&
-          profileData.prodi
-        ) {
-          window.location.href = "home.html";
+        // 🔹 Redirect berdasarkan role (case-insensitive)
+        if (foundUser.role && foundUser.role.toLowerCase() === "dosen") {
+          window.location.href = "home_dosen.html";
         } else {
-          window.location.href = "Profile.html";
+          // cek apakah profil mahasiswa lengkap
+          const username = foundUser.username || foundUser.name || foundUser.email;
+          const profileKey = `profileData_${username}`;
+          const profileData = JSON.parse(localStorage.getItem(profileKey));
+
+          if (profileData && profileData.nama && profileData.nim && profileData.kelas && profileData.prodi) {
+            window.location.href = "home.html";
+          } else {
+            window.location.href = "Profile.html";
+          }
         }
       } else {
         loginError.style.display = "block";
       }
     });
   </script>
+
 </body>
 </html>
