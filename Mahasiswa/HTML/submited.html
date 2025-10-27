@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Submitted — SETRUM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../CSS/submited.css">
+</head>
+
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home.html"><i class="fa fa-home"></i> Beranda</a>
+      <a href="MataKuliah.html"><i class="fa fa-book"></i> Kelas</a>
+      <a href="Profile.html"><i class="fa fa-user"></i> Profil</a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="header">
+      <div></div>
+      <div class="profile-section">
+        <div class="profile-text">
+          <h1 id="greetName">Hai, pengguna!</h1>
+          <p id="todayDate"></p>
+        </div>
+        <div class="profile">
+          <img id="profilePhoto" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="breadcrumb" id="breadcrumb"></div>
+
+    <div class="page-title" id="pageTitle">PBL Kelompok</div>
+
+    <div class="status">
+      <i class="fa fa-check"></i>
+      <div>
+        <div>Tugas Telah Disubmit</div>
+        <div style="font-weight:600; font-size:12px; color:#0a6b2f;">File:</div>
+      </div>
+    </div>
+
+    <div class="info-box" id="infoBox">
+      <div class="deadline">Deadline 25 Sept 2025, 23.59</div>
+      <div style="font-size:12px; color:#777; margin-bottom:12px;">100 point</div>
+      <p>Presentasi : rancangan gedung (gambar), jumlah user, sejarah gedung (termasuk berapa jumlah lantai, berapa ruangan, nama ruangan)</p>
+
+      <div class="info-list">
+        <div><strong>Dosen:</strong> Yasir Arafat</div>
+        <div><strong>Mata Kuliah:</strong> <span id="infoCourse">Jaringan Komputer</span></div>
+        <div><strong>Kelas:</strong> D</div>
+        <div><strong>Prodi:</strong> TI</div>
+        <div><strong>Semester:</strong> 5</div>
+      </div>
+    </div>
+  </main>
+
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+  <script>
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || (!loggedInUser.name && !loggedInUser.username)) {
+      window.location.href = 'form_login.html';
+    }
+
+    const username = loggedInUser.username || loggedInUser.name || 'guest';
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
+    const profileData = JSON.parse(localStorage.getItem(profileKey));
+    const savedImage = localStorage.getItem(imageKey);
+    const profilePhoto = document.getElementById('profilePhoto');
+
+    document.getElementById('greetName').textContent = profileData?.nama ? `Hai, ${profileData.nama}!` : `Hai, ${loggedInUser.name || 'Pengguna'}!`;
+
+    if (savedImage) {
+      profilePhoto.src = savedImage;
+    } else {
+      profilePhoto.removeAttribute('src');
+      profilePhoto.removeAttribute('alt');
+      profilePhoto.classList.add('empty');
+    }
+
+    const today = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
+
+    const selectedCourse = localStorage.getItem('selectedCourse') || 'Jaringan Komputer';
+    const selectedTask = localStorage.getItem('selectedTask') || 'PBL Kelompok';
+    const breadcrumbEl = document.getElementById('breadcrumb');
+    breadcrumbEl.innerHTML = `
+      <a href="MataKuliah.html">Kelas</a>
+      <span class="sep">›</span>
+      <a href="postingan.html">${selectedCourse}</a>
+      <span class="sep">›</span>
+      <a href="postingan.html">Tugas</a>
+      <span class="sep">›</span>
+      <span style="color:#000; font-weight:600;">Submitted</span>
+    `;
+    document.getElementById('pageTitle').textContent = selectedTask;
+    document.getElementById('infoCourse').textContent = selectedCourse;
+
+    profilePhoto.addEventListener('click', () => {
+      window.location.href = 'Profile.html';
+    });
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+    logoutBtn.addEventListener('click', () => logoutPopup.style.display = 'block');
+    cancelLogout.addEventListener('click', () => logoutPopup.style.display = 'none');
+    yesLogout.addEventListener('click', () => {
+      localStorage.removeItem('loggedInUser');
+      logoutPopup.style.display = 'none';
+      window.location.href = 'form_login.html';
+    });
+  </script>
+</body>
+</html>

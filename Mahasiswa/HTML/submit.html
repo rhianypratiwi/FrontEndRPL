@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PBL Kelompok — SETRUM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../CSS/submit.css">
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home.html"><i class="fa fa-home"></i><span> Beranda</span></a>
+      <a href="MataKuliah.html" class="active"><i class="fa fa-book"></i><span> Kelas</span></a>
+      <a href="Profile.html"><i class="fa fa-user"></i><span> Profil</span></a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span> Keluar</span></a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="header">
+      <div class="profile-section">
+        <div class="profile-text">
+          <h1 id="greetName">Hai, Pengguna!</h1>
+          <p id="todayDate"></p>
+        </div>
+        <div class="profile">
+          <img id="profilePhoto" alt="">
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size: 14px; color: #555; margin-bottom: 20px; text-align: right;">
+      Kelas &gt; Mata Kuliah &gt; <span style="font-weight: 700; color: #000;">Tugas</span>
+    </p>
+
+    <div class="task-title" id="taskTitle">Judul Tugas</div>
+    <div class="deadline" id="taskDeadline"><i class="fa-solid fa-calendar"></i> Deadline</div>
+    <div class="points" id="taskPoints">Poin</div>
+
+    <div class="task-desc" id="taskDesc">Deskripsi tugas akan muncul di sini.</div>
+
+    <div class="upload-box" id="uploadBox">
+      <i class="fa-solid fa-upload"></i> Pilih file atau tarik ke sini
+      <input type="file" id="fileInput" style="display:none;">
+      <span id="fileName"></span>
+    </div>
+
+    <p id="errorMsg" class="error-message"></p>
+
+    <div class="comment-box">
+      <input type="text" placeholder="Tambahkan komentar privat..." id="commentInput"/>
+      <button id="submitBtn"><i class="fa-regular fa-paper-plane"></i></button>
+    </div>
+  </main>
+
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+  <script>
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.name) {
+      window.location.href = 'form_login.html';
+    }
+
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
+
+    const greetName = document.getElementById('greetName');
+    const profilePhoto = document.getElementById('profilePhoto');
+
+    const profileData = JSON.parse(localStorage.getItem(profileKey));
+    greetName.textContent = profileData && profileData.nama
+      ? `Hai, ${profileData.nama}!`
+      : `Hai, ${loggedInUser.name}!`;
+
+    const savedImage = localStorage.getItem(imageKey);
+    if (savedImage) {
+      profilePhoto.src = savedImage;
+    } else {
+      profilePhoto.removeAttribute("src");
+      profilePhoto.removeAttribute("alt");
+      profilePhoto.style.backgroundColor = "#fff";
+      profilePhoto.style.border = "2px solid #eee";
+    }
+
+    profilePhoto.addEventListener('click', () => {
+      window.location.href = 'Profile.html';
+    });
+
+    const today = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
+
+    const selectedTask = localStorage.getItem('selectedTask');
+    const taskData = {
+      "PBL Kelompok": {
+        title: "PBL Kelompok",
+        deadline: "Deadline 25 Sept 2025, 23.59",
+        points: "100 point",
+        desc: "Presentasi: rancangan gedung (gambar), jumlah user, sejarah gedung (termasuk berapa jumlah lantai, berapa ruangan, nama ruangan)"
+      },
+      "Project RPL": {
+        title: "Project RPL",
+        deadline: "Deadline 30 Sept 2025, 23.59",
+        points: "100 point",
+        desc: "Bangun prototipe aplikasi dengan pendekatan waterfall dan dokumentasi lengkap."
+      },
+      "Project Pemrograman": {
+        title: "Project Pemrograman",
+        deadline: "Deadline 9 Okt 2025, 23.59",
+        points: "100 point",
+        desc: "Buat website responsif menggunakan HTML, CSS, dan JavaScript dengan fitur login sederhana."
+      }
+    };
+
+    const task = taskData[selectedTask];
+    if (task) {
+      document.getElementById('taskTitle').textContent = task.title;
+      document.getElementById('taskDeadline').innerHTML = `<i class="fa-solid fa-calendar"></i> ${task.deadline}`;
+      document.getElementById('taskPoints').textContent = task.points;
+      document.getElementById('taskDesc').textContent = task.desc;
+    }
+
+    const uploadBox = document.getElementById('uploadBox');
+    const fileInput = document.getElementById('fileInput');
+    const fileName = document.getElementById('fileName');
+    const errorMsg = document.getElementById('errorMsg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    uploadBox.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file) {
+        fileName.textContent = `📁 ${file.name}`;
+        errorMsg.textContent = "";
+      }
+    });
+
+    submitBtn.addEventListener('click', () => {
+      const file = fileInput.files[0];
+      if (!file) {
+        errorMsg.textContent = "⚠️ Tidak ada file yang dimasukkan.";
+        return;
+      }
+      localStorage.setItem(`uploadedFile_${username}`, file.name);
+      window.location.href = 'submited.html';
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      document.getElementById('logoutPopup').style.display = 'block';
+    });
+    document.getElementById('cancelLogout').addEventListener('click', () => {
+      document.getElementById('logoutPopup').style.display = 'none';
+    });
+    document.getElementById('yesLogout').addEventListener('click', () => {
+      localStorage.removeItem('loggedInUser');
+      window.location.href = 'form_login.html';
+    });
+  </script>
+</body>
+</html>

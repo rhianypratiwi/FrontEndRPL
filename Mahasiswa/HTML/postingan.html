@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Postingan — SETRUM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../CSS/postingan.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home.html"><i class="fa fa-home"></i><span>Beranda</span></a>
+      <a href="MataKuliah.html" class="active"><i class="fa fa-book"></i><span>Kelas</span></a>
+      <a href="Profile.html"><i class="fa fa-user"></i><span>Profil</span></a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span>Keluar</span></a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="header">
+      <h2 id="courseTitle">Mata Kuliah</h2>
+      <div class="profile-section">
+        <div class="profile-text">
+          <h1 id="greetName">Hai, pengguna!</h1>
+          <p id="todayDate"></p>
+        </div>
+        <div class="profile">
+          <img id="profilePhoto" alt="Foto Profil">
+        </div>
+      </div>
+    </div>
+
+    <p class="breadcrumb">Kelas &gt; Mata Kuliah &gt; <span>Postingan</span></p>
+
+    <div id="postContainer" style="margin-top: 20px;"></div>
+  </main>
+
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+  <!-- ⚠️ JavaScript tidak diubah sama sekali -->
+  <script>
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.name) {
+      window.location.href = 'form_login.html';
+    }
+
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
+
+    const greetName = document.getElementById('greetName');
+    const profilePhoto = document.getElementById('profilePhoto');
+    const courseTitle = document.getElementById('courseTitle');
+
+    const selectedCourse = localStorage.getItem('selectedCourse');
+    if (selectedCourse) courseTitle.textContent = selectedCourse;
+
+    const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+    greetName.textContent = profileData.nama ? `Hai, ${profileData.nama}!` : `Hai, ${loggedInUser.name}!`;
+
+    const savedImage = localStorage.getItem(imageKey);
+    if (savedImage) {
+      profilePhoto.src = savedImage;
+    } else {
+      profilePhoto.removeAttribute('src');
+      profilePhoto.removeAttribute('alt');
+      profilePhoto.style.background = "#fff";
+      profilePhoto.style.border = "2px solid #eee";
+    }
+
+    profilePhoto.addEventListener('click', () => window.location.href = 'Profile.html');
+
+    const today = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+
+    logoutBtn.onclick = () => logoutPopup.style.display = 'block';
+    cancelLogout.onclick = () => logoutPopup.style.display = 'none';
+    yesLogout.onclick = () => {
+      localStorage.removeItem('loggedInUser');
+      logoutPopup.style.display = 'none';
+      window.location.href = 'form_login.html';
+    };
+
+    const postData = {
+      "Jaringan Komputer": [
+        { nama: "Yasir Arafat", tanggal: "Okt 3" },
+        { nama: "Yasir Arafat", tanggal: "Sep 13" },
+        { nama: "Yasir Arafat", tanggal: "Sep 7" }
+      ],
+      "Rekayasa Perangkat Lunak": [
+        { nama: "Yusril Eka Mahandra", tanggal: "Okt 2" },
+        { nama: "Yusril Eka Mahandra", tanggal: "Sep 20" },
+        { nama: "Yusril Eka Mahandra", tanggal: "Sep 5" }
+      ],
+      "Pemrograman Web": [
+        { nama: "Ferry Faisal", tanggal: "Okt 1" },
+        { nama: "Ferry Faisal", tanggal: "Sep 18" },
+        { nama: "Ferry Faisal", tanggal: "Sep 3" }
+      ]
+    };
+
+    const postContainer = document.getElementById('postContainer');
+    postContainer.innerHTML = "";
+
+    const posts = postData[selectedCourse] || [];
+
+    posts.forEach(post => {
+      const card = document.createElement('div');
+      card.className = 'post-card';
+      card.innerHTML = `
+        <div class="post-avatar"></div>
+        <div class="post-info">
+          <strong>${post.nama}</strong>
+          <small>${post.tanggal}</small>
+        </div>
+      `;
+      postContainer.appendChild(card);
+    });
+  </script>
+</body>
+</html>

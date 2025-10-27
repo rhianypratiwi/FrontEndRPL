@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lupa Password</title>
+  <!-- 🔗 Hubungkan ke CSS eksternal -->
+  <link rel="stylesheet" href="../CSS/forgot.css">
+</head>
+<body>
+  <div class="forgot-container">
+    <h1>LUPA PASSWORD</h1>
+    <p>Masukkan email Anda untuk reset password</p>
+
+    <form id="forgotForm" novalidate>
+      <label for="resetEmail">Email</label>
+      <input type="email" id="resetEmail" placeholder="contoh@email.com" required />
+      <div class="error" id="resetError">Masukkan email yang valid!</div>
+      <div class="error" id="notFoundError">Email tidak ditemukan!</div>
+
+      <button type="submit">Kirim Link Reset</button>
+      <div class="success" id="successMessage">Email ditemukan! Mengarahkan ke halaman OTP...</div>
+    </form>
+
+    <a href="form_login.html" class="back-link">Kembali ke Login</a>
+  </div>
+
+  <script>
+    const form = document.getElementById("forgotForm");
+    const resetEmail = document.getElementById("resetEmail");
+    const resetError = document.getElementById("resetError");
+    const notFoundError = document.getElementById("notFoundError");
+    const successMessage = document.getElementById("successMessage");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      resetError.style.display = "none";
+      notFoundError.style.display = "none";
+      successMessage.style.display = "none";
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailValue = resetEmail.value.trim();
+
+      if (!emailValue) {
+        resetError.textContent = "Email harus diisi!";
+        resetError.style.display = "block";
+        return;
+      }
+
+      if (!emailValue.match(emailPattern)) {
+        resetError.textContent = "Masukkan email yang valid!";
+        resetError.style.display = "block";
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const foundUser = users.find(u => u.email === emailValue);
+
+      if (!foundUser) {
+        notFoundError.style.display = "block";
+        return;
+      }
+
+      localStorage.setItem("currentEmail", emailValue);
+      successMessage.style.display = "block";
+
+      setTimeout(() => {
+        window.location.href = "otp.html";
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

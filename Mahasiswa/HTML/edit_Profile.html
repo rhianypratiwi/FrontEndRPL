@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Edit Profil — SETRUM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../CSS/edit_Profile.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home.html"><i class="fa fa-home"></i><span>Beranda</span></a>
+      <a href="MataKuliah.html"><i class="fa fa-book"></i><span>Kelas</span></a>
+      <a href="profile.html" class="active"><i class="fa fa-user"></i><span>Profil</span></a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span>Keluar</span></a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="content-inner">
+      <div class="top-row">
+        <img id="profileImage" class="profile-pic" alt="Foto Profil">
+        <div>
+          <div class="profile-info">
+            <h3 id="nameDisplay">Nama Pengguna</h3>
+            <p id="roleDisplay">Mahasiswa | Teknik Informatika</p>
+          </div>
+          <div class="pic-controls">
+            <button id="btnChangeSmall">Ganti foto profil</button>
+            <button id="btnDeleteSmall">Hapus</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-area">
+        <label for="nama">Nama</label>
+        <input type="text" id="nama">
+        <label for="nim">NIM</label>
+        <input type="text" id="nim">
+        <label for="kelas">Kelas</label>
+        <input type="text" id="kelas">
+        <label for="prodi">Prodi</label>
+        <input type="text" id="prodi">
+      </div>
+
+      <div class="actions">
+        <button class="btn-cancel" id="btnCancel">Batal</button>
+        <button class="btn-save" id="btnSave">Simpan Perubahan</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah kamu yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+  <script>
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || (!loggedInUser.username && !loggedInUser.name)) {
+      window.location.href = 'form_login.html';
+    }
+
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
+
+    const profileImage = document.getElementById('profileImage');
+    const nameInput = document.getElementById('nama');
+    const nimInput = document.getElementById('nim');
+    const kelasInput = document.getElementById('kelas');
+    const prodiInput = document.getElementById('prodi');
+    const nameDisplay = document.getElementById('nameDisplay');
+    const roleDisplay = document.getElementById('roleDisplay');
+
+    const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+    const savedImage = localStorage.getItem(imageKey);
+
+    nameInput.value = profileData.nama || loggedInUser.name || 'Pengguna';
+    nimInput.value = profileData.nim || '';
+    kelasInput.value = profileData.kelas || '';
+    prodiInput.value = profileData.prodi || 'Teknik Informatika';
+
+    nameDisplay.textContent = profileData.nama || loggedInUser.name || 'Pengguna';
+    roleDisplay.textContent = profileData.prodi ? ('Mahasiswa | ' + profileData.prodi) : 'Mahasiswa | Teknik Informatika';
+
+    if (savedImage) {
+      profileImage.src = savedImage;
+    } else {
+      profileImage.removeAttribute('src');
+      profileImage.removeAttribute('alt');
+      profileImage.style.background = "#fff";
+      profileImage.style.border = "3px solid #ddd";
+    }
+
+    document.getElementById('btnChangeSmall').addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.src = reader.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const maxSize = 300;
+            let width = img.width;
+            let height = img.height;
+            if (width > height && width > maxSize) {
+              height = Math.round(height * (maxSize / width));
+              width = maxSize;
+            } else if (height > maxSize) {
+              width = Math.round(width * (maxSize / height));
+              height = maxSize;
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+            localStorage.setItem(imageKey, dataUrl);
+            profileImage.src = dataUrl;
+          };
+        };
+        reader.readAsDataURL(file);
+      };
+      input.click();
+    });
+
+    document.getElementById('btnDeleteSmall').addEventListener('click', () => {
+      localStorage.removeItem(imageKey);
+      profileImage.removeAttribute('src');
+      profileImage.removeAttribute('alt');
+      profileImage.style.background = "#fff";
+      profileImage.style.border = "3px solid #ddd";
+    });
+
+    document.getElementById('btnCancel').addEventListener('click', () => {
+      window.location.href = 'profile.html';
+    });
+
+    document.getElementById('btnSave').addEventListener('click', () => {
+      const data = {
+        nama: nameInput.value.trim(),
+        nim: nimInput.value.trim(),
+        kelas: kelasInput.value.trim(),
+        prodi: prodiInput.value.trim()
+      };
+      localStorage.setItem(profileKey, JSON.stringify(data));
+      window.location.href = 'profile.html';
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      document.getElementById('logoutPopup').style.display = 'block';
+    });
+
+    document.getElementById('yesLogout').addEventListener('click', () => {
+      localStorage.removeItem('loggedInUser');
+      window.location.href = 'form_login.html';
+    });
+  </script>
+</body>
+</html>

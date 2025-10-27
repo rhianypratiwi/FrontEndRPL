@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verifikasi OTP</title>
+  <!-- 🔗 Hubungkan ke CSS eksternal -->
+  <link rel="stylesheet" href="../CSS/otp.css">
+</head>
+<body>
+
+  <div class="otp-container">
+    <h1>Change Password</h1>
+    <p>Kode verifikasi untuk ganti password Anda</p>
+    <p style="font-weight:600;">Masukkan kode OTP</p>
+
+    <form id="otpForm">
+      <div class="otp-inputs">
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+      </div>
+
+      <div class="form-group">
+        <label for="newPassword">New password</label>
+        <input type="password" id="newPassword">
+        <div id="error-new" class="error-text">Password harus diisi</div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword">
+        <div id="error-confirm" class="error-text">Password harus diisi</div>
+      </div>
+
+      <button type="submit">Change Password</button>
+    </form>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll('.otp-inputs input');
+    const form = document.getElementById('otpForm');
+    const newPassword = document.getElementById('newPassword');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const errorNew = document.getElementById('error-new');
+    const errorConfirm = document.getElementById('error-confirm');
+
+    // Auto focus ke input berikutnya
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', () => {
+        if (input.value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let valid = true;
+      [newPassword, confirmPassword].forEach(input => input.classList.remove('error'));
+      [errorNew, errorConfirm].forEach(err => err.style.display = 'none');
+
+      if (newPassword.value.trim() === "") {
+        newPassword.classList.add('error');
+        errorNew.style.display = 'block';
+        valid = false;
+      }
+
+      if (confirmPassword.value.trim() === "") {
+        confirmPassword.classList.add('error');
+        errorConfirm.style.display = 'block';
+        valid = false;
+      }
+
+      if (valid && newPassword.value !== confirmPassword.value) {
+        confirmPassword.classList.add('error');
+        errorConfirm.textContent = "Password tidak sama";
+        errorConfirm.style.display = 'block';
+        valid = false;
+      }
+
+      if (valid) {
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const currentEmail = localStorage.getItem("currentEmail");
+
+        if (!currentEmail) {
+          alert("Email tidak ditemukan! Kembali ke halaman lupa password.");
+          window.location.href = "forgot.html";
+          return;
+        }
+
+        const index = users.findIndex(u => u.email === currentEmail);
+
+        if (index !== -1) {
+          users[index].password = newPassword.value;
+          localStorage.setItem("users", JSON.stringify(users));
+          localStorage.removeItem("currentEmail");
+          alert("Password berhasil diubah! Silakan login kembali.");
+          window.location.href = "form_login.html";
+        } else {
+          alert("User tidak ditemukan!");
+        }
+      }
+    });
+  </script>
+</body>
+</html>

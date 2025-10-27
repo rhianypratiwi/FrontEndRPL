@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <!-- Hubungkan file CSS eksternal -->
+  <link rel="stylesheet" href="../CSS/register.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Sign Up!</h1>
+    <p class="subtext">Silakan buat akun terlebih dahulu</p>
+
+    <form onsubmit="return registerUser(event)">
+      <label for="name">Name</label>
+      <input type="text" id="name">
+      <span class="error" id="errorName"></span>
+
+      <label for="email">Email</label>
+      <input type="email" id="email">
+      <span class="error" id="errorEmail"></span>
+
+      <div class="row">
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password">
+          <span class="error" id="errorPassword"></span>
+        </div>
+        <div class="field">
+          <label for="confirm">Confirm Password</label>
+          <input type="password" id="confirm">
+          <span class="error" id="errorConfirm"></span>
+        </div>
+      </div>
+
+      <label for="role">Role</label>
+      <select id="role">
+        <option value="">-- Pilih Role --</option>
+        <option value="Mahasiswa">Mahasiswa</option>
+        <option value="Dosen">Dosen</option>
+      </select>
+      <span class="error" id="errorRole"></span>
+
+      <button type="submit">Sign Up</button>
+
+      <div class="bottom-text">
+        Already have an account? <a href="form_login.html">Sign in</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function registerUser(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const confirm = document.getElementById("confirm").value.trim();
+      const role = document.getElementById("role").value;
+
+      const errorName = document.getElementById("errorName");
+      const errorEmail = document.getElementById("errorEmail");
+      const errorPassword = document.getElementById("errorPassword");
+      const errorConfirm = document.getElementById("errorConfirm");
+      const errorRole = document.getElementById("errorRole");
+
+      errorName.textContent = "";
+      errorEmail.textContent = "";
+      errorPassword.textContent = "";
+      errorConfirm.textContent = "";
+      errorRole.textContent = "";
+
+      let isValid = true;
+
+      if (!name) {
+        errorName.textContent = "Nama harus diisi.";
+        isValid = false;
+      }
+      if (!email) {
+        errorEmail.textContent = "Email harus diisi.";
+        isValid = false;
+      }
+      if (!password) {
+        errorPassword.textContent = "Password harus diisi.";
+        isValid = false;
+      }
+      if (!confirm) {
+        errorConfirm.textContent = "Konfirmasi password harus diisi.";
+        isValid = false;
+      } else if (password && confirm && password !== confirm) {
+        errorConfirm.textContent = "Password dan konfirmasi tidak cocok.";
+        isValid = false;
+      }
+      if (!role) {
+        errorRole.textContent = "Role harus dipilih.";
+        isValid = false;
+      }
+
+      if (!isValid) return false;
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      const existingUser = users.find(u => u.email === email);
+      if (existingUser) {
+        errorEmail.textContent = "Email sudah terdaftar.";
+        return false;
+      }
+
+      const newUser = { name, email, password, role };
+      users.push(newUser);
+      localStorage.setItem("users", JSON.stringify(users));
+
+      alert("Registrasi berhasil! Silakan login.");
+      window.location.href = "form_login.html";
+      return false;
+    }
+  </script>
+
+</body>
+</html>
