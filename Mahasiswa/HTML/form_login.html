@@ -69,7 +69,7 @@
 
         // 🔹 Redirect berdasarkan role (case-insensitive)
         if (foundUser.role && foundUser.role.toLowerCase() === "dosen") {
-          window.location.href = "home_dosen.html";
+          window.location.href = "../../Dosen/HTML/home_dosen.html";
         } else {
           const username = foundUser.username || foundUser.name || foundUser.email;
           const profileKey = `profileData_${username}`;
