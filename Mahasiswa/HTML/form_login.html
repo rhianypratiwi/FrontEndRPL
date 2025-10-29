@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Login</title>
+
+  <!-- Hubungkan ke file CSS di folder CSS -->
+  <link rel="stylesheet" href="../CSS/form_login.css">
+</head>
+<body>
+
+  <div class="login-container">
+    <h1>LOGIN</h1>
+    <p>Masukkan email dan password Anda</p>
+
+    <form id="loginForm" method="post" novalidate>
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Email" required />
+      <div id="emailError" class="error">Email harus diisi!</div>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Password" required />
+      <div id="passwordError" class="error">Password harus diisi!</div>
+
+      <div id="loginError" class="error">Email atau password salah!</div>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <a href="forgot.html" class="link">Lupa Password?</a>
+    <a href="register.html" class="link">Belum punya akun? Daftar</a>
+  </div>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const loginError = document.getElementById("loginError");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      let valid = true;
+      emailError.style.display = "none";
+      passwordError.style.display = "none";
+      loginError.style.display = "none";
+
+      if (emailInput.value.trim() === "") {
+        emailError.style.display = "block";
+        valid = false;
+      }
+      if (passwordInput.value.trim() === "") {
+        passwordError.style.display = "block";
+        valid = false;
+      }
+      if (!valid) return;
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const foundUser = users.find(
+        (u) => u.email === emailInput.value && u.password === passwordInput.value
+      );
+
+      if (foundUser) {
+        localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
+        localStorage.setItem("isLoggedIn", "true");
+
+        // 🔹 Redirect berdasarkan role (case-insensitive)
+        if (foundUser.role && foundUser.role.toLowerCase() === "dosen") {
+          window.location.href = "../../Dosen/HTML/home_dosen.html";
+        } else {
+          const username = foundUser.username || foundUser.name || foundUser.email;
+          const profileKey = `profileData_${username}`;
+          const profileData = JSON.parse(localStorage.getItem(profileKey));
+
+          if (profileData && profileData.nama && profileData.nim && profileData.kelas && profileData.prodi) {
+            window.location.href = "home.html";
+          } else {
+            window.location.href = "Profile.html";
+          }
+        }
+      } else {
+        loginError.style.display = "block";
+      }
+    });
+  </script>
+
+</body>
+</html>

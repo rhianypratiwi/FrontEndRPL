@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard Dosen — SETRUM</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../CSS/home_dosen.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="#" class="active"><i class="fa fa-home"></i><span>Beranda</span></a>
+      <a href="Kelas.html"><i class="fa fa-book"></i><span>Kelas</span></a>
+      <a href="Profil.html"><i class="fa fa-user"></i><span>Profil</span></a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span>Keluar</span></a>
+    </nav>
+  </aside>
+
+  <!-- Konten utama -->
+  <main class="content">
+    <div class="header">
+      <div class="profile-section">
+        <div class="profile-text">
+          <h1 id="greetName">Selamat mengajar, Dosen!</h1>
+          <p id="todayDate"></p>
+        </div>
+        <div class="profile" id="profileContainer">
+          <img id="profilePhoto" alt="profil">
+        </div>
+      </div>
+    </div>
+
+    <!-- Jadwal Mengajar -->
+    <section class="teaching-schedule">
+      <h2>Jadwal Mengajar Hari Ini</h2>
+
+      <div class="card">
+        <div>
+          <strong>Jaringan Komputer</strong> (07.00 – 11.45)
+          <p class="ruang">Ruang LAB TI 13</p>
+        </div>
+        <span>5D</span>
+      </div>
+
+      <div class="card light">
+        <div>
+          <strong>Kewirausahaan</strong> (13.00 – 15.00)
+          <p class="ruang">Ruang LAB TI 11</p>
+        </div>
+        <span>1A</span>
+      </div>
+
+      <div class="card">
+        <div>
+          <strong>Jaringan Komputer</strong> (07.00 – 11.45)
+          <p class="ruang">Ruang LAB TI 8</p>
+        </div>
+        <span>5B</span>
+      </div>
+    </section>
+
+    <!-- Tugas Mahasiswa -->
+    <section class="student-tasks">
+      <h2>Tugas Mahasiswa</h2>
+
+      <div class="card">
+        <div><strong>PBL Kelompok</strong></div>
+        <span>Sept 25</span>
+      </div>
+
+      <div class="card light">
+        <div><strong>Business Canvas</strong></div>
+        <span>Sept 30</span>
+      </div>
+
+      <div class="card">
+        <div><strong>Topologi Jaringan</strong></div>
+        <span>Okt 5</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- Popup logout -->
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.name) window.location.href = 'form_login.html';
+
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
+
+    const greetName = document.getElementById('greetName');
+    const profilePhoto = document.getElementById('profilePhoto');
+    const profileContainer = document.getElementById('profileContainer');
+
+    const profileData = JSON.parse(localStorage.getItem(profileKey));
+    greetName.textContent = profileData && profileData.nama 
+      ? `Selamat mengajar, ${profileData.nama}!`
+      : `Selamat mengajar, ${loggedInUser.name}!`;
+
+    const savedImage = localStorage.getItem(imageKey);
+    if (savedImage) {
+      profilePhoto.src = savedImage;
+      profilePhoto.style.display = "block";
+    } else {
+      profilePhoto.style.display = "none";
+      profileContainer.style.background = "#fff";
+    }
+
+    const today = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
+
+    profileContainer.addEventListener('click', () => window.location.href = 'Profil.html');
+
+    // Logout
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+
+    logoutBtn.onclick = () => logoutPopup.style.display = 'block';
+    cancelLogout.onclick = () => logoutPopup.style.display = 'none';
+    yesLogout.onclick = () => {
+      localStorage.removeItem('loggedInUser');
+      logoutPopup.style.display = 'none';
+      window.location.href = '../../Mahasiswa/HTML/form_login.html';
+    };
+  </script>
+</body>
+</html>

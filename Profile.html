@@ -85,12 +85,22 @@
       text-align: center;
     }
 
+    /* ✅ Foto profil bulat dan kosong jika tidak ada gambar */
     .profile-container img {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid #ddd;
+      background-color: #fff;
+      aspect-ratio: 1 / 1;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .profile-container img.empty {
+      background-color: #fff;
+      content: "";
     }
 
     .profile-container h3 {
@@ -257,8 +267,8 @@
       }
 
       .profile-container img {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
       }
 
       .profile-container h3 {
@@ -273,7 +283,7 @@
 </head>
 <body>
 
-  <!-- === SIDEBAR / NAVBAR === -->
+  <!-- === SIDEBAR === -->
   <aside class="sidebar">
     <div class="brand">SETRUM</div>
     <nav class="menu">
@@ -287,9 +297,9 @@
   <!-- === KONTEN PROFIL === -->
   <main class="content">
     <div class="profile-container">
-      <img id="profileImage" src="https://i.pravatar.cc/100" alt="Profile" />
-      <h3 id="profileName">Lia Ali</h3>
-      <p>Mahasiswa | Teknik Informatika</p>
+      <img id="profileImage" alt="">
+      <h3 id="profileName">Nama Pengguna</h3>
+      <p id="profileRole">Mahasiswa | Teknik Informatika</p>
 
       <div style="margin-top: 20px;">
         <label for="nim">NIM</label>
@@ -300,12 +310,12 @@
         <input type="text" id="kelas" readonly />
         <div id="kelasError" class="error"></div>
 
-        <button id="editBtn">Edit</button>
+        <button id="editBtn">Edit Profil</button>
       </div>
     </div>
   </main>
 
-  <!-- === POPUP KONFIRMASI LOGOUT === -->
+  <!-- === POPUP LOGOUT === -->
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
     <p>Apakah kamu yakin ingin keluar?</p>
@@ -316,7 +326,7 @@
   <script>
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     if (!loggedInUser || (!loggedInUser.name && !loggedInUser.username)) {
-      window.location.href = "form_login.html";
+      window.location.replace("form_login.html");
     }
 
     const username = loggedInUser.username || loggedInUser.name || "guest";
@@ -328,6 +338,7 @@
 
     const nameEl = document.getElementById("profileName");
     const imageEl = document.getElementById("profileImage");
+    const roleEl = document.getElementById("profileRole");
     const nimInput = document.getElementById("nim");
     const kelasInput = document.getElementById("kelas");
     const nimError = document.getElementById("nimError");
@@ -337,18 +348,19 @@
       nameEl.textContent = profileData.nama || loggedInUser.name || "Pengguna";
       nimInput.value = profileData.nim || "";
       kelasInput.value = profileData.kelas || "";
-
-      const roleEl = nameEl.nextElementSibling;
-      if (roleEl) {
-        roleEl.textContent = profileData.prodi
-          ? `Mahasiswa | ${profileData.prodi}`
-          : "Mahasiswa | Teknik Informatika";
-      }
+      roleEl.textContent = profileData.prodi ? `Mahasiswa | ${profileData.prodi}` : "Mahasiswa | Teknik Informatika";
     } else {
       nameEl.textContent = loggedInUser.name || "Pengguna";
     }
 
-    imageEl.src = savedImage || "https://i.pravatar.cc/100";
+    if (savedImage) {
+      imageEl.src = savedImage;
+      imageEl.classList.remove("empty");
+    } else {
+      imageEl.removeAttribute("src");
+      imageEl.classList.add("empty");
+    }
+
     nimError.textContent = nimInput.value ? "" : "NIM belum diisi!";
     kelasError.textContent = kelasInput.value ? "" : "Kelas belum diisi!";
 
@@ -361,19 +373,12 @@
     const yesLogout = document.getElementById("yesLogout");
     const cancelLogout = document.getElementById("cancelLogout");
 
-    logoutBtn.addEventListener("click", () => {
-      logoutPopup.style.display = "block";
-    });
-
-    cancelLogout.addEventListener("click", () => {
-      logoutPopup.style.display = "none";
-    });
-
-    yesLogout.addEventListener("click", () => {
+    logoutBtn.onclick = () => logoutPopup.style.display = "block";
+    cancelLogout.onclick = () => logoutPopup.style.display = "none";
+    yesLogout.onclick = () => {
       localStorage.removeItem("loggedInUser");
-      logoutPopup.style.display = "none";
-      window.location.href = "form_login.html";
-    });
+      window.location.replace("form_login.html");
+    };
   </script>
 </body>
 </html>

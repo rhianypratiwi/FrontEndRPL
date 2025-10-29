@@ -1,0 +1,123 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #d9d9d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.forgot-container {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+p {
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: #e63946;
+  box-shadow: 0 0 3px rgba(230, 57, 70, 0.4);
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  text-align: left;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.success {
+  color: green;
+  font-size: 13px;
+  margin-top: 10px;
+  font-weight: bold;
+  display: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: darkred;
+}
+
+.back-link {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+  color: red;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* ✅ Responsif untuk layar kecil */
+@media (max-width: 480px) {
+  .forgot-container {
+    width: 90%;
+    padding: 25px 20px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  p {
+    font-size: 13px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 9px;
+  }
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mata Kuliah — SETRUM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../CSS/MataKuliah.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home.html"><i class="fa fa-home"></i> Beranda</a>
+      <a href="#" class="active"><i class="fa fa-book"></i> Kelas</a>
+      <a href="Profile.html"><i class="fa fa-user"></i> Profil</a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="header">
+      <h2>Mata Kuliah</h2>
+      <div class="profile-section">
+        <div class="profile-text">
+          <h1 id="greetName">Hai, pengguna!</h1>
+          <p id="todayDate"></p>
+        </div>
+        <div class="profile" id="profileContainer"></div>
+      </div>
+    </div>
+    
+    <p style="font-size: 14px; color: #555; margin-bottom: 20px; text-align: right;">
+      Kelas &gt; <span style="font-weight: 700; color: #000;">Mata Kuliah</span>
+    </p>
+
+    <div style="margin-top: 25px;">
+      <div class="card"><div><strong>Jaringan Komputer</strong><small>Yasir Arafat</small></div><span>TI-11</span></div>
+      <div class="card light"><div><strong>Rekayasa Perangkat Lunak</strong><small>Yusril Eka Mahendra</small></div><span>TI-4</span></div>
+      <div class="card"><div><strong>Pemrograman Web</strong><small>Ferry Faisal</small></div><span>TI-12</span></div>
+    </div>
+  </main>
+
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+  <script>
+    // Ambil user login
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || (!loggedInUser.username && !loggedInUser.name)) {
+      window.location.href = 'form_login.html';
+    }
+
+    // ⚡ Gunakan key yang sama persis dengan edit_Profile.html
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileData_${username}`;
+    const imageKey = `profileImage_${username}`;
+
+    const greetName = document.getElementById('greetName');
+    const profileContainer = document.getElementById('profileContainer');
+
+    // Ambil data profil dan gambar dari localStorage
+    const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+    const savedImage = localStorage.getItem(imageKey);
+
+    // Tampilkan nama pengguna
+    greetName.textContent = profileData.nama
+      ? `Hai, ${profileData.nama}!`
+      : `Hai, ${loggedInUser.name || "Pengguna"}!`;
+
+    // Tampilkan foto profil jika ada
+    if (savedImage) {
+      const img = document.createElement("img");
+      img.src = savedImage;
+      img.alt = "Foto Profil";
+      img.style.display = "block";
+      img.addEventListener('click', () => window.location.href = 'Profile.html');
+      profileContainer.appendChild(img);
+    } else {
+      const placeholder = document.createElement("div");
+      placeholder.className = "profile-placeholder";
+      placeholder.addEventListener('click', () => window.location.href = 'Profile.html');
+      profileContainer.appendChild(placeholder);
+    }
+
+    // Tanggal hari ini
+    const today = new Date();
+    document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    });
+
+    // Logout popup
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+
+    logoutBtn.addEventListener('click', () => logoutPopup.style.display = 'block');
+    cancelLogout.addEventListener('click', () => logoutPopup.style.display = 'none');
+    yesLogout.addEventListener('click', () => {
+      localStorage.removeItem('loggedInUser');
+      logoutPopup.style.display = 'none';
+      window.location.href = 'form_login.html';
+    });
+
+    // Klik kartu → buka postingan
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        const namaMatkul = card.querySelector('strong')?.textContent?.trim();
+        if (namaMatkul) {
+          localStorage.setItem('selectedCourse', namaMatkul);
+          window.location.href = 'postingan.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
