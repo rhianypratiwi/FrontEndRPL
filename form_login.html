@@ -172,46 +172,50 @@
   </div>
 
   <script>
-    const form = document.getElementById("loginForm");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const emailError = document.getElementById("emailError");
-    const passwordError = document.getElementById("passwordError");
-    const loginError = document.getElementById("loginError");
+  const form = document.getElementById("loginForm");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const emailError = document.getElementById("emailError");
+  const passwordError = document.getElementById("passwordError");
+  const loginError = document.getElementById("loginError");
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-      let valid = true;
-      emailError.style.display = "none";
-      passwordError.style.display = "none";
-      loginError.style.display = "none";
+    let valid = true;
+    emailError.style.display = "none";
+    passwordError.style.display = "none";
+    loginError.style.display = "none";
 
-      if (emailInput.value.trim() === "") {
-        emailError.style.display = "block";
-        valid = false;
-      }
+    if (emailInput.value.trim() === "") {
+      emailError.style.display = "block";
+      valid = false;
+    }
 
-      if (passwordInput.value.trim() === "") {
-        passwordError.style.display = "block";
-        valid = false;
-      }
+    if (passwordInput.value.trim() === "") {
+      passwordError.style.display = "block";
+      valid = false;
+    }
 
-      if (!valid) return;
+    if (!valid) return;
 
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-      const foundUser = users.find(
-        (u) => u.email === emailInput.value && u.password === passwordInput.value
-      );
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const foundUser = users.find(
+      (u) => u.email === emailInput.value && u.password === passwordInput.value
+    );
 
-      if (foundUser) {
-        localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
-        localStorage.setItem("isLoggedIn", "true");
+    if (foundUser) {
+      // Simpan user yang login
+      localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
+      localStorage.setItem("isLoggedIn", "true");
 
-        const username = foundUser.username || foundUser.name || foundUser.email;
-        const profileKey = `profileData_${username}`;
-        const profileData = JSON.parse(localStorage.getItem(profileKey));
+      // Ambil nama unik buat profile
+      const username = foundUser.name || foundUser.email;
+      const profileKey = `profileData_${username}`;
+      const profileData = JSON.parse(localStorage.getItem(profileKey));
 
+      // 🔹 Arahkan sesuai role
+      if (foundUser.role === "Mahasiswa") {
         if (
           profileData &&
           profileData.nama &&
@@ -219,14 +223,30 @@
           profileData.kelas &&
           profileData.prodi
         ) {
-          window.location.href = "home.html";
+          window.location.href = "home.html"; // misal dashboard mahasiswa
         } else {
-          window.location.href = "Profile.html";
+          window.location.href = "profile.html";
+        }
+      } else if (foundUser.role === "Dosen") {
+        if (
+          profileData &&
+          profileData.nama &&
+          profileData.nip &&
+          profileData.prodi
+        ) {
+          window.location.href = "homedosen.html"; // misal halaman utama dosen
+        } else {
+          window.location.href = "profiledosen.html";
         }
       } else {
-        loginError.style.display = "block";
+        // kalau gak punya role, arahkan ke halaman umum
+        window.location.href = "home.html";
       }
-    });
-  </script>
+    } else {
+      loginError.style.display = "block";
+    }
+  });
+</script>
+
 </body>
 </html>

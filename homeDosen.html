@@ -279,46 +279,80 @@
     <div class="brand">SETRUM</div>
     <nav class="menu">
       <a href="#" class="active"><i class="fa fa-home"></i> Beranda</a>
-      <a href="profile.html"><i class="fa fa-user"></i> Profil</a>
-      <a href="MataKuliah.html"><i class="fa fa-book"></i> Kelas</a>
+      <a href="ProfileDosen.html"><i class="fa fa-user"></i> Profil</a>
+      <a href="kelasdosen.html"><i class="fa fa-book"></i> Kelas</a>
       <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
      
     </nav>
   </aside>
 
   <main class="content">
-    <div class="header">
-      <h2></h2>
-      <div class="profile-section">
-        <div class="profile-text">
-          <h1 id="greetName">Hai, pengguna!</h1>
-          <p id="todayDate"></p>
-        </div>
-        <div class="profile">
-          <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
-        </div>
+  <div class="header">
+    <h2></h2>
+    <div class="profile-section">
+      <div class="profile-text">
+        <h1 id="greetName">Selamat mengajar, Dosen!</h1>
+        <p id="todayDate"></p>
+      </div>
+      <div class="profile">
+        <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
       </div>
     </div>
+  </div>
 
-    <h2>Mata Kuliah</h2>
-    <div class="card" id="matkul1">
-      <div><strong>Jaringan Komputer</strong><br><small>Yasir Arafat</small></div>
-      <span>TI-11</span>
+  <!-- ===== Jadwal Mengajar ===== -->
+  <h2>Jadwal Mengajar Hari Ini</h2>
+  <div class="card">
+    <div>
+      <strong>Jaringan Komputer</strong><br>
+      <small>07.00 – 11.45<br>Ruang LAB TI 13</small>
     </div>
-    <div class="card" id="matkul2">
-      <div><strong>Rekayasa Perangkat Lunak</strong><br><small>Yusril Eka Mahandra</small></div>
-      <span>TI-4</span>
-    </div>
-    <div class="card" id="matkul3">
-      <div><strong>Pemrograman Web</strong><br><small>Ferry Faisal</small></div>
-      <span>TI-12</span>
-    </div>
+    <span>5 D</span>
+  </div>
 
-    <h2>Tugas</h2>
-    <div class="card" id="task1"><div><strong>PBL Kelompok</strong></div><span>Sept 25</span></div>
-    <div class="card light" id="task2"><div><strong>Project RPL</strong></div><span>Sept 30</span></div>
-    <div class="card" id="task3"><div><strong>Project Pemrograman</strong></div><span>Okt 9</span></div>
-  </main>
+  <div class="card">
+    <div>
+      <strong>Kewirausahaan</strong><br>
+      <small>13.00 – 15.00<br>Ruang LAB TI 11</small>
+    </div>
+    <span>5 A</span>
+  </div>
+
+  <div class="card">
+    <div>
+      <strong>Jaringan Komputer</strong><br>
+      <small>07.00 – 11.45<br>Ruang LAB TI 13</small>
+    </div>
+    <span>5 D</span>
+  </div>
+
+  <!-- ===== Tugas Mahasiswa ===== -->
+  <h2>Tugas Mahasiswa</h2>
+  <div class="card">
+    <div>
+      <strong>PBL Kelompok</strong><br>
+      <small>Kelas 5D | Keterangan:</small>
+    </div>
+    <span>Sept 25</span>
+  </div>
+
+  <div class="card">
+    <div>
+      <strong>Business Canvas</strong><br>
+      <small>Kelas 5A | Keterangan:</small>
+    </div>
+    <span>Sept 30</span>
+  </div>
+
+  <div class="card">
+    <div>
+      <strong>Topologi Jaringan</strong><br>
+      <small>Kelas 5E | Keterangan:</small>
+    </div>
+    <span>Okt 9</span>
+  </div>
+</main>
+
 
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
@@ -333,7 +367,7 @@
 
   const username = loggedInUser.username || loggedInUser.name || "guest";
   const profileKey = `profileData_${username}`;
-  const imageKey = `profileImage_${username}`;
+  const imageKey = `profileImageDosen_${username}`;
   const greetName = document.getElementById('greetName');
   const profilePhoto = document.getElementById('profilePhoto');
 

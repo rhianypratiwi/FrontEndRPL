@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detail Kelas — SETRUM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:"Inter", Arial, sans-serif; }
+    body { display:flex; min-height:100vh; background:#fff; }
+    .sidebar {
+      width:240px; background:#c8102e; color:#fff; display:flex; flex-direction:column; padding:20px 0; border-radius:0 10px 10px 0;
+    }
+    .brand { font-size:22px; font-weight:700; text-align:center; margin-bottom:40px; letter-spacing:1px; }
+    .menu { display:flex; flex-direction:column; }
+    .menu a {
+      display:flex; align-items:center; gap:12px; padding:12px 24px; text-decoration:none; color:#fff; font-weight:500; transition:background 0.3s ease;
+    }
+    .menu a:hover, .menu a.active { background:#a10d25; }
+    .menu i { width:20px; text-align:center; font-size:18px; }
+    .content { flex:1; padding:30px; transition:all 0.3s ease; }
+    .header {
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+    }
+    .profile-section { display:flex; align-items:center; gap:12px; }
+    .profile-text { text-align:right; }
+    .profile-text h1 { font-size:18px; margin-bottom:4px; }
+    .profile-text p { color:#555; font-size:13px; }
+    .profile img {
+      width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid #eee; cursor:pointer; transition:transform 0.2s ease;
+    }
+    .profile img:hover { transform:scale(1.05); }
+    h2 { margin-top:26px; margin-bottom:8px; font-size:18px; }
+    .kelas-info {
+      background:#c8102e; color:#fff; padding:10px 12px; border-radius:8px; margin-bottom:10px;
+    }
+    .actions {
+      display:flex; gap:10px; margin-bottom:10px;
+    }
+    .actions button {
+      background:#c8102e; color:#fff; border:none; padding:8px 12px; border-radius:5px; cursor:pointer;
+    }
+    .actions input {
+      flex:1; padding:8px 12px; border:1px solid #ccc; border-radius:5px;
+    }
+    .post-list { margin-top:10px; }
+    .post {
+      background:#fff; border:1px solid #f28a8a; border-radius:8px; padding:10px 12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;
+    }
+    .post .info {
+      display:flex; align-items:center; gap:8px;
+    }
+    .post .info .avatar {
+      width:35px; height:35px; border-radius:50%; background:#f4b2b2;
+    }
+    .post .actions-post {
+      display:flex; align-items:center; gap:8px;
+    }
+    .post .actions-post i {
+      cursor:pointer;
+      color:#444;
+    }
+    @media (max-width:900px) {
+      body { flex-direction:column; }
+      .sidebar { width:100%; border-radius:0; flex-direction:row; justify-content:space-around; align-items:center; padding:10px 0; }
+      .brand { font-size:18px; margin-bottom:0; }
+      .menu { flex-direction:row; gap:10px; }
+      .menu a { padding:8px 10px; font-size:14px; }
+      .content { padding:20px; }
+      .profile-section { justify-content:flex-end; width:100%; }
+      .profile-text h1 { font-size:16px; }
+    }
+    @media (max-width:600px) {
+      .menu a span { display:none; }
+      .menu a i { font-size:20px; }
+      .post { flex-direction:column; align-items:flex-start; gap:6px; }
+    }
+    .kirim {
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    .kirim:hover {
+      background: #333;
+    }
+
+    .post {
+    margin-top: 10px;
+    background: #f5f5f5;
+    padding: 12px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .post .info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .post .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ccc;
+  }
+
+  .post .actions-post {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .post p {
+  margin-top: 8px;
+  margin-left: 50px; /* jarak dari avatar */
+  margin-right: 40px; /* biar gak nabrak tombol titik tiga */
+  text-align: left;
+  word-wrap: break-word;
+}
+
+
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="homeDosen.html"><i class="fa fa-home"></i> Beranda</a>
+      <a href="ProfileDosen.html"><i class="fa fa-user"></i> Profil</a>
+      <a href="kelasdosen.html" class="active"><i class="fa fa-book"></i> Kelas</a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="header">
+      <h2 id="titleClass">Kelas</h2>
+      <div class="profile-section">
+        <div class="profile-text">
+          <h1 id="greetName">Selamat mengajar, Lia!</h1>
+          <p id="todayDate"></p>
+        </div>
+        <div class="profile">
+          <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
+        </div>
+      </div>
+    </div>
+
+    <div id="classInfo" class="kelas-info"></div>
+
+    <div class="actions">
+      <button id="btnBuatTugas">Buat Tugas</button>
+      <input type="text" id="announceInput" placeholder="Umumkan sesuatu …">
+      <button id="btnKirim" class="kirim">Kirim</button>
+
+    </div>
+
+    <div class="post-list" id="postList"></div>
+  </main>
+
+  <script>
+  // Ambil data kelas yang dipilih
+  const selected = JSON.parse(localStorage.getItem("selectedClass")) || { nama:"Kelas", jumlah:"", waktu:"" };
+  document.getElementById("titleClass").textContent = selected.nama;
+  document.getElementById("classInfo").innerHTML = `<strong>${selected.nama}</strong><br>${selected.jumlah}<br>${selected.waktu}`;
+
+  // Elemen DOM utama
+  const greetNameEl = document.getElementById("greetName");
+  const todayDateEl = document.getElementById("todayDate");
+  const inputAnn = document.getElementById("announceInput");
+  const postListEl = document.getElementById("postList");
+
+  // Ambil nama dosen dari localStorage (saat login)
+  const namaDosen = localStorage.getItem("namaDosen") || "Dosen";
+
+  // Tanggal hari ini
+  const today = new Date();
+  const opts = { weekday:'long', day:'numeric', month:'long', year:'numeric' };
+  todayDateEl.textContent = today.toLocaleDateString('id-ID', opts);
+  greetNameEl.textContent = `Selamat mengajar, ${namaDosen}!`;
+
+  // Ambil postingan per kelas
+  let posts = JSON.parse(localStorage.getItem("posts_" + selected.nama)) || [];
+
+  // 🔹 Render semua postingan
+  function renderPosts(){
+    postListEl.innerHTML = '';
+    posts.forEach((p, i) => {
+      const div = document.createElement("div");
+      div.className = 'post';
+      div.innerHTML = `
+        <div class="info">
+          <div class="avatar"></div>
+          <div class="info-text">
+            <strong>${namaDosen}</strong><br>
+            <small>${p.tanggal}</small>
+            <p class="isi-post">${p.text}</p>
+          </div>
+        </div>
+        <div class="actions-post">
+          <i class="fa fa-ellipsis-v" onclick="toggleMenu(this, ${i})"></i>
+          <button class="deleteBtn" style="display:none;" onclick="deletePost(${i})">Hapus</button>
+        </div>
+      `;
+      postListEl.appendChild(div);
+    });
+  }
+
+  // 🔹 Tampilkan/sembunyikan tombol hapus
+  function toggleMenu(el, idx){
+    const btn = el.nextElementSibling;
+    btn.style.display = btn.style.display === 'block' ? 'none' : 'block';
+  }
+
+  // 🔹 Hapus postingan
+  function deletePost(idx){
+    posts.splice(idx, 1);
+    localStorage.setItem("posts_" + selected.nama, JSON.stringify(posts));
+    renderPosts();
+  }
+
+  // 🔹 Kirim pengumuman baru
+  function tambahPost(){
+    const text = inputAnn.value.trim();
+    if (!text) return alert("Tulis pengumumannya dulu!");
+    const newPost = { 
+      text, 
+      tanggal: new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric'}) 
+    };
+    posts.unshift(newPost);
+    localStorage.setItem("posts_" + selected.nama, JSON.stringify(posts));
+    inputAnn.value = '';
+    renderPosts();
+  }
+
+  // 🔹 Event tombol
+  document.getElementById("btnBuatTugas").addEventListener("click", tambahPost);
+  const btnKirim = document.getElementById("btnKirim");
+  if (btnKirim) btnKirim.addEventListener("click", tambahPost);
+
+  // 🔹 Render awal
+  renderPosts();
+</script>
+
+</body>
+</html>

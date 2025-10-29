@@ -277,103 +277,94 @@
   <aside class="sidebar">
     <div class="brand">SETRUM</div>
     <nav class="menu">
-      <a href="home.html"><i class="fa fa-home"></i><span> Beranda</span></a>
+      <a href="homeDosen.html"><i class="fa fa-home"></i><span> Beranda</span></a>
       <a href="#" class="active"><i class="fa fa-user"></i><span> Profil</span></a>
-      <a href="MataKuliah.html"><i class="fa fa-book"></i><span> Kelas</span></a>
+      <a href="kelasdosen.html"><i class="fa fa-book"></i><span> Kelas</span></a>
       <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span> Keluar</span></a>
     </nav>
   </aside>
 
   <!-- === KONTEN PROFIL === -->
-  <main class="content">
-    <div class="profile-container">
-      <img id="profileImage" src="https://i.pravatar.cc/100" alt="Profile" />
-      <h3 id="profileName">Lia Ali</h3>
-      <p>Mahasiswa | Teknik Informatika</p>
+ <!-- Bagian konten -->
+<main class="content">
+  <div class="profile-container">
+    <img id="profileImage" src="https://i.pravatar.cc/100" alt="Profile" />
 
-      <div style="margin-top: 20px;">
-        <label for="nim">NIM</label>
-        <input type="text" id="nim" readonly />
-        <div id="nimError" class="error"></div>
+    <div style="margin-top: 20px;">
+      <label for="nama">Nama</label>
+      <input type="text" id="nama" readonly />
 
-        <label for="kelas">Kelas</label>
-        <input type="text" id="kelas" readonly />
-        <div id="kelasError" class="error"></div>
+      <label for="nip">NIP</label>
+      <input type="text" id="nip" readonly />
+      <div id="nipError" class="error"></div>
 
-        <button id="editBtn">Edit</button>
-      </div>
+      <button id="editBtn">Edit</button>
     </div>
-  </main>
+  </div>
+</main>
+
 
   <!-- === POPUP KONFIRMASI LOGOUT === -->
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
-    <p>Apakah kamu yakin ingin keluar?</p>
+    <p>Apakah Anda yakin ingin keluar?</p>
     <button class="yes" id="yesLogout">Ya</button>
     <button class="cancel" id="cancelLogout">Batal</button>
   </div>
 
-  <script>
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (!loggedInUser || (!loggedInUser.name && !loggedInUser.username)) {
-      window.location.href = "form_login.html";
-    }
+<script>
+  // --- CEK LOGIN ---
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+if (!loggedInUser || (!loggedInUser.name && !loggedInUser.username)) {
+  window.location.href = "form_login.html";
+}
 
-    const username = loggedInUser.username || loggedInUser.name || "guest";
-    const profileKey = `profileData_${username}`;
-    const imageKey = `profileImage_${username}`;
+const username = loggedInUser.username || loggedInUser.name || "guest";
+const profileKey = `profileDosen_${username}`;
+const imageKey = `profileImageDosen_${username}`;
 
-    const profileData = JSON.parse(localStorage.getItem(profileKey));
-    const savedImage = localStorage.getItem(imageKey);
+const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+const savedImage = localStorage.getItem(imageKey);
 
-    const nameEl = document.getElementById("profileName");
-    const imageEl = document.getElementById("profileImage");
-    const nimInput = document.getElementById("nim");
-    const kelasInput = document.getElementById("kelas");
-    const nimError = document.getElementById("nimError");
-    const kelasError = document.getElementById("kelasError");
+const imageEl = document.getElementById("profileImage");
+const nameInput = document.getElementById("nama");
+const nipInput = document.getElementById("nip");
+const nipError = document.getElementById("nipError");
 
-    if (profileData) {
-      nameEl.textContent = profileData.nama || loggedInUser.name || "Pengguna";
-      nimInput.value = profileData.nim || "";
-      kelasInput.value = profileData.kelas || "";
+// Load data ke kolom input
+nameInput.value = profileData.nama || loggedInUser.name || "";
+nipInput.value = profileData.nip || loggedInUser.nip || "";
 
-      const roleEl = nameEl.nextElementSibling;
-      if (roleEl) {
-        roleEl.textContent = profileData.prodi
-          ? `Mahasiswa | ${profileData.prodi}`
-          : "Mahasiswa | Teknik Informatika";
-      }
-    } else {
-      nameEl.textContent = loggedInUser.name || "Pengguna";
-    }
+// Foto profil
+imageEl.src = savedImage || "https://i.pravatar.cc/100";
 
-    imageEl.src = savedImage || "https://i.pravatar.cc/100";
-    nimError.textContent = nimInput.value ? "" : "NIM belum diisi!";
-    kelasError.textContent = kelasInput.value ? "" : "Kelas belum diisi!";
+// Validasi NIP
+nipError.textContent = nipInput.value ? "" : "NIP belum diisi!";
 
-    document.getElementById("editBtn").addEventListener("click", () => {
-      window.location.href = "edit_Profile.html";
-    });
+// Tombol Edit
+document.getElementById("editBtn").addEventListener("click", () => {
+  window.location.href = "editprofiledosen.html";
+});
 
-    const logoutBtn = document.getElementById("logoutBtn");
-    const logoutPopup = document.getElementById("logoutPopup");
-    const yesLogout = document.getElementById("yesLogout");
-    const cancelLogout = document.getElementById("cancelLogout");
+// Logout
+const logoutBtn = document.getElementById("logoutBtn");
+const logoutPopup = document.getElementById("logoutPopup");
+const yesLogout = document.getElementById("yesLogout");
+const cancelLogout = document.getElementById("cancelLogout");
 
-    logoutBtn.addEventListener("click", () => {
-      logoutPopup.style.display = "block";
-    });
+logoutBtn.addEventListener("click", () => {
+  logoutPopup.style.display = "block";
+});
+cancelLogout.addEventListener("click", () => {
+  logoutPopup.style.display = "none";
+});
+yesLogout.addEventListener("click", () => {
+  localStorage.removeItem("loggedInUser");
+  window.location.href = "form_login.html";
+});
 
-    cancelLogout.addEventListener("click", () => {
-      logoutPopup.style.display = "none";
-    });
+</script>
 
-    yesLogout.addEventListener("click", () => {
-      localStorage.removeItem("loggedInUser");
-      logoutPopup.style.display = "none";
-      window.location.href = "form_login.html";
-    });
-  </script>
+
 </body>
 </html>
