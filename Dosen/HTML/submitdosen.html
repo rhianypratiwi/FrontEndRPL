@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Tugas</title>
+  <link rel="stylesheet" href="../CSS/submitdosen.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+  
+</head>
+<body>
+
+    <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home_dosen.html"><i class="fa fa-house"></i><span>Beranda</span></a>
+      <a href="ProfileDosen.html"><i class="fa fa-user"></i><span>Profil</span></a>
+      <a href="kelasdosen.html" class="active"><i class="fa fa-book-open"></i><span>Kelas</span></a>
+      <a href="#" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i><span>Keluar</span></a>
+    </nav>
+  </aside>
+
+    <main class="content">
+        <div class="header">
+      <div class="profile-section">
+        <div class="profile-text">
+          <h1 id="greetName">Selamat mengajar, lia!</h1>
+          <p id="todayDate">Kamis, 18 september 2025</p>
+        </div>
+        <div class="profile">
+          <img src="https://i.pravatar.cc/100" alt="Profil" id="profilePhoto">
+        </div>
+      </div>
+    </div>
+
+        <div class="content-wrapper">
+      <div class="content-header">
+        <h2 id="judulTugas">PBL Kelompok</h2>
+              </div>
+
+      <div class="deadline">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <span id="deadlineTugas">Deadline 25 sept 2025, 23.59</span>
+      </div>
+      <div class="points">100 point</div>
+      <div class="desc" id="deskripsiTugas">
+        Presentasi : rancangan gedung (gambar), jumlah user, sejarah gedung (termasuk berapa jumlah lantai, berapa ruangan, nama ruangan)
+      </div>
+
+      <div class="comment-box">
+        <input type="text" placeholder="Add private comment..." />
+        <i class="fa-solid fa-paper-plane"></i>
+      </div>
+    </div>
+  </main>
+
+    <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+    <script>
+    // === 1. BLOK HEADER (Kode Anda sudah benar) ===
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.name) {
+      window.location.href = 'form_login.html'; 
+    }
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = 'profileDosen_' + username;
+    const imageKey = 'profileImageDosen_' + username;
+    const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+    const savedImage = localStorage.getItem(imageKey);
+    
+    const greetNameEl = document.getElementById("greetName");
+    const todayDateEl = document.getElementById("todayDate");
+    const profilePhotoEl = document.getElementById("profilePhoto");
+
+    if (profileData && profileData.nama) {
+      greetNameEl.textContent = 'Selamat mengajar, ' + profileData.nama + '!';
+    } else {
+      greetNameEl.textContent = 'Selamat mengajar, ' + loggedInUser.name + '!';
+    }
+    if (savedImage) {
+      profilePhotoEl.src = savedImage;
+    } else {
+      profilePhotoEl.src = "https://i.pravatar.cc/100";
+    }
+    const today = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    todayDateEl.textContent = today.toLocaleDateString('id-ID', options);
+    // === AKHIR BLOK HEADER ===
+
+
+    // === 2. SCRIPT DETAIL TUGAS (Kode Anda) ===
+    const judul = localStorage.getItem("judulTugas");
+    const deskripsi = localStorage.getItem("deskripsiTugas");
+    const deadlineInput = localStorage.getItem("deadlineTugas"); 
+
+    if (judul) {
+      document.getElementById("judulTugas").textContent = judul;
+    }
+
+    if (deskripsi !== null) {
+      if (deskripsi.trim() !== "") {
+        document.getElementById("deskripsiTugas").textContent = deskripsi;
+      } else {
+        document.getElementById("deskripsiTugas").textContent = "-";
+      }
+    }
+
+    // === 3. PERBAIKAN DEADLINE (Tanpa Backtick) ===
+    if (deadlineInput) {
+      const date = new Date(deadlineInput + 'T00:00:00'); 
+      const options = { day: 'numeric', month: 'short', year: 'numeric' };
+      const formattedDate = date.toLocaleDateString('id-ID', options); 
+      
+      document.getElementById("deadlineTugas").textContent = 'Deadline ' + formattedDate + ', 23.59';
+    } else {
+      document.getElementById("deadlineTugas").textContent = "Deadline belum diatur";
+    }
+    
+    // === 4. JAVASCRIPT POPUP DITAMBAHKAN ===
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+   const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+
+    if (logoutBtn && logoutPopup && yesLogout && cancelLogout) {
+    
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault(); 
+        logoutPopup.style.display = "block";
+      });
+    
+      cancelLogout.addEventListener("click", () => {
+        logoutPopup.style.display = "none";
+      });
+    
+      yesLogout.addEventListener("click", () => {
+        localStorage.removeItem('loggedInUser'); 
+        logoutPopup.style.display = 'none';
+        window.location.href = '../../form_login.html'; 
+      });
+    }
+    // === AKHIR LOGOUT SCRIPT ===
+  </script>
+</body>
+</html>

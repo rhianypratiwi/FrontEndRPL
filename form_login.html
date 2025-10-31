@@ -154,13 +154,14 @@
       localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
       localStorage.setItem("isLoggedIn", "true");
 
-        // 🔹 Redirect berdasarkan role (case-insensitive)
+        // === PERBAIKAN UNTUK DOSEN ===
         if (foundUser.role && foundUser.role.toLowerCase() === "dosen") {
-          window.location.href = "home_dosen.html";
+          // Path dan nama file diperbaiki
+          window.location.href = "Dosen/HTML/home_dosen.html"; 
         } else {
-          // cek apakah profil mahasiswa lengkap
+          // (Logika Mahasiswa Anda sudah benar)
           const username = foundUser.username || foundUser.name || foundUser.email;
-          const profileKey = `profileData_${username}`;
+          const profileKey = 'profileData_' + username; // (Ini key untuk Mahasiswa)
           const profileData = JSON.parse(localStorage.getItem(profileKey));
 
           if (profileData && profileData.nama && profileData.nim && profileData.kelas && profileData.prodi) {
@@ -170,8 +171,9 @@
           }
         }
       } else {
-        // kalau gak punya role, arahkan ke halaman umum
-        window.location.href = "home.html";
+        // === PERBAIKAN LOGIKA GAGAL LOGIN ===
+        // Tampilkan pesan error, jangan redirect
+        loginError.style.display = "block";
       }
     });
   </script>

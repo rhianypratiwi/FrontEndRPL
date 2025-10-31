@@ -4,70 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kelas — SETRUM</title>
+  <link rel="stylesheet" href="../CSS/kelasdosen.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:"Inter", Arial, sans-serif; }
-    body { display:flex; min-height:100vh; background:#fff; }
-    .sidebar {
-      width:240px; background:#c8102e; color:#fff; display:flex; flex-direction:column; padding:20px 0; border-radius:0 10px 10px 0;
-    }
-    .brand { font-size:22px; font-weight:700; text-align:center; margin-bottom:40px; letter-spacing:1px; }
-    .menu { display:flex; flex-direction:column; }
-    .menu a {
-      display:flex; align-items:center; gap:12px; padding:12px 24px; text-decoration:none; color:#fff; font-weight:500; transition:background 0.3s ease;
-    }
-    .menu a:hover, .menu a.active { background:#a10d25; }
-    .menu i { width:20px; text-align:center; font-size:18px; }
-    .content {
-      flex:1; padding:30px; transition:all 0.3s ease;
-    }
-    .header {
-      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
-    }
-    .profile-section { display:flex; align-items:center; gap:12px; }
-    .profile-text { text-align:right; }
-    .profile-text h1 { font-size:18px; margin-bottom:4px; }
-    .profile-text p { color:#555; font-size:13px; }
-    .profile img {
-      width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid #eee; cursor:pointer; transition:transform 0.2s ease;
-    }
-    .profile img:hover { transform:scale(1.05); }
-    h2 { margin-top:26px; margin-bottom:8px; font-size:18px; }
-    .card {
-      background:#c8102e; color:#fff; padding:10px 12px; border-radius:8px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; transition:transform 0.25s ease, box-shadow 0.25s ease; cursor:pointer;
-    }
-    .card:hover { transform:translateY(-5px); box-shadow:0 6px 15px rgba(0,0,0,0.2); }
-    .card.light { background:#f28a8a; color:#000; }
-    @media (max-width: 900px) {
-      body { flex-direction:column; }
-      .sidebar {
-        width:100%; border-radius:0; flex-direction:row; justify-content:space-around; align-items:center; padding:10px 0;
-      }
-      .brand { font-size:18px; margin-bottom:0; }
-      .menu { flex-direction:row; gap:10px; }
-      .menu a { padding:8px 10px; font-size:14px; }
-      .content { padding:20px; }
-      .profile-section { justify-content:flex-end; width:100%; }
-      .profile-text h1 { font-size:16px; }
-    }
-    @media (max-width: 600px) {
-      .menu a span { display:none; }
-      .menu a i { font-size:20px; }
-      .card {
-        flex-direction:column; align-items:flex-start; gap:6px;
-      }
-      .profile-section {
-        flex-direction:row; justify-content:space-between; width:100%;
-      }
-      .profile img { width:40px; height:40px; }
-    }
-  </style>
+ 
 </head>
 <body>
   <aside class="sidebar">
     <div class="brand">SETRUM</div>
     <nav class="menu">
-      <a href="homeDosen.html" ><i class="fa fa-home"></i> Beranda</a>
+      <a href="home_dosen.html" ><i class="fa fa-home"></i> Beranda</a>
       <a href="ProfileDosen.html" ><i class="fa fa-user"></i> Profil</a>
       <a href="#" class="active"><i class="fa fa-book"></i> Kelas</a>
       <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
@@ -79,42 +24,79 @@
       <h2>Daftar Kelas</h2>
       <div class="profile-section">
         <div class="profile-text">
-          <h1 id="greetName">Selamat mengajar, Lia!</h1>
+                    <h1 id="greetName">Memuat...</h1>
           <p id="todayDate"></p>
         </div>
         <div class="profile">
-          <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
+                    <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
         </div>
       </div>
     </div>
 
     <div id="kelasList">
-      <!-- Kartu kelas akan di-render di sini -->
-    </div>
+          </div>
   </main>
 
-  <script>
-    // contoh data kelas
+   <!-- Popup logout -->
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+    <script>
+    // === AWAL LOGIKA HEADER ===
+    // 1. Cek Login & Ambil Kunci Penyimpanan
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.name) {
+      window.location.href = 'form_login.html'; // Arahkan ke login jika tidak ada data
+    }
+
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = 'profileDosen_' + username;
+    const imageKey = 'profileImageDosen_' + username;
+
+    const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+    const savedImage = localStorage.getItem(imageKey);
+    // === AKHIR LOGIKA HEADER ===
+
+    // contoh data kelas (kode asli Anda)
     const kelasData = [
       { nama: "KELAS A", jumlah: "28 Mahasiswa", waktu: "08.00 - 10.00" },
       { nama: "KELAS B", jumlah: "28 Mahasiswa", waktu: "10.00 - 12.00" },
       { nama: "KELAS C", jumlah: "28 Mahasiswa", waktu: "13.00 - 15.00" }
     ];
 
-    // simpan ke localStorage
+    // simpan ke localStorage (kode asli Anda)
     localStorage.setItem("kelasData", JSON.stringify(kelasData));
 
+    // Ambil elemen-elemen (kode asli Anda)
     const greetNameEl = document.getElementById("greetName");
     const todayDateEl = document.getElementById("todayDate");
     const logoutBtn = document.getElementById("logoutBtn");
     const profilePhoto = document.getElementById("profilePhoto");
 
-    // set tanggal
+    // === PERBAIKAN: Tampilkan data header dinamis ===
+    if (profileData && profileData.nama) {
+      greetNameEl.textContent = 'Selamat mengajar, ' + profileData.nama + '!';
+    } else {
+      greetNameEl.textContent = 'Selamat mengajar, ' + loggedInUser.name + '!';
+    }
+
+    if (savedImage) {
+      profilePhoto.src = savedImage;
+    } else {
+      profilePhoto.src = "https://i.pravatar.cc/100"; // Foto default
+    }
+    // === AKHIR PERBAIKAN HEADER ===
+
+    // set tanggal (kode asli Anda)
     const today = new Date();
     const opts = { weekday:'long', day:'numeric', month:'long', year:'numeric' };
     todayDateEl.textContent = today.toLocaleDateString('id-ID', opts);
 
-    // render kelas
+    // render kelas (kode asli Anda)
     const kelasListEl = document.getElementById("kelasList");
     kelasData.forEach((k, idx) => {
       const div = document.createElement("div");
@@ -134,6 +116,7 @@
       kelasListEl.appendChild(div);
     });
 
+    // deleteClass function (kode asli Anda)
     function deleteClass(e, nama) {
       e.stopPropagation();
       if(confirm("Hapus kelas "+nama+"?")) {
@@ -143,10 +126,25 @@
       }
     }
 
-    logoutBtn.addEventListener("click", () => {
-      // misalnya clear session & arah ke login
-      window.location.href = "form_login.html";
+    const logoutPopup = document.getElementById('logoutPopup');
+  const yesLogout = document.getElementById('yesLogout');
+  const cancelLogout = document.getElementById('cancelLogout');
+
+  // Pastikan semua elemen ada sebelum menambahkan listener
+  if (logoutBtn && logoutPopup && yesLogout && cancelLogout) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault(); // Mencegah link '#' pindah halaman
+      logoutPopup.style.display = "block";
     });
+    cancelLogout.addEventListener("click", () => {
+      logoutPopup.style.display = "none";
+    });
+    yesLogout.addEventListener("click", () => {
+      
+      window.location.href = "../../form_login.html"; // Arahkan ke login
+    });
+  }
+    
   </script>
 </body>
 </html>

@@ -15,8 +15,8 @@
     <div class="brand">SETRUM</div>
     <nav class="menu">
       <a href="#" class="active"><i class="fa fa-home"></i><span>Beranda</span></a>
-      <a href="Kelas.html"><i class="fa fa-book"></i><span>Kelas</span></a>
-      <a href="Profil.html"><i class="fa fa-user"></i><span>Profil</span></a>
+      <a href="ProfileDosen.html"><i class="fa fa-user"></i><span>Profil</span></a>
+      <a href="kelasdosen.html"><i class="fa fa-book"></i><span>Kelas</span></a>
       <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span>Keluar</span></a>
     </nav>
   </aside>
@@ -99,8 +99,8 @@
     if (!loggedInUser || !loggedInUser.name) window.location.href = 'form_login.html';
 
     const username = loggedInUser.username || loggedInUser.name || "guest";
-    const profileKey = `profileData_${username}`;
-    const imageKey = `profileImage_${username}`;
+    const profileKey = `profileDosen_${username}`;
+    const imageKey = `profileImageDosen_${username}`;
 
     const greetName = document.getElementById('greetName');
     const profilePhoto = document.getElementById('profilePhoto');
@@ -124,7 +124,7 @@
     const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
     document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
 
-    profileContainer.addEventListener('click', () => window.location.href = 'Profil.html');
+    profileContainer.addEventListener('click', () => window.location.href = 'ProfileDosen.html');
 
     // Logout
     const logoutBtn = document.getElementById('logoutBtn');
@@ -137,7 +137,7 @@
     yesLogout.onclick = () => {
       localStorage.removeItem('loggedInUser');
       logoutPopup.style.display = 'none';
-      window.location.href = '../../Mahasiswa/HTML/form_login.html';
+      window.location.href = '../../form_login.html';
     };
   </script>
 </body>

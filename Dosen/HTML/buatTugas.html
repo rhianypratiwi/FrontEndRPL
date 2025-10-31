@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buat Tugas — SETRUM</title>
+  <link rel="stylesheet" href="../CSS/buattugas.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  
+</head>
+<body>
+    <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home_dosen.html"><i class="fa-solid fa-house"></i><span>Beranda</span></a>
+      <a href="ProfileDosen.html"><i class="fa fa-user"></i><span>Profile</span></a>
+      <a href="kelasdosen.html" class="active"><i class="fa-solid fa-book"></i><span>Kelas</span></a>
+            <a href="#" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i><span>Keluar</span></a>
+    </nav>
+  </aside>
+
+    <main class="content">
+    <div class="header">
+          <div class="profile-section"> 
+            <div class="profile-text">
+              <h1 id="greetName">Selamat mengajar, Lia!</h1> 
+              <p id="todayDate"></p>
+            </div>
+          <div class="profile">
+            <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto"> 
+          </div>
+      </div>
+    </div>
+
+        <section class="form-container">
+      <h2>Buat Tugas</h2>
+      <label>Tambahkan Judul (wajib)</label>
+      <input type="text" id="judulTugas" placeholder="">
+      <label>Deskripsi</label>
+      <textarea id="deskripsiTugas"></textarea>
+      <div class="file-row"> 
+        <label for="fileLampiran" class="btn-lampiran">
+          <i class="fa-solid fa-plus"></i>
+          <span id="lampiranText">Tambahkan Lampiran</span>
+        </label>
+        <input type="file" id="fileLampiran" style="display: none;">
+        <div class="poin-box">100 Poin ✖</div>
+      </div> 
+      <div class="deadline-container">
+        <a href="#" id="deadlineLink" class="deadline-link">Tambah Deadline</a>
+        <input type="date" id="deadlineInput" class="deadline-input">
+      </div>
+      <div class="button-row">
+        <button class="btn-posting" onclick="kirimTugas()">Posting</button>
+        <button class="btn-batal" onclick="window.history.back()">Batal</button>
+      </div>
+    </section>
+  </main>
+
+    <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+  <script>
+    // Cek login dan ambil data profil
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.name) {
+       window.location.href = 'form_login.html'; 
+    }
+
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = 'profileDosen_' + username;
+    const imageKey = 'profileImageDosen_' + username;
+
+    const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+    const savedImage = localStorage.getItem(imageKey);
+
+    // (Script header dinamis Anda sudah benar)
+    const greetNameEl = document.getElementById("greetName");
+    const todayDateEl = document.getElementById("todayDate");
+    const profilePhotoEl = document.getElementById("profilePhoto");
+    if (profileData && profileData.nama) {
+      greetNameEl.textContent = 'Selamat mengajar, ' + profileData.nama + '!';
+    } else {
+      greetNameEl.textContent = 'Selamat mengajar, ' + loggedInUser.name + '!';
+    }
+    if (savedImage) {
+     profilePhotoEl.src = savedImage;
+    } else {
+     profilePhotoEl.src = "https://i.pravatar.cc/100";
+    }
+    const today = new Date();
+    const opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    todayDateEl.textContent = today.toLocaleDateString('id-ID', opts);
+
+
+    // (Script file dan deadline Anda sudah benar)
+    document.getElementById('fileLampiran').addEventListener('change', function() {
+      const lampiranText = document.getElementById('lampiranText');
+      if (this.files && this.files.length > 0) {
+        lampiranText.textContent = this.files[0].name;
+      } else {
+        lampiranText.textContent = 'Tambahkan Lampiran';
+     }
+    });
+    document.getElementById('deadlineLink').addEventListener('click', function(e) {
+      e.preventDefault(); 
+      this.style.display = 'none'; 
+      const deadlineInput = document.getElementById('deadlineInput');
+      deadlineInput.style.display = 'block'; 
+      deadlineInput.focus(); 
+    });
+
+
+    // (Script kirimTugas Anda sudah benar)
+    function kirimTugas() {
+      const judul = document.getElementById('judulTugas').value.trim();
+      const desk = document.getElementById('deskripsiTugas').value.trim();
+      const file = document.getElementById('fileLampiran').files[0];
+      const deadline = document.getElementById('deadlineInput').value;
+
+      if (judul === "") {
+        alert("Judul tugas wajib diisi!");
+        return;
+      }
+      localStorage.setItem("judulTugas", judul);
+      localStorage.setItem("deskripsiTugas", desk);
+      localStorage.setItem("deadlineTugas", deadline); 
+      window.location.href = "submitdosen.html"; 
+    }
+
+        // === LOGOUT SCRIPT ===
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+
+    // Pastikan semua elemen ada sebelum menambahkan listener
+    if (logoutBtn && logoutPopup && yesLogout && cancelLogout) {
+    
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault(); // Mencegah link '#' pindah halaman
+        logoutPopup.style.display = "block";
+      });
+    
+      cancelLogout.addEventListener("click", () => {
+        logoutPopup.style.display = "none";
+      });
+    
+      yesLogout.addEventListener("click", () => {
+        // Hanya hapus data sesi login
+        localStorage.removeItem('loggedInUser'); 
+        logoutPopup.style.display = 'none';
+      
+        // Path dari Dosen/HTML/ kembali ke folder paling atas
+        window.location.href = '../../form_login.html'; 
+      });
+    }
+    // === AKHIR LOGOUT SCRIPT ===
+  </script>
+</body>
+</html>

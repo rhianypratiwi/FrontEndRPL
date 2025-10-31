@@ -4,199 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Edit Profil — SETRUM Dosen</title>
+  <link rel="stylesheet" href="../CSS/editprofiledosen.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    :root {
-      --red: #c8102e;
-      --hover-red: #a10d25;
-      --green: #00b33c;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "Inter", Arial, sans-serif;
-      background: #fff;
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* SIDEBAR */
-    .sidebar {
-      width: 240px;
-      background: var(--red);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      padding: 20px 0;
-      border-radius: 0 10px 10px 0;
-      transition: all 0.3s ease;
-    }
-
-    .brand {
-      font-size: 22px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .menu { display: flex; flex-direction: column; }
-
-    .menu a {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 24px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 500;
-      transition: background 0.3s ease;
-    }
-
-    .menu a:hover, .menu a.active { background: var(--hover-red); }
-    .menu i { width: 20px; text-align: center; font-size: 18px; }
-
-    /* CONTENT */
-    .content {
-      flex: 1;
-      padding: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-    }
-
-    .content-inner { width: 100%; max-width: 760px; }
-
-    .top-row {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .profile-pic {
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #ddd;
-      background: #f2f2f2;
-    }
-
-    .pic-controls { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-
-    .pic-controls button {
-      padding: 6px 10px;
-      border-radius: 6px;
-      border: 1px solid #bbb;
-      background: #fff;
-      cursor: pointer;
-      font-size: 13px;
-    }
-    .pic-controls button:hover { background: #f4f4f4; }
-
-    .profile-info h3 { font-size: 20px; font-weight: 700; color: #222; }
-    .profile-info p { color: #666; font-size: 13px; margin-top: 6px; }
-
-    .form-area { margin-top: 24px; width: 100%; max-width: 420px; }
-
-    label {
-      display: block;
-      font-weight: 700;
-      font-size: 13px;
-      margin-bottom: 6px;
-      color: #222;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 8px 10px;
-      margin-bottom: 16px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-    }
-
-    .actions { margin-top: 10px; display: flex; gap: 12px; flex-wrap: wrap; }
-
-    .btn-cancel {
-      padding: 8px 14px;
-      border-radius: 6px;
-      border: 1px solid #999;
-      background: #fff;
-      cursor: pointer;
-    }
-
-    .btn-save {
-      padding: 8px 14px;
-      border-radius: 6px;
-      border: none;
-      background: var(--green);
-      color: #fff;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* LOGOUT POPUP */
-    .logout-popup {
-      display: none;
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: var(--red);
-      color: #fff;
-      padding: 25px 30px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      z-index: 1000;
-    }
-
-    .logout-popup button {
-      background: #fff;
-      border: none;
-      padding: 8px 20px;
-      margin: 5px;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .logout-popup button.yes { color: var(--red); }
-    .logout-popup button.cancel {
-      background: transparent;
-      border: 1px solid #fff;
-      color: #fff;
-    }
-    .logout-popup button.cancel:hover {
-      background: #fff; color: var(--red);
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      body { flex-direction: column; }
-      .sidebar { width: 100%; flex-direction: row; justify-content: space-around; align-items: center; border-radius: 0; }
-      .brand { display: none; }
-      .menu { flex-direction: row; gap: 10px; }
-      .menu a { padding: 8px 10px; font-size: 14px; }
-      .content { padding: 20px; }
-      .top-row { justify-content: center; text-align: center; }
-      .profile-pic { width: 80px; height: 80px; }
-      .actions { justify-content: center; }
-    }
-
-    @media (max-width: 600px) {
-      .menu a span { display: none; }
-      .menu a i { font-size: 20px; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  
 </head>
 <body>
   <aside class="sidebar">
     <div class="brand">SETRUM</div>
     <nav class="menu">
-      <a href="homeDosen.html"><i class="fa fa-home"></i><span>Beranda</span></a>
+      <a href="home_dosen.html"><i class="fa fa-home"></i><span>Beranda</span></a>
       <a href="ProfileDosen.html" class="active"><i class="fa fa-user"></i><span>Profil</span></a>
-      <a href="MataKuliah.html"><i class="fa fa-book"></i><span>Mata Kuliah</span></a>
+            <a href="kelasdosen.html"><i class="fa fa-book"></i><span>Kelas</span></a>
       <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span>Keluar</span></a>
     </nav>
   </aside>
@@ -207,11 +26,11 @@
         <img id="profileImage" class="profile-pic" src="https://i.pravatar.cc/150" alt="Foto Profil">
         <div>
           <div class="profile-info">
-
             <p id="roleDisplay">Dosen | Teknik Informatika</p>
           </div>
           <div class="pic-controls">
-            <button id="btnChangeSmall">Ganti foto profil</button>
+                        <label for="fotoInput" id="btnChangeSmall">Ganti foto profil</label>
+            <input type="file" id="fotoInput" accept="image/*" style="display: none;">
             <button id="btnDeleteSmall">Hapus</button>
           </div>
         </div>
@@ -224,7 +43,7 @@
         <label for="nip">NIP</label>
         <input type="text" id="nip">
 
-        <label for="prodi">Program Studi yang  Diampu</label>
+        <label for="prodi">Program Studi yang Diampu</label>
         <input type="text" id="prodi">
       </div>
 
@@ -235,6 +54,7 @@
     </div>
   </main>
 
+  <!-- Popup logout -->
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
     <p>Apakah Anda yakin ingin keluar?</p>
@@ -242,105 +62,125 @@
     <button class="cancel" id="cancelLogout">Batal</button>
   </div>
 
-   <script>
+    <script>
+    // === SCRIPT DIPERBAIKI TOTAL ===
+
+    // 1. Cek Login & Ambil Kunci Penyimpanan
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || (!loggedInUser.username && !loggedInUser.name)) {
       window.location.href = 'form_login.html';
     }
 
     const username = loggedInUser.username || loggedInUser.name || "guest";
-    const profileKey = `profileData_${username}`;
-    const imageKey = `profileImage_${username}`;
+    const profileKey = `profileDosen_${username}`;
+    const imageKey = `profileImageDosen_${username}`;
 
+    // 2. Ambil Referensi Elemen HTML (SESUAIKAN DENGAN HTML ANDA)
     const profileImage = document.getElementById('profileImage');
     const nameInput = document.getElementById('nama');
-    const nimInput = document.getElementById('nim');
-    const kelasInput = document.getElementById('kelas');
-    const prodiInput = document.getElementById('prodi');
-    const nameDisplay = document.getElementById('nameDisplay');
+    const nipInput = document.getElementById('nip'); // DIGANTI DARI 'nimInput'
+    const prodiInput = document.getElementById('prodi'); // DIGANTI DARI 'kelasInput'
     const roleDisplay = document.getElementById('roleDisplay');
+    const fotoInputElement = document.getElementById('fotoInput');
 
+    // Variabel sementara untuk foto baru
+    let newImageDataUrl = null;
+    let deleteImageFlag = false;
+
+    // 3. Muat Data yang Ada ke Form
     const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
     const savedImage = localStorage.getItem(imageKey);
 
-    nameInput.value = profileData.nama || loggedInUser.name || 'Lia Ali';
-    nimInput.value = profileData.nim || '';
-    kelasInput.value = profileData.kelas || '';
-    prodiInput.value = profileData.prodi || 'Teknik Informatika';
+    nameInput.value = profileData.nama || loggedInUser.name || '';
+    nipInput.value = profileData.nip || ''; // DIGANTI DARI 'nim'
+    prodiInput.value = profileData.prodi || 'Teknik Informatika'; // DIGANTI DARI 'kelas'
 
-    nameDisplay.textContent = profileData.nama || loggedInUser.name || 'Lia Ali';
-    roleDisplay.textContent = profileData.prodi ? ('Mahasiswa | ' + profileData.prodi) : 'Mahasiswa | Teknik Informatika';
-    if (savedImage) profileImage.src = savedImage;
-
-    document.getElementById('btnChangeSmall').addEventListener('click', () => {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
-      input.onchange = e => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = () => {
-          const img = new Image();
-          img.src = reader.result;
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            const maxSize = 300;
-            let width = img.width;
-            let height = img.height;
-            if (width > height && width > maxSize) {
-              height = Math.round(height * (maxSize / width));
-              width = maxSize;
-            } else if (height > maxSize) {
-              width = Math.round(width * (maxSize / height));
-              height = maxSize;
-            }
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-            localStorage.setItem(imageKey, dataUrl);
-            profileImage.src = dataUrl;
-          };
-        };
-        reader.readAsDataURL(file);
-      };
-      input.click();
-    });
-
-    document.getElementById('btnDeleteSmall').addEventListener('click', () => {
-      localStorage.removeItem(imageKey);
+    if (savedImage) {
+      profileImage.src = savedImage;
+    } else {
       profileImage.src = "https://i.pravatar.cc/150";
-    });
+    }
+    
+    // Set Teks Role (Dosen, bukan Mahasiswa)
+    roleDisplay.textContent = 'Dosen | ' + (prodiInput.value || 'Teknik Informatika');
 
-    document.getElementById('btnCancel').addEventListener('click', () => {
-      window.location.href = 'profile.html';
-    });
 
-    document.getElementById('btnSave').addEventListener('click', () => {
-      const data = {
-        nama: nameInput.value.trim(),
-        nim: nimInput.value.trim(),
-        kelas: kelasInput.value.trim(),
-        prodi: prodiInput.value.trim()
+    // 4. Fungsikan Tombol Ganti Foto
+    fotoInputElement.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        const dataUrl = e.target.result;
+        profileImage.src = dataUrl; // Tampilkan preview
+        newImageDataUrl = dataUrl; // Simpan data URL untuk 'Simpan'
+        deleteImageFlag = false; // Batalkan flag hapus jika ada
       };
-      localStorage.setItem(profileKey, JSON.stringify(data));
-      window.location.href = 'profile.html';
+      
+      reader.readAsDataURL(file);
+    });
+    
+    // (Tambahkan listener ke tombol <label> jika diperlukan, tapi 'for' sudah cukup)
+    // document.getElementById('btnChangeSmall').addEventListener('click', () => {
+    //     fotoInputElement.click(); // Memicu input file tersembunyi
+    // });
+
+
+    // 5. Fungsikan Tombol Hapus Foto
+    document.getElementById('btnDeleteSmall').addEventListener('click', () => {
+      profileImage.src = "https://i.pravatar.cc/150"; // Reset preview
+      newImageDataUrl = null; // Hapus data URL baru
+      deleteImageFlag = true; // Set flag untuk dihapus saat simpan
     });
 
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      document.getElementById('logoutPopup').style.display = 'block';
+    // 6. Fungsikan Tombol Batal
+    document.getElementById('btnCancel').addEventListener('click', () => {
+      window.location.href = 'ProfileDosen.html'; // PERBAIKI NAMA FILE
     });
 
-    document.getElementById('cancelLogout').addEventListener('click', () => {
-      document.getElementById('logoutPopup').style.display = 'none';
+    // 7. Fungsikan Tombol Simpan
+    document.getElementById('btnSave').addEventListener('click', () => {
+      // Ambil data yang ada
+      const currentProfileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+
+      // Update data dengan nilai form
+      const dataToSave = {
+        nama: nameInput.value.trim(),
+        nip: nipInput.value.trim(), // DIGANTI DARI 'nim'
+        prodi: prodiInput.value.trim() // DIGANTI DARI 'kelas'
+      };
+      
+      // Simpan data teks ke profileKey
+      localStorage.setItem(profileKey, JSON.stringify(dataToSave));
+      
+      // Cek dan simpan data foto
+      if (newImageDataUrl) {
+        // Jika ada foto baru, simpan
+        localStorage.setItem(imageKey, newImageDataUrl);
+      } else if (deleteImageFlag) {
+        // Jika flag hapus aktif, hapus foto
+        localStorage.removeItem(imageKey);
+      }
+      // Jika tidak keduanya, foto lama tidak diubah
+
+      alert("Perubahan disimpan!");
+      window.location.href = 'ProfileDosen.html'; // PERBAIKI NAMA FILE
     });
 
-    document.getElementById('yesLogout').addEventListener('click', () => {
-      localStorage.removeItem('loggedInUser');
-      window.location.href = 'form_login.html';
-    });
+    // 8. Fungsikan Logout (Kode Anda sudah benar)
+     // Logout
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+
+    logoutBtn.onclick = () => logoutPopup.style.display = 'block';
+    cancelLogout.onclick = () => logoutPopup.style.display = 'none';
+    yesLogout.onclick = () => {
+      logoutPopup.style.display = 'none';
+      window.location.href = '../../form_login.html';
+    };
   </script>
 </body>
 </html>
