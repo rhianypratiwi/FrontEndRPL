@@ -26,7 +26,8 @@
   <main class="content">
     <div class="profile-container">
       <img id="profileImage" alt="Profile" />
-      <h3 id="profileName"></h3>
+      <h3 class="static-name">Dosen</h3>
+      <p id="profileJurusan" class="jurusan">Teknik Informatika</p>
 
       <label for="nama">Nama</label>
       <input type="text" id="nama" readonly />
@@ -65,13 +66,13 @@
 
     // === REFERENSI ELEMEN ===
     const imageEl = document.getElementById("profileImage");
-    const nameEl = document.getElementById("profileName");
+    const jurusanEl = document.getElementById("profileJurusan");
     const nameInput = document.getElementById("nama");
     const nipInput = document.getElementById("nip");
     const nipError = document.getElementById("nipError");
 
     // === TAMPILKAN DATA ===
-    nameEl.textContent = profileData.nama || loggedInUser.name || "Dosen";
+    jurusanEl.textContent = profileData.prodi || "Teknik Informatika";
     nameInput.value = profileData.nama || loggedInUser.name || "";
     nipInput.value = profileData.nip || "";
 
