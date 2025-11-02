@@ -4,13 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profil — SETRUM</title>
+
   <link rel="stylesheet" href="../CSS/ProfileDosen.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  
 </head>
 <body>
 
+  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="brand">SETRUM</div>
     <nav class="menu">
@@ -21,9 +22,11 @@
     </nav>
   </aside>
 
+  <!-- Konten Utama -->
   <main class="content">
     <div class="profile-container">
-      <img id="profileImage" src="https://i.pravatar.cc/100" alt="Profile" />
+      <img id="profileImage" alt="Profile" />
+      <h3 id="profileName"></h3>
 
       <label for="nama">Nama</label>
       <input type="text" id="nama" readonly />
@@ -32,11 +35,11 @@
       <input type="text" id="nip" readonly />
       <div id="nipError" class="error"></div>
 
-      <button id="editBtn">Edit</button>
+      <button id="editBtn">Edit Profil</button>
     </div>
   </main>
 
- <!-- Popup logout -->
+  <!-- Popup Logout -->
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
     <p>Apakah Anda yakin ingin keluar?</p>
@@ -45,73 +48,75 @@
   </div>
 
   <script>
-// --- CEK LOGIN (Kode Anda sudah benar) ---
-const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-if (!loggedInUser || (!loggedInUser.name && !loggedInUser.username)) {
-  window.location.href = "form_login.html";
-}
+    // === CEK LOGIN ===
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!loggedInUser || (!loggedInUser.name && !loggedInUser.username)) {
+      window.location.href = "/Mahasiswa/HTML/form_login.html";
+    }
 
-// === KUNCI PENYIMPANAN (Kode Anda sudah benar) ===
-const username = loggedInUser.username || loggedInUser.name || "guest";
-const profileKey = `profileDosen_${username}`;
-const imageKey = `profileImageDosen_${username}`;
+    // === KEY PENYIMPANAN ===
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileDosen_${username}`;
+    const imageKey = `profileImageDosen_${username}`;
 
-// === AMBIL DATA (Kode Anda sudah benar) ===
-const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
-const savedImage = localStorage.getItem(imageKey);
+    // === AMBIL DATA ===
+    const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
+    const savedImage = localStorage.getItem(imageKey);
 
-// === REFERENSI ELEMEN (Kode Anda sudah benar) ===
-const imageEl = document.getElementById("profileImage");
-const nameInput = document.getElementById("nama");
-const nipInput = document.getElementById("nip");
-const nipError = document.getElementById("nipError");
+    // === REFERENSI ELEMEN ===
+    const imageEl = document.getElementById("profileImage");
+    const nameEl = document.getElementById("profileName");
+    const nameInput = document.getElementById("nama");
+    const nipInput = document.getElementById("nip");
+    const nipError = document.getElementById("nipError");
 
-// === LOGIKA TAMPILKAN DATA (Kode Anda sudah benar) ===
-// 1. Load data nama dan NIP
-// (Jika data di profileKey ada, gunakan. Jika tidak, coba dari loggedInUser. Jika tidak, kosongkan)
-nameInput.value = profileData.nama || loggedInUser.name || "";
-nipInput.value = profileData.nip || ""; // NIP hanya dari profileData
+    // === TAMPILKAN DATA ===
+    nameEl.textContent = profileData.nama || loggedInUser.name || "Dosen";
+    nameInput.value = profileData.nama || loggedInUser.name || "";
+    nipInput.value = profileData.nip || "";
 
-// 2. Load foto profil
-imageEl.src = savedImage || "https://i.pravatar.cc/100";
+    // === FOTO PROFIL ===
+    if (savedImage && savedImage.trim() !== "") {
+      imageEl.src = savedImage;
+      imageEl.classList.remove("empty");
+    } else {
+      imageEl.removeAttribute("src");
+      imageEl.classList.add("empty");
+    }
 
-// 3. Validasi NIP (Peringatan "NIP belum diisi!")
-if (nipInput.value) {
-  nipError.style.display = "none";
-} else {
-  nipError.style.display = "block";
-  nipError.textContent = "NIP belum diisi!";
-}
+    // === VALIDASI NIP ===
+    if (nipInput.value) {
+      nipError.style.display = "none";
+    } else {
+      nipError.style.display = "block";
+      nipError.textContent = "NIP belum diisi!";
+    }
 
-// 4. Tombol Edit (Kode Anda sudah benar)
-document.getElementById("editBtn").addEventListener("click", () => {
-  window.location.href = "editprofiledosen.html";
-});
-
-// 5. Logout (Kode Anda sudah benar)
-
-// === LOGOUT SCRIPT ===
-  const logoutBtn = document.getElementById('logoutBtn');
-  const logoutPopup = document.getElementById('logoutPopup');
-  const yesLogout = document.getElementById('yesLogout');
-  const cancelLogout = document.getElementById('cancelLogout');
-
-  // Pastikan semua elemen ada sebelum menambahkan listener
-  if (logoutBtn && logoutPopup && yesLogout && cancelLogout) {
-    logoutBtn.addEventListener("click", (e) => {
-      e.preventDefault(); // Mencegah link '#' pindah halaman
-      logoutPopup.style.display = "block";
+    // === EDIT PROFIL ===
+    document.getElementById("editBtn").addEventListener("click", () => {
+      window.location.href = "editprofiledosen.html";
     });
-    cancelLogout.addEventListener("click", () => {
-      logoutPopup.style.display = "none";
-    });
-    yesLogout.addEventListener("click", () => {
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "../../form_login.html"; // Arahkan ke login
-    });
-  }
-  // === AKHIR LOGOUT SCRIPT ===
-</script>
+
+    // === LOGOUT ===
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+
+    if (logoutBtn && logoutPopup && yesLogout && cancelLogout) {
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        logoutPopup.style.display = "block";
+      });
+      cancelLogout.addEventListener("click", () => {
+        logoutPopup.style.display = "none";
+      });
+      yesLogout.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = '../../Mahasiswa/HTML/form_login.html';
+      });
+    }
+  </script>
 
 </body>
 </html>

@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="../CSS/editprofiledosen.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  
 </head>
 <body>
   <aside class="sidebar">
@@ -23,14 +22,14 @@
   <main class="content">
     <div class="content-inner">
       <div class="top-row">
-        <img id="profileImage" class="profile-pic" src="https://i.pravatar.cc/150" alt="Foto Profil">
+        <img id="profileImage" class="profile-pic" alt="Foto Profil">
         <div>
           <div class="profile-info">
             <p id="roleDisplay">Dosen | Teknik Informatika</p>
           </div>
           <div class="pic-controls">
-                        <label for="fotoInput" id="btnChangeSmall">Ganti foto profil</label>
-            <input type="file" id="fotoInput" accept="image/*" style="display: none;">
+            <label for="fotoInput" id="btnChangeSmall">Ganti foto profil</label>
+            <input type="file" id="fotoInput" accept="image/*" style="display:none;">
             <button id="btnDeleteSmall">Hapus</button>
           </div>
         </div>
@@ -62,10 +61,7 @@
     <button class="cancel" id="cancelLogout">Batal</button>
   </div>
 
-    <script>
-    // === SCRIPT DIPERBAIKI TOTAL ===
-
-    // 1. Cek Login & Ambil Kunci Penyimpanan
+  <script>
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || (!loggedInUser.username && !loggedInUser.name)) {
       window.location.href = 'form_login.html';
@@ -75,101 +71,73 @@
     const profileKey = `profileDosen_${username}`;
     const imageKey = `profileImageDosen_${username}`;
 
-    // 2. Ambil Referensi Elemen HTML (SESUAIKAN DENGAN HTML ANDA)
     const profileImage = document.getElementById('profileImage');
     const nameInput = document.getElementById('nama');
-    const nipInput = document.getElementById('nip'); // DIGANTI DARI 'nimInput'
-    const prodiInput = document.getElementById('prodi'); // DIGANTI DARI 'kelasInput'
+    const nipInput = document.getElementById('nip');
+    const prodiInput = document.getElementById('prodi');
     const roleDisplay = document.getElementById('roleDisplay');
     const fotoInputElement = document.getElementById('fotoInput');
 
-    // Variabel sementara untuk foto baru
     let newImageDataUrl = null;
     let deleteImageFlag = false;
 
-    // 3. Muat Data yang Ada ke Form
     const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
     const savedImage = localStorage.getItem(imageKey);
 
     nameInput.value = profileData.nama || loggedInUser.name || '';
-    nipInput.value = profileData.nip || ''; // DIGANTI DARI 'nim'
-    prodiInput.value = profileData.prodi || 'Teknik Informatika'; // DIGANTI DARI 'kelas'
+    nipInput.value = profileData.nip || '';
+    prodiInput.value = profileData.prodi || 'Teknik Informatika';
 
-    if (savedImage) {
+    if (savedImage && savedImage.trim() !== "") {
       profileImage.src = savedImage;
     } else {
-      profileImage.src = "https://i.pravatar.cc/150";
+      profileImage.src = "";
     }
-    
-    // Set Teks Role (Dosen, bukan Mahasiswa)
+
     roleDisplay.textContent = 'Dosen | ' + (prodiInput.value || 'Teknik Informatika');
 
-
-    // 4. Fungsikan Tombol Ganti Foto
     fotoInputElement.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      
       reader.onload = (e) => {
         const dataUrl = e.target.result;
-        profileImage.src = dataUrl; // Tampilkan preview
-        newImageDataUrl = dataUrl; // Simpan data URL untuk 'Simpan'
-        deleteImageFlag = false; // Batalkan flag hapus jika ada
+        profileImage.src = dataUrl;
+        newImageDataUrl = dataUrl;
+        deleteImageFlag = false;
       };
-      
       reader.readAsDataURL(file);
     });
-    
-    // (Tambahkan listener ke tombol <label> jika diperlukan, tapi 'for' sudah cukup)
-    // document.getElementById('btnChangeSmall').addEventListener('click', () => {
-    //     fotoInputElement.click(); // Memicu input file tersembunyi
-    // });
 
-
-    // 5. Fungsikan Tombol Hapus Foto
     document.getElementById('btnDeleteSmall').addEventListener('click', () => {
-      profileImage.src = "https://i.pravatar.cc/150"; // Reset preview
-      newImageDataUrl = null; // Hapus data URL baru
-      deleteImageFlag = true; // Set flag untuk dihapus saat simpan
+      profileImage.src = ""; // kosongkan src
+      newImageDataUrl = null;
+      deleteImageFlag = true;
     });
 
-    // 6. Fungsikan Tombol Batal
     document.getElementById('btnCancel').addEventListener('click', () => {
-      window.location.href = 'ProfileDosen.html'; // PERBAIKI NAMA FILE
+      window.location.href = 'ProfileDosen.html';
     });
 
-    // 7. Fungsikan Tombol Simpan
     document.getElementById('btnSave').addEventListener('click', () => {
-      // Ambil data yang ada
-      const currentProfileData = JSON.parse(localStorage.getItem(profileKey)) || {};
-
-      // Update data dengan nilai form
       const dataToSave = {
         nama: nameInput.value.trim(),
-        nip: nipInput.value.trim(), // DIGANTI DARI 'nim'
-        prodi: prodiInput.value.trim() // DIGANTI DARI 'kelas'
+        nip: nipInput.value.trim(),
+        prodi: prodiInput.value.trim()
       };
-      
-      // Simpan data teks ke profileKey
       localStorage.setItem(profileKey, JSON.stringify(dataToSave));
-      
-      // Cek dan simpan data foto
+
       if (newImageDataUrl) {
-        // Jika ada foto baru, simpan
         localStorage.setItem(imageKey, newImageDataUrl);
       } else if (deleteImageFlag) {
-        // Jika flag hapus aktif, hapus foto
         localStorage.removeItem(imageKey);
       }
-      // Jika tidak keduanya, foto lama tidak diubah
 
       alert("Perubahan disimpan!");
-      window.location.href = 'ProfileDosen.html'; // PERBAIKI NAMA FILE
+      window.location.href = 'ProfileDosen.html';
     });
 
-    // 8. Fungsikan Logout (Kode Anda sudah benar)
-     // Logout
+    // === LOGOUT POPUP ===
     const logoutBtn = document.getElementById('logoutBtn');
     const logoutPopup = document.getElementById('logoutPopup');
     const yesLogout = document.getElementById('yesLogout');
@@ -178,6 +146,7 @@
     logoutBtn.onclick = () => logoutPopup.style.display = 'block';
     cancelLogout.onclick = () => logoutPopup.style.display = 'none';
     yesLogout.onclick = () => {
+      localStorage.removeItem("loggedInUser");
       logoutPopup.style.display = 'none';
       window.location.href = '../../form_login.html';
     };
