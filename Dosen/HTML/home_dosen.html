@@ -39,7 +39,7 @@
     <section class="teaching-schedule">
       <h2>Jadwal Mengajar Hari Ini</h2>
 
-      <div class="card">
+      <div class="card schedule-card" data-matkul="Jaringan Komputer" data-kelas="5D" data-waktu="07.00 – 11.45" data-ruang="LAB TI 13">
         <div>
           <strong>Jaringan Komputer</strong> (07.00 – 11.45)
           <p class="ruang">Ruang LAB TI 13</p>
@@ -47,15 +47,15 @@
         <span>5D</span>
       </div>
 
-      <div class="card light">
+      <div class="card light schedule-card" data-matkul="Kewirausahaan" data-kelas="5A" data-waktu="13.00 – 15.00" data-ruang="LAB TI 11">
         <div>
           <strong>Kewirausahaan</strong> (13.00 – 15.00)
           <p class="ruang">Ruang LAB TI 11</p>
         </div>
-        <span>1A</span>
+        <span>5A</span>
       </div>
 
-      <div class="card">
+      <div class="card schedule-card" data-matkul="Jaringan Komputer" data-kelas="5B" data-waktu="07.00 – 11.45" data-ruang="LAB TI 8">
         <div>
           <strong>Jaringan Komputer</strong> (07.00 – 11.45)
           <p class="ruang">Ruang LAB TI 8</p>
@@ -125,6 +125,28 @@
     document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
 
     profileContainer.addEventListener('click', () => window.location.href = 'ProfileDosen.html');
+
+    // Klik pada card Jadwal Mengajar
+    document.querySelectorAll('.schedule-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function() {
+        const matkul = this.getAttribute('data-matkul');
+        const kelas = this.getAttribute('data-kelas');
+        const waktu = this.getAttribute('data-waktu');
+        const ruang = this.getAttribute('data-ruang');
+        
+        // Simpan data jadwal yang dipilih ke localStorage
+        localStorage.setItem('selectedSchedule', JSON.stringify({
+          matkul: matkul,
+          kelas: kelas,
+          waktu: waktu,
+          ruang: ruang
+        }));
+        
+        // Redirect ke halaman Pengumuman.html
+        window.location.href = 'Pengumuman.html';
+      });
+    });
 
     // Klik pada card Tugas Mahasiswa
     document.querySelectorAll('.task-card').forEach(card => {

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pengumuman — SETRUM</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../CSS/Pengumuman.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">SETRUM</div>
+    <nav class="menu">
+      <a href="home_dosen.html"><i class="fa fa-home"></i><span>Beranda</span></a>
+      <a href="#" class="active"><i class="fa fa-book"></i><span>Kelas</span></a>
+      <a href="ProfileDosen.html"><i class="fa fa-user"></i><span>Profil</span></a>
+      <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span>Keluar</span></a>
+    </nav>
+  </aside>
+
+  <!-- Konten utama -->
+  <main class="content">
+    <div class="header">
+      <div class="profile-section">
+        <div class="profile-text">
+          <h1 id="greetName">Selamat mengajar, Dosen!</h1>
+          <p id="todayDate"></p>
+        </div>
+        <div class="profile" id="profileContainer">
+          <img id="profilePhoto" alt="profil">
+        </div>
+      </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <p class="breadcrumb">
+      <span class="breadcrumb-gray">Kelas &gt; Mata Kuliah</span> &gt; <span id="breadcrumbClass">Postingan</span>
+    </p>
+
+    <!-- Header Kelas -->
+    <section class="class-header">
+      <h2 id="classTitle">Jaringan Komputer</h2>
+      <div class="class-time" id="classTime">07.00 - 18.00</div>
+    </section>
+
+    <!-- Input Pengumuman -->
+    <section class="announcement-input">
+      <div class="input-container">
+        <input type="text" id="announcementText" placeholder="Umumkan sesuatu">
+        <i class="fa-solid fa-paper-plane send-icon"></i>
+      </div>
+    </section>
+
+    <!-- Daftar Pengumuman -->
+    <section class="announcement-list">
+      <div class="announcement-card">
+        <div class="announcement-header">
+          <div class="user-avatar">Y</div>
+          <div class="user-info">
+            <strong>Yasir Arafat</strong>
+            <span class="announcement-date">Out 3</span>
+          </div>
+        </div>
+        <div class="announcement-content">
+          <!-- Konten pengumuman Yasir Arafat -->
+        </div>
+      </div>
+
+      <div class="announcement-card">
+        <div class="announcement-header">
+          <div class="user-avatar">D</div>
+          <div class="user-info">
+            <strong>Yunita</strong>
+            <span class="announcement-date">Sep 13</span>
+          </div>
+        </div>
+        <div class="announcement-content">
+          <!-- Konten pengumuman Yunita -->
+        </div>
+      </div>
+
+      <div class="announcement-card">
+        <div class="announcement-header">
+          <div class="user-avatar">Y</div>
+          <div class="user-info">
+            <strong>Tri Bowo Atmojo</strong>
+            <span class="announcement-date">Sep 13</span>
+          </div>
+        </div>
+        <div class="announcement-content">
+          <!-- Konten pengumuman Tri Bowo Atmojo -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Popup logout -->
+  <div class="logout-popup" id="logoutPopup">
+    <h3>Logout</h3>
+    <p>Apakah Anda yakin ingin keluar?</p>
+    <button class="yes" id="yesLogout">Ya</button>
+    <button class="cancel" id="cancelLogout">Batal</button>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.name) window.location.href = '/Mahasiswa/HTML/form_login.html';
+
+    const username = loggedInUser.username || loggedInUser.name || "guest";
+    const profileKey = `profileDosen_${username}`;
+    const imageKey = `profileImageDosen_${username}`;
+
+    const greetName = document.getElementById('greetName');
+    const profilePhoto = document.getElementById('profilePhoto');
+    const profileContainer = document.getElementById('profileContainer');
+
+    const profileData = JSON.parse(localStorage.getItem(profileKey));
+    greetName.textContent = profileData && profileData.nama 
+      ? `Selamat mengajar, ${profileData.nama}!`
+      : `Selamat mengajar, ${loggedInUser.name}!`;
+
+    const savedImage = localStorage.getItem(imageKey);
+    if (savedImage) {
+      profilePhoto.src = savedImage;
+      profilePhoto.style.display = "block";
+    } else {
+      profilePhoto.style.display = "none";
+      profileContainer.style.background = "#fff";
+    }
+
+    const today = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
+
+    profileContainer.addEventListener('click', () => window.location.href = 'ProfileDosen.html');
+
+    // Tampilkan data jadwal yang dipilih
+    const selectedSchedule = JSON.parse(localStorage.getItem('selectedSchedule'));
+    if (selectedSchedule) {
+      document.getElementById('classTitle').textContent = `${selectedSchedule.matkul} - Kelas ${selectedSchedule.kelas}`;
+      document.getElementById('classTime').textContent = `${selectedSchedule.waktu} | Ruang ${selectedSchedule.ruang}`;
+    }
+
+    // Fungsi untuk post pengumuman dengan icon
+    document.querySelector('.send-icon').addEventListener('click', function() {
+      const announcementText = document.getElementById('announcementText').value.trim();
+      if (announcementText) {
+        // Logic untuk menambahkan pengumuman baru
+        console.log('Pengumuman diposting:', announcementText);
+        document.getElementById('announcementText').value = '';
+        alert('Pengumuman berhasil diposting!');
+      }
+    });
+
+    // Juga bisa post dengan menekan Enter
+    document.getElementById('announcementText').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const announcementText = this.value.trim();
+        if (announcementText) {
+          console.log('Pengumuman diposting:', announcementText);
+          this.value = '';
+          alert('Pengumuman berhasil diposting!');
+        }
+      }
+    });
+
+    // Logout
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutPopup = document.getElementById('logoutPopup');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+
+    logoutBtn.onclick = () => logoutPopup.style.display = 'block';
+    cancelLogout.onclick = () => logoutPopup.style.display = 'none';
+    yesLogout.onclick = () => {
+      localStorage.removeItem('loggedInUser');
+      localStorage.removeItem('selectedSchedule'); // Hapus data jadwal yang dipilih
+      logoutPopup.style.display = 'none';
+      window.location.href = '../../Mahasiswa/HTML/form_login.html';
+    };
+  </script>
+</body>
+</html>
