@@ -15,8 +15,8 @@
     <div class="brand">SETRUM</div>
     <nav class="menu">
       <a href="#" class="active"><i class="fa fa-home"></i><span>Beranda</span></a>
-      <a href="ProfileDosen.html"><i class="fa fa-user"></i><span>Profil</span></a>
       <a href="kelasdosen.html"><i class="fa fa-book"></i><span>Kelas</span></a>
+      <a href="ProfileDosen.html"><i class="fa fa-user"></i><span>Profil</span></a>
       <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i><span>Keluar</span></a>
     </nav>
   </aside>
@@ -96,7 +96,7 @@
   <!-- Script -->
   <script>
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-    if (!loggedInUser || !loggedInUser.name) window.location.href = 'form_login.html';
+    if (!loggedInUser || !loggedInUser.name) window.location.href = '/Mahasiswa/HTML/form_login.html';
 
     const username = loggedInUser.username || loggedInUser.name || "guest";
     const profileKey = `profileDosen_${username}`;
@@ -137,7 +137,7 @@
     yesLogout.onclick = () => {
       localStorage.removeItem('loggedInUser');
       logoutPopup.style.display = 'none';
-      window.location.href = '../../form_login.html';
+      window.location.href = '../../Mahasiswa/HTML/form_login.html';
     };
   </script>
 </body>
