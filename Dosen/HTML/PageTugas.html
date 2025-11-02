@@ -33,6 +33,11 @@
       </div>
     </div>
 
+    <!-- Breadcrumb dipindah ke sini -->
+    <p class="breadcrumb">
+      <span class="breadcrumb-gray">Kelas &gt; Daftar Kelas</span> &gt; <span id="breadcrumbClass">Kelas</span>
+    </p>
+
     <div id="classInfo" class="kelas-info"></div>
 
     <div class="actions">
@@ -44,7 +49,7 @@
     <div class="post-list" id="postList"></div>
   </main>
 
-    <div class="logout-popup" id="logoutPopup">
+  <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
     <p>Apakah Anda yakin ingin keluar?</p>
     <button class="yes" id="yesLogout">Ya</button>
@@ -70,6 +75,9 @@
     const selected = JSON.parse(localStorage.getItem("selectedClass")) || { nama:"Kelas", jumlah:"", waktu:"" };
     document.getElementById("titleClass").textContent = selected.nama;
     document.getElementById("classInfo").innerHTML = '<strong>' + selected.nama + '</strong><br>' + selected.jumlah + '<br>' + selected.waktu;
+    
+    // PERBAIKAN: Update breadcrumb dengan nama kelas
+    document.getElementById("breadcrumbClass").textContent = selected.nama;
 
     // Elemen DOM utama
     const greetNameEl = document.getElementById("greetName");
@@ -146,7 +154,7 @@
         tanggal: new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric'}) 
       };
       posts.unshift(newPost);
-      localStorage.setItem("posts_" + selected.nama, JSON.stringify(posts));
+      localStorage.setItem("posts_" + selected.nasama, JSON.stringify(posts));
       inputAnn.value = '';
       renderPosts();
     }

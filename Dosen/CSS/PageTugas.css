@@ -1,170 +1,289 @@
+:root {
+  --red: #c8102e;
+  --hover-red: #a10d25;
+}
+* { 
+  margin:0; 
+  padding:0; 
+  box-sizing:border-box; 
+  font-family:"Inter", Arial, sans-serif; 
+}
+body { 
+  display:flex; 
+  min-height:100vh; 
+  background:#fff; 
+}
+.sidebar {
+  width:240px; 
+  background:#c8102e; 
+  color:#fff; 
+  display:flex; 
+  flex-direction:column; 
+  padding:20px 0; 
+  border-radius:0 10px 10px 0;
+}
+.brand { 
+  font-size:22px; 
+  font-weight:700; 
+  text-align:center; 
+  margin-bottom:40px; 
+  letter-spacing:1px; 
+}
+.menu { 
+  display:flex; 
+  flex-direction:column; 
+}
+.menu a {
+  display:flex; 
+  align-items:center; 
+  gap:12px; 
+  padding:12px 24px; 
+  text-decoration:none; 
+  color:#fff; 
+  font-weight:500; 
+  transition:background 0.3s ease;
+}
+.menu a:hover, .menu a.active { 
+  background:#a10d25; 
+}
+.menu i { 
+  width:20px; 
+  text-align:center; 
+  font-size:18px; 
+}
+.content { 
+  flex:1; 
+  padding:30px; 
+  transition:all 0.3s ease; 
+}
+.header {
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  flex-wrap:wrap; 
+  gap:10px;
+}
+.profile-section { 
+  display:flex; 
+  align-items:center; 
+  gap:12px; 
+}
+.profile-text { 
+  text-align:right; 
+}
+.profile-text h1 { 
+  font-size:18px; 
+  margin-bottom:4px; 
+  font-weight: 700; 
+}
+.profile-text p { 
+  color:#555; 
+  font-size:13px; 
+}
+.profile img {
+  width:48px; 
+  height:48px; 
+  border-radius:50%; 
+  object-fit:cover; 
+  border:2px solid #eee; 
+  cursor:pointer; 
+  transition:transform 0.2s ease;
+}
+.profile img:hover { 
+  transform:scale(1.05); 
+}
 
-        :root {
-      --red: #c8102e;
-      --hover-red: #a10d25;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; font-family:"Inter", Arial, sans-serif; }
-    body { display:flex; min-height:100vh; background:#fff; }
-    .sidebar {
-      width:240px; background:#c8102e; color:#fff; display:flex; flex-direction:column; padding:20px 0; border-radius:0 10px 10px 0;
-    }
-    .brand { font-size:22px; font-weight:700; text-align:center; margin-bottom:40px; letter-spacing:1px; }
-    .menu { display:flex; flex-direction:column; }
-    .menu a {
-      display:flex; align-items:center; gap:12px; padding:12px 24px; text-decoration:none; color:#fff; font-weight:500; transition:background 0.3s ease;
-    }
-    .menu a:hover, .menu a.active { background:#a10d25; }
-    .menu i { width:20px; text-align:center; font-size:18px; }
-    .content { flex:1; padding:30px; transition:all 0.3s ease; }
-    .header {
-      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
-    }
-    .profile-section { display:flex; align-items:center; gap:12px; }
-    .profile-text { text-align:right; }
-    .profile-text h1 { font-size:18px; margin-bottom:4px; font-weight: 700; } /* Font tebal */
-    .profile-text p { color:#555; font-size:13px; }
-    .profile img {
-      width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid #eee; cursor:pointer; transition:transform 0.2s ease;
-    }
-    .profile img:hover { transform:scale(1.05); }
-    h2 { margin-top:26px; margin-bottom:8px; font-size:18px; }
-    .kelas-info {
-      background:#c8102e; color:#fff; padding:10px 12px; border-radius:8px; margin-bottom:10px;
-    }
-    .actions {
-      display:flex; gap:10px; margin-bottom:10px; flex-wrap: wrap; /* Izinkan wrap */
-    }
-    .actions button {
-      background:#c8102e; color:#fff; border:none; padding:8px 12px; border-radius:5px; cursor:pointer;
-    }
-    .actions input {
-      flex:1; padding:8px 12px; border:1px solid #ccc; border-radius:5px; min-width: 200px; /* Lebar minimum */
-    }
-    .post-list { margin-top:10px; }
-    
-    /* HAPUS BLOK .post LAMA (dengan border merah) KARENA DIDUPLIKAT */
-    
-    .kirim {
-      background: #444;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 15px;
-      cursor: pointer;
-    }
-    .kirim:hover {
-      background: #333;
-    }
+/* === BREADCRUMB === */
+.breadcrumb {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+  text-align: right;
+}
 
-    .post {
-    margin-top: 10px;
-    background: #f5f5f5;
-    padding: 12px;
-    border-radius: 8px;
-    position: relative;
+.breadcrumb-gray {
+  color: #555;
+}
+
+.breadcrumb span:last-child {
+  font-weight: 700;
+  color: #000;
+}
+
+h2 { 
+  margin-top:26px; 
+  margin-bottom:8px; 
+  font-size:18px; 
+}
+.kelas-info {
+  background:#c8102e; 
+  color:#fff; 
+  padding:10px 12px; 
+  border-radius:8px; 
+  margin-bottom:10px;
+}
+.actions {
+  display:flex; 
+  gap:10px; 
+  margin-bottom:10px; 
+  flex-wrap: wrap;
+}
+.actions button {
+  background:#c8102e; 
+  color:#fff; 
+  border:none; 
+  padding:8px 12px; 
+  border-radius:5px; 
+  cursor:pointer;
+}
+.actions input {
+  flex:1; 
+  padding:8px 12px; 
+  border:1px solid #ccc; 
+  border-radius:5px; 
+  min-width: 200px;
+}
+.post-list { 
+  margin-top:10px; 
+}
+
+.kirim {
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+.kirim:hover {
+  background: #333;
+}
+
+.post {
+  margin-top: 10px;
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.post .info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+.post .actions-post {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.post .isi-post {
+  margin-top: 8px;
+  margin-left: 50px;
+  margin-right: 40px;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+/* === LOGOUT POPUP === */
+.logout-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--red);
+  color: #fff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -45%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+.logout-popup h3 { margin-bottom: 10px; }
+.logout-popup button {
+  background: #fff; 
+  border: none; 
+  padding: 8px 20px; 
+  margin: 5px;
+  border-radius: 6px; 
+  font-weight: 600; 
+  cursor: pointer; 
+  float: none;
+}
+.logout-popup button.yes { color: var(--red); }
+.logout-popup button.cancel { 
+  background: transparent; 
+  border: 1px solid #fff; 
+  color: #fff; 
+}
+.logout-popup button.cancel:hover { 
+  background: #fff; 
+  color: var(--red); 
+}
+/* === AKHIR LOGOUT POPUP === */
+
+@media (max-width:900px) {
+  body { flex-direction:column; }
+  .sidebar { 
+    width:100%; 
+    border-radius:0; 
+    flex-direction:row; 
+    justify-content:space-around; 
+    align-items:center; 
+    padding:10px 0; 
   }
+  .brand { font-size:18px; margin-bottom:0; }
+  .menu { flex-direction:row; gap:10px; }
+  .menu a { padding:8px 10px; font-size:14px; }
+  .content { padding:20px; }
+  .profile-section { justify-content:flex-end; width:100%; }
+  .profile-text h1 { font-size:16px; }
+}
+
+@media (max-width:600px) {
+  .menu a span { display:none; }
+  .menu a i { font-size:20px; }
+  
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  .profile-section {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .profile-text p { font-size: 12px; }
+  .profile img { width: 40px; height: 40px; }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .actions input { width: 100%; }
 
   .post .info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    align-items: flex-start;
   }
-
-  .post .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #ccc;
-  }
-
-  .post .actions-post {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-
-    /* DIPERBAIKI: Selector .post p diubah menjadi .isi-post */
   .post .isi-post {
-    margin-top: 8px;
-    margin-left: 50px; /* jarak dari avatar */
-    margin-right: 40px; /* biar gak nabrak tombol titik tiga */
-    text-align: left;
-    word-wrap: break-word;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 12px;
   }
-
-        /* === LOGOUT POPUP === */
-    .logout-popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: var(--red);
-      color: #fff;
-      padding: 25px 30px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      z-index: 1000;
-      animation: fadeIn 0.2s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translate(-50%, -45%); }
-      to { opacity: 1; transform: translate(-50%, -50%); }
-    }
-    .logout-popup h3 { margin-bottom: 10px; }
-    .logout-popup button {
-      background: #fff; border: none; padding: 8px 20px; margin: 5px;
-      border-radius: 6px; font-weight: 600; cursor: pointer; float: none;
-    }
-    .logout-popup button.yes { color: var(--red); }
-    .logout-popup button.cancel { background: transparent; border: 1px solid #fff; color: #fff; }
-    .logout-popup button.cancel:hover { background: #fff; color: var(--red); }
-    /* === AKHIR LOGOUT POPUP === */
-
-
-    @media (max-width:900px) {
-      body { flex-direction:column; }
-      .sidebar { width:100%; border-radius:0; flex-direction:row; justify-content:space-around; align-items:center; padding:10px 0; }
-      .brand { font-size:18px; margin-bottom:0; }
-      .menu { flex-direction:row; gap:10px; }
-      .menu a { padding:8px 10px; font-size:14px; }
-      .content { padding:20px; }
-      .profile-section { justify-content:flex-end; width:100%; }
-      .profile-text h1 { font-size:16px; }
-    }
-    
-    @media (max-width:600px) {
-      .menu a span { display:none; }
-      .menu a i { font-size:20px; }
-      
-      /* === ATURAN RESPONSIVE BARU DITAMBAHKAN === */
-      .header {
-        flex-direction: column; /* Stack judul dan profil */
-        align-items: flex-start; /* Rata kiri semua */
-        gap: 15px;
-        margin-bottom: 20px;
-      }
-      .profile-section {
-        width: 100%;
-        justify-content: space-between; /* Pisahkan teks dan foto */
-      }
-      .profile-text p { font-size: 12px; }
-      .profile img { width: 40px; height: 40px; }
-
-      .actions {
-        flex-direction: column; /* Stack tombol dan input */
-        align-items: stretch; /* Buat semua full-width */
-      }
-      .actions input { width: 100%; }
-
-      .post .info {
-        align-items: flex-start; /* Rata kiri */
-      }
-      /* Perbaiki margin kiri di HP */
-      .post .isi-post {
-        margin-left: 0;
-        margin-right: 0;
-        margin-top: 12px;
-      }
-    }
+}

@@ -90,6 +90,7 @@ body {
 .profile-text h1 {
   font-size: 18px;
   margin-bottom: 4px;
+  font-weight: 700; /* Ditambahkan untuk konsistensi */
 }
 
 .profile-text p {
@@ -99,8 +100,8 @@ body {
 
 /* === FOTO PROFIL === */
 .profile {
-  width: 60px;
-  height: 60px;
+  width: 48px; /* Diubah dari 60px menjadi 48px */
+  height: 48px; /* Diubah dari 60px menjadi 48px */
   border-radius: 50%;
   border: 2px solid #eee;
   background: #fff;
@@ -108,6 +109,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer; /* Ditambahkan */
+  transition: transform 0.2s ease; /* Ditambahkan */
+}
+
+.profile:hover {
+  transform: scale(1.05); /* Ditambahkan */
 }
 
 .profile-photo {
@@ -205,6 +212,7 @@ h2 {
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
+  float: none; /* Ditambahkan untuk konsistensi */
 }
 
 .logout-popup button.yes {
@@ -290,5 +298,17 @@ h2 {
   .profile {
     width: 40px;
     height: 40px;
+  }
+
+  /* Ditambahkan untuk konsistensi dengan PageTugas.css */
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .profile-text p {
+    font-size: 12px;
   }
 }
