@@ -1,44 +1,170 @@
-    :root {
-      --red: #c8102e;
-     --hover-red: #a10d25;
-    }
-    /* (Seluruh CSS Anda sudah benar, tidak perlu diubah) */
-    * { margin:0; padding:0; box-sizing:border-box; font-family:"Inter", Arial, sans-serif; }
-    body { display:flex; min-height:100vh; background:#fff; }
-    .sidebar {
-      width:240px; background:#c8102e; color:#fff; display:flex; flex-direction:column; padding:20px 0; border-radius:0 10px 10px 0;
-    }
-    .brand { font-size:22px; font-weight:700; text-align:center; margin-bottom:40px; letter-spacing:1px; }
-    .menu { display:flex; flex-direction:column; }
-    .menu a {
-      display:flex; align-items:center; gap:12px; padding:12px 24px; text-decoration:none; color:#fff; font-weight:500; transition:background 0.3s ease;
-    }
-    .menu a:hover, .menu a.active { background:#a10d25; }
-    .menu i { width:20px; text-align:center; font-size:18px; }
-    .content {
-      flex:1; padding:30px; transition:all 0.3s ease;
-    }
-    .header {
-      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
-    }
-    .profile-section { display:flex; align-items:center; gap:12px; }
-    .profile-text { text-align:right; }
-    .profile-text h1 { font-size:18px; margin-bottom:4px; }
-    .profile-text p { color:#555; font-size:13px; }
-    .profile img {
-      width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid #eee; cursor:pointer; transition:transform 0.2s ease;
-      /* CSS Anda di sini sudah benar, tidak perlu 'display: block' */
-    }
-    .profile img:hover { transform:scale(1.05); }
-    h2 { margin-top:26px; margin-bottom:8px; font-size:18px; }
-    .card {
-      background:#c8102e; color:#fff; padding:10px 12px; border-radius:8px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; transition:transform 0.25s ease, box-shadow 0.25s ease; cursor:pointer;
-    }
-    .card:hover { transform:translateY(-5px); box-shadow:0 6px 15px rgba(0,0,0,0.2); }
-    .card.light { background:#f28a8a; color:#000; }
+:root {
+  --red: #c8102e;
+  --hover-red: #a10d25;
+}
 
-    
-    
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  background: #fff;
+}
+
+/* === SIDEBAR === */
+.sidebar {
+  width: 240px;
+  background: var(--red);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  border-radius: 0 10px 10px 0;
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.menu a:hover,
+.menu a.active {
+  background: var(--hover-red);
+}
+
+.menu i {
+  width: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* === CONTENT === */
+.content {
+  flex: 1;
+  padding: 30px;
+  transition: all 0.3s ease;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-text {
+  text-align: right;
+}
+
+.profile-text h1 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.profile-text p {
+  color: #555;
+  font-size: 13px;
+}
+
+/* === FOTO PROFIL === */
+.profile {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #eee;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-photo.empty {
+  display: none;
+}
+
+/* === KELAS === */
+h2 {
+  margin-top: 26px;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.card {
+  background: var(--red);
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card.light {
+  background: #f28a8a;
+  color: #000;
+}
+
+/* === BREADCRUMB === */
+.breadcrumb {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.breadcrumb span {
+  font-weight: 700;
+  color: #000;
+}
+
 /* === LOGOUT POPUP === */
 .logout-popup {
   display: none;
@@ -46,73 +172,123 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--red); /* Mengambil warna --red dari root */
+  background: var(--red);
   color: #fff;
   padding: 25px 30px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   animation: fadeIn 0.2s ease;
 }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translate(-50%, -45%); }
-      to { opacity: 1; transform: translate(-50%, -50%); }
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
 
-    .logout-popup h3 {
-      margin-bottom: 10px;
-    }
+.logout-popup h3 {
+  margin-bottom: 10px;
+}
 
-    .logout-popup button {
-      background: #fff;
-      border: none;
-      padding: 8px 20px;
-      margin: 5px;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      float: none; /* Pastikan tombol tidak terpengaruh style lain */
-    }
+.logout-popup button {
+  background: #fff;
+  border: none;
+  padding: 8px 20px;
+  margin: 5px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
 
-    .logout-popup button.yes {
-      color: var(--red);
-    }
+.logout-popup button.yes {
+  color: var(--red);
+}
 
-    .logout-popup button.cancel {
-      background: transparent;
-      border: 1px solid #fff;
-      color: #fff;
-    }
+.logout-popup button.cancel {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+}
 
-    .logout-popup button.cancel:hover {
-      background: #fff;
-      color: var(--red);
-    }
+.logout-popup button.cancel:hover {
+  background: #fff;
+  color: var(--red);
+}
 
-    /* (Sisa CSS Anda dan @media query sudah benar) */
-    @media (max-width: 900px) {
-      body { flex-direction:column; }
-      .sidebar {
-        width:100%; border-radius:0; flex-direction:row; justify-content:space-around; align-items:center; padding:10px 0;
-      }
-      .brand { font-size:18px; margin-bottom:0; }
-      .menu { flex-direction:row; gap:10px; }
-      .menu a { padding:8px 10px; font-size:14px; }
-      .content { padding:20px; }
-      .profile-section { justify-content:flex-end; width:100%; }
-      .profile-text h1 { font-size:16px; }
-    }
-    @media (max-width: 600px) {
-      .menu a span { display:none; }
-      .menu a i { font-size:20px; }
-      .card {
-        flex-direction:column; align-items:flex-start; gap:6px;
-      }
-      .profile-section {
-        flex-direction:row; justify-content:space-between; width:100%;
-      }
-      .profile img { width:40px; height:40px; }
-    }
-  
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-radius: 0;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+  }
+
+  .brand {
+    font-size: 18px;
+    margin-bottom: 0;
+  }
+
+  .menu {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .menu a {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .profile-section {
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .profile-text h1 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .menu a span {
+    display: none;
+  }
+
+  .menu a i {
+    font-size: 20px;
+  }
+
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .profile-section {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .profile {
+    width: 40px;
+    height: 40px;
+  }
+}

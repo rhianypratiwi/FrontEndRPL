@@ -6,15 +6,14 @@
   <title>Kelas — SETRUM</title>
   <link rel="stylesheet" href="../CSS/kelasdosen.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
- 
 </head>
 <body>
   <aside class="sidebar">
     <div class="brand">SETRUM</div>
     <nav class="menu">
-      <a href="home_dosen.html" ><i class="fa fa-home"></i> Beranda</a>
+      <a href="home_dosen.html"><i class="fa fa-home"></i> Beranda</a>
       <a href="#" class="active"><i class="fa fa-book"></i> Kelas</a>
-      <a href="ProfileDosen.html" ><i class="fa fa-user"></i> Profil</a>
+      <a href="ProfileDosen.html"><i class="fa fa-user"></i> Profil</a>
       <a href="#" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Keluar</a>
     </nav>
   </aside>
@@ -24,20 +23,22 @@
       <h2>Daftar Kelas</h2>
       <div class="profile-section">
         <div class="profile-text">
-                    <h1 id="greetName">Memuat...</h1>
+          <h1 id="greetName">Memuat...</h1>
           <p id="todayDate"></p>
         </div>
         <div class="profile">
-                    <img src="https://i.pravatar.cc/100" alt="profil" id="profilePhoto">
+          <img id="profilePhoto" class="profile-photo" alt="profil" />
         </div>
       </div>
     </div>
 
-    <div id="kelasList">
-          </div>
+    <p class="breadcrumb">
+      Kelas &gt; <span>Daftar Kelas</span>
+    </p>
+
+    <div id="kelasList"></div>
   </main>
 
-   <!-- Popup logout -->
   <div class="logout-popup" id="logoutPopup">
     <h3>Logout</h3>
     <p>Apakah Anda yakin ingin keluar?</p>
@@ -45,12 +46,10 @@
     <button class="cancel" id="cancelLogout">Batal</button>
   </div>
 
-    <script>
-    // === AWAL LOGIKA HEADER ===
-    // 1. Cek Login & Ambil Kunci Penyimpanan
+  <script>
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || !loggedInUser.name) {
-      window.location.href = 'form_login.html'; // Arahkan ke login jika tidak ada data
+      window.location.href = 'form_login.html';
     }
 
     const username = loggedInUser.username || loggedInUser.name || "guest";
@@ -59,49 +58,38 @@
 
     const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
     const savedImage = localStorage.getItem(imageKey);
-    // === AKHIR LOGIKA HEADER ===
 
-    // contoh data kelas (kode asli Anda)
-    const kelasData = [
-      { nama: "KELAS A", jumlah: "28 Mahasiswa", waktu: "08.00 - 10.00" },
-      { nama: "KELAS B", jumlah: "28 Mahasiswa", waktu: "10.00 - 12.00" },
-      { nama: "KELAS C", jumlah: "28 Mahasiswa", waktu: "13.00 - 15.00" }
-    ];
-
-    // simpan ke localStorage (kode asli Anda)
-    localStorage.setItem("kelasData", JSON.stringify(kelasData));
-
-    // Ambil elemen-elemen (kode asli Anda)
     const greetNameEl = document.getElementById("greetName");
     const todayDateEl = document.getElementById("todayDate");
     const logoutBtn = document.getElementById("logoutBtn");
     const profilePhoto = document.getElementById("profilePhoto");
 
-    // === PERBAIKAN: Tampilkan data header dinamis ===
-    if (profileData && profileData.nama) {
-      greetNameEl.textContent = 'Selamat mengajar, ' + profileData.nama + '!';
-    } else {
-      greetNameEl.textContent = 'Selamat mengajar, ' + loggedInUser.name + '!';
-    }
+    greetNameEl.textContent = 'Selamat mengajar, ' + (profileData.nama || loggedInUser.name || 'Dosen') + '!';
 
-    if (savedImage) {
+    if (savedImage && savedImage.trim() !== "") {
       profilePhoto.src = savedImage;
+      profilePhoto.classList.remove("empty");
     } else {
-      profilePhoto.src = "https://i.pravatar.cc/100"; // Foto default
+      profilePhoto.removeAttribute("src");
+      profilePhoto.classList.add("empty");
     }
-    // === AKHIR PERBAIKAN HEADER ===
 
-    // set tanggal (kode asli Anda)
     const today = new Date();
     const opts = { weekday:'long', day:'numeric', month:'long', year:'numeric' };
     todayDateEl.textContent = today.toLocaleDateString('id-ID', opts);
 
-    // render kelas (kode asli Anda)
+    const kelasData = [
+      { nama: "KELAS A", jumlah: "28 Mahasiswa", waktu: "08.00 - 10.00" },
+      { nama: "KELAS B", jumlah: "28 Mahasiswa", waktu: "10.00 - 12.00" },
+      { nama: "KELAS C", jumlah: "28 Mahasiswa", waktu: "13.00 - 15.00" }
+    ];
+    localStorage.setItem("kelasData", JSON.stringify(kelasData));
+
     const kelasListEl = document.getElementById("kelasList");
     kelasData.forEach((k, idx) => {
       const div = document.createElement("div");
       div.className = "card";
-      if(idx===1) div.classList.add("light");
+      if (idx === 1) div.classList.add("light");
       div.innerHTML = `
         <div>
           <strong>${k.nama}</strong><br>
@@ -111,40 +99,37 @@
       `;
       div.onclick = () => {
         localStorage.setItem("selectedClass", JSON.stringify(k));
-        window.location.href = "postingandosen.html";
+        window.location.href = "PageTugas.html";
       };
       kelasListEl.appendChild(div);
     });
 
-    // deleteClass function (kode asli Anda)
     function deleteClass(e, nama) {
       e.stopPropagation();
-      if(confirm("Hapus kelas "+nama+"?")) {
-        const newData = kelasData.filter(x => x.nama!==nama);
+      if (confirm("Hapus kelas " + nama + "?")) {
+        const newData = kelasData.filter(x => x.nama !== nama);
         localStorage.setItem("kelasData", JSON.stringify(newData));
         location.reload();
       }
     }
 
     const logoutPopup = document.getElementById('logoutPopup');
-  const yesLogout = document.getElementById('yesLogout');
-  const cancelLogout = document.getElementById('cancelLogout');
+    const yesLogout = document.getElementById('yesLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
 
-  // Pastikan semua elemen ada sebelum menambahkan listener
-  if (logoutBtn && logoutPopup && yesLogout && cancelLogout) {
-    logoutBtn.addEventListener("click", (e) => {
-      e.preventDefault(); // Mencegah link '#' pindah halaman
-      logoutPopup.style.display = "block";
-    });
-    cancelLogout.addEventListener("click", () => {
-      logoutPopup.style.display = "none";
-    });
-    yesLogout.addEventListener("click", () => {
-      
-      window.location.href = "../../form_login.html"; // Arahkan ke login
-    });
-  }
-    
+    if (logoutBtn && logoutPopup && yesLogout && cancelLogout) {
+      logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        logoutPopup.style.display = "block";
+      });
+      cancelLogout.addEventListener("click", () => {
+        logoutPopup.style.display = "none";
+      });
+      yesLogout.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "../../form_login.html";
+      });
+    }
   </script>
 </body>
 </html>
