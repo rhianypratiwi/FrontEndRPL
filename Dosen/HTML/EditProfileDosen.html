@@ -64,7 +64,7 @@
   <script>
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || (!loggedInUser.username && !loggedInUser.name)) {
-      window.location.href = 'form_login.html';
+      window.location.href = '/Mahasiswa/HTML/form_login.html';
     }
 
     const username = loggedInUser.username || loggedInUser.name || "guest";
@@ -148,7 +148,7 @@
     yesLogout.onclick = () => {
       localStorage.removeItem("loggedInUser");
       logoutPopup.style.display = 'none';
-      window.location.href = '../../form_login.html';
+      window.location.href = '../../Mahasiswa/HTML/form_login.html';
     };
   </script>
 </body>

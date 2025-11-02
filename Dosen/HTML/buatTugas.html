@@ -67,7 +67,7 @@
     // Cek login dan ambil data profil
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || !loggedInUser.name) {
-       window.location.href = 'form_login.html'; 
+       window.location.href = '/Mahasiswa/HTML/form_login.html'; 
     }
 
     const username = loggedInUser.username || loggedInUser.name || "guest";
@@ -159,7 +159,7 @@
         logoutPopup.style.display = 'none';
       
         // Path dari Dosen/HTML/ kembali ke folder paling atas
-        window.location.href = '../../form_login.html'; 
+        window.location.href = '../../Mahasiswa/HTML/form_login.html'; 
       });
     }
     // === AKHIR LOGOUT SCRIPT ===
