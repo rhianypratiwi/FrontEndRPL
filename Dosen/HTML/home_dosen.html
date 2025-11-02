@@ -68,17 +68,17 @@
     <section class="student-tasks">
       <h2>Tugas Mahasiswa</h2>
 
-      <div class="card">
+      <div class="card task-card" data-task="PBL Kelompok">
         <div><strong>PBL Kelompok</strong></div>
         <span>Sept 25</span>
       </div>
 
-      <div class="card light">
+      <div class="card light task-card" data-task="Business Canvas">
         <div><strong>Business Canvas</strong></div>
         <span>Sept 30</span>
       </div>
 
-      <div class="card">
+      <div class="card task-card" data-task="Topologi Jaringan">
         <div><strong>Topologi Jaringan</strong></div>
         <span>Okt 5</span>
       </div>
@@ -125,6 +125,18 @@
     document.getElementById('todayDate').textContent = today.toLocaleDateString('id-ID', options);
 
     profileContainer.addEventListener('click', () => window.location.href = 'ProfileDosen.html');
+
+    // Klik pada card Tugas Mahasiswa
+    document.querySelectorAll('.task-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function() {
+        const taskName = this.getAttribute('data-task');
+        // Simpan nama tugas yang dipilih ke localStorage
+        localStorage.setItem('selectedTask', taskName);
+        // Redirect ke halaman submitdosen.html
+        window.location.href = 'submitdosen.html';
+      });
+    });
 
     // Logout
     const logoutBtn = document.getElementById('logoutBtn');

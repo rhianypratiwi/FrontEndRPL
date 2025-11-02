@@ -6,8 +6,6 @@
   <title>Detail Tugas</title>
   <link rel="stylesheet" href="../CSS/submitdosen.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-  
 </head>
 <body>
 
@@ -37,7 +35,7 @@
         <div class="content-wrapper">
       <div class="content-header">
         <h2 id="judulTugas">PBL Kelompok</h2>
-              </div>
+      </div>
 
       <div class="deadline">
         <i class="fa-solid fa-clipboard-list"></i>
@@ -63,7 +61,7 @@
   </div>
 
     <script>
-    // === 1. BLOK HEADER (Kode Anda sudah benar) ===
+    // === 1. BLOK HEADER ===
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || !loggedInUser.name) {
       window.location.href = 'form_login.html'; 
@@ -93,39 +91,88 @@
     todayDateEl.textContent = today.toLocaleDateString('id-ID', options);
     // === AKHIR BLOK HEADER ===
 
+    // === 2. TAMPILKAN DATA BERDASARKAN SUMBER ===
+    const selectedTask = localStorage.getItem('selectedTask');
+    const fromBuattugas = localStorage.getItem('fromBuattugas'); // Flag untuk menandai dari buattugas.html
 
-    // === 2. SCRIPT DETAIL TUGAS (Kode Anda) ===
-    const judul = localStorage.getItem("judulTugas");
-    const deskripsi = localStorage.getItem("deskripsiTugas");
-    const deadlineInput = localStorage.getItem("deadlineTugas"); 
+    // Data untuk setiap tugas default
+    const tugasData = {
+      'PBL Kelompok': {
+        judul: 'PBL Kelompok',
+        deadline: '2025-09-25',
+        deskripsi: 'Presentasi : rancangan gedung (gambar), jumlah user, sejarah gedung (termasuk berapa jumlah lantai, berapa ruangan, nama ruangan)'
+      },
+      'Business Canvas': {
+        judul: 'Business Canvas',
+        deadline: '2025-09-30',
+        deskripsi: 'Buat business canvas model untuk startup teknologi. Sertakan value proposition, customer segments, channels, customer relationships, revenue streams, key activities, key resources, key partners, dan cost structure.'
+      },
+      'Topologi Jaringan': {
+        judul: 'Topologi Jaringan',
+        deadline: '2025-10-05',
+        deskripsi: 'Desain topologi jaringan untuk perusahaan dengan 3 lantai. Sertakan diagram jaringan, spesifikasi perangkat, dan justification atas pilihan topologi yang digunakan.'
+      }
+    };
 
-    if (judul) {
-      document.getElementById("judulTugas").textContent = judul;
-    }
+    // Jika berasal dari buattugas.html, tampilkan data dari form
+    if (fromBuattugas === 'true') {
+      const judul = localStorage.getItem("judulTugas");
+      const deskripsi = localStorage.getItem("deskripsiTugas");
+      const deadlineInput = localStorage.getItem("deadlineTugas");
 
-    if (deskripsi !== null) {
-      if (deskripsi.trim() !== "") {
+      // Set judul tugas
+      if (judul) {
+        document.getElementById("judulTugas").textContent = judul;
+      } else {
+        document.getElementById("judulTugas").textContent = "Tugas Baru";
+      }
+
+      // Set deskripsi
+      if (deskripsi !== null && deskripsi.trim() !== "") {
         document.getElementById("deskripsiTugas").textContent = deskripsi;
       } else {
         document.getElementById("deskripsiTugas").textContent = "-";
       }
+
+      // Set deadline
+      if (deadlineInput) {
+        const date = new Date(deadlineInput + 'T00:00:00'); 
+        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        const formattedDate = date.toLocaleDateString('id-ID', options); 
+        document.getElementById("deadlineTugas").textContent = 'Deadline ' + formattedDate + ', 23.59';
+      } else {
+        document.getElementById("deadlineTugas").textContent = "Deadline belum diatur";
+      }
+
+      // Hapus flag setelah digunakan
+      localStorage.removeItem('fromBuattugas');
+    }
+    // Jika berasal dari home_dosen.html (klik tugas), tampilkan data default
+    else if (selectedTask && tugasData[selectedTask]) {
+      const tugas = tugasData[selectedTask];
+      
+      // Set judul tugas
+      document.getElementById('judulTugas').textContent = tugas.judul;
+      
+      // Set deadline
+      const date = new Date(tugas.deadline + 'T00:00:00');
+      const options = { day: 'numeric', month: 'short', year: 'numeric' };
+      const formattedDate = date.toLocaleDateString('id-ID', options);
+      document.getElementById('deadlineTugas').textContent = 'Deadline ' + formattedDate + ', 23.59';
+      
+      // Set deskripsi
+      document.getElementById('deskripsiTugas').textContent = tugas.deskripsi;
+    } else {
+      // Default jika tidak ada data
+      document.getElementById('judulTugas').textContent = 'Tugas Tidak Ditemukan';
+      document.getElementById('deadlineTugas').textContent = 'Deadline belum diatur';
+      document.getElementById('deskripsiTugas').textContent = 'Silakan pilih tugas dari halaman beranda.';
     }
 
-    // === 3. PERBAIKAN DEADLINE (Tanpa Backtick) ===
-    if (deadlineInput) {
-      const date = new Date(deadlineInput + 'T00:00:00'); 
-      const options = { day: 'numeric', month: 'short', year: 'numeric' };
-      const formattedDate = date.toLocaleDateString('id-ID', options); 
-      
-      document.getElementById("deadlineTugas").textContent = 'Deadline ' + formattedDate + ', 23.59';
-    } else {
-      document.getElementById("deadlineTugas").textContent = "Deadline belum diatur";
-    }
-    
-    // === 4. JAVASCRIPT POPUP DITAMBAHKAN ===
+    // === 3. JAVASCRIPT POPUP ===
     const logoutBtn = document.getElementById('logoutBtn');
     const logoutPopup = document.getElementById('logoutPopup');
-   const yesLogout = document.getElementById('yesLogout');
+    const yesLogout = document.getElementById('yesLogout');
     const cancelLogout = document.getElementById('cancelLogout');
 
     if (logoutBtn && logoutPopup && yesLogout && cancelLogout) {

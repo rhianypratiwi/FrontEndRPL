@@ -6,8 +6,6 @@
   <title>Buat Tugas — SETRUM</title>
   <link rel="stylesheet" href="../CSS/buattugas.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  
 </head>
 <body>
     <aside class="sidebar">
@@ -79,7 +77,7 @@
     const profileData = JSON.parse(localStorage.getItem(profileKey)) || {};
     const savedImage = localStorage.getItem(imageKey);
 
-    // (Script header dinamis Anda sudah benar)
+    // Script header dinamis
     const greetNameEl = document.getElementById("greetName");
     const todayDateEl = document.getElementById("todayDate");
     const profilePhotoEl = document.getElementById("profilePhoto");
@@ -97,8 +95,7 @@
     const opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
     todayDateEl.textContent = today.toLocaleDateString('id-ID', opts);
 
-
-    // (Script file dan deadline Anda sudah benar)
+    // Script file dan deadline
     document.getElementById('fileLampiran').addEventListener('change', function() {
       const lampiranText = document.getElementById('lampiranText');
       if (this.files && this.files.length > 0) {
@@ -115,8 +112,7 @@
       deadlineInput.focus(); 
     });
 
-
-    // (Script kirimTugas Anda sudah benar)
+    // Script kirimTugas - YANG DIUBAH
     function kirimTugas() {
       const judul = document.getElementById('judulTugas').value.trim();
       const desk = document.getElementById('deskripsiTugas').value.trim();
@@ -127,13 +123,19 @@
         alert("Judul tugas wajib diisi!");
         return;
       }
+      
+      // Simpan data tugas
       localStorage.setItem("judulTugas", judul);
       localStorage.setItem("deskripsiTugas", desk);
-      localStorage.setItem("deadlineTugas", deadline); 
+      localStorage.setItem("deadlineTugas", deadline);
+      
+      // TANDAI BAHWA INI DARI buattugas.html - INI YANG DITAMBAHKAN
+      localStorage.setItem("fromBuattugas", "true");
+      
       window.location.href = "submitdosen.html"; 
     }
 
-        // === LOGOUT SCRIPT ===
+    // LOGOUT SCRIPT
     const logoutBtn = document.getElementById('logoutBtn');
     const logoutPopup = document.getElementById('logoutPopup');
     const yesLogout = document.getElementById('yesLogout');
