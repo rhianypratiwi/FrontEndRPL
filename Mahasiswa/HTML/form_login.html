@@ -69,7 +69,16 @@
 
         // 🔹 Redirect berdasarkan role (case-insensitive)
         if (foundUser.role && foundUser.role.toLowerCase() === "dosen") {
-          window.location.href = "../../Dosen/HTML/home_dosen.html";
+          const username = foundUser.username || foundUser.name || foundUser.email;
+          const profileKey = `profileDosen_${username}`;
+          const profileData = JSON.parse(localStorage.getItem(profileKey));
+
+          // Cek apakah dosen sudah mengisi profil
+          if (profileData && profileData.nama && profileData.nip && profileData.prodi) {
+            window.location.href = "../../Dosen/HTML/home_dosen.html";
+          } else {
+            window.location.href = "../../Dosen/HTML/ProfileDosen.html";
+          }
         } else {
           const username = foundUser.username || foundUser.name || foundUser.email;
           const profileKey = `profileData_${username}`;
