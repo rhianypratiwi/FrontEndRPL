@@ -154,7 +154,8 @@
         tanggal: new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric'}) 
       };
       posts.unshift(newPost);
-      localStorage.setItem("posts_" + selected.nasama, JSON.stringify(posts));
+      // PERBAIKAN: selected.nama bukan selected.nasama
+      localStorage.setItem("posts_" + selected.nama, JSON.stringify(posts));
       inputAnn.value = '';
       renderPosts();
     }
